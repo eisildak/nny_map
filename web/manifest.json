@@ -1,11 +1,11 @@
 {
-    "name": "kayseri_millet_bahcesi_map",
-    "short_name": "kayseri_millet_bahcesi_map",
+    "name": "Kayseri Millet Bahçesi Harita",
+    "short_name": "Millet Bahçesi",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Kayseri Millet Bahçesi interaktif harita uygulaması",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

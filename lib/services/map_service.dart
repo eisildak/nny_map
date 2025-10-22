@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import '../models/point_of_interest.dart';
+import '../config/api_keys.dart';
 
 class MapService extends ChangeNotifier {
   GoogleMapController? _controller;
@@ -18,7 +19,7 @@ class MapService extends ChangeNotifier {
   Marker? _userLocationMarker;
 
   // Google API Key - Directions API için
-  static const String _apiKey = 'AIzaSyDWVBfYxASYj1aTqcS8pvHa67IDic4wthk';
+  static const String _apiKey = ApiKeys.googleMapsApiKey;
 
   // Kayseri Millet Bahçesi merkez koordinatları (WC'lerin ortası)
   static const LatLng kayseriMilletBahcesi = LatLng(38.704200, 35.509500);

@@ -59,25 +59,27 @@ flutter packages pub run build_runner build
 
 ### API Key Ayarları
 
-#### Android
+⚠️ **Önemli**: Google Maps API Key'inizi güvenli bir şekilde saklayın ve GitHub'a yüklemeyin!
+
+#### 1. API Key Dosyası Oluşturma
+`lib/config/api_keys.dart` dosyasını oluşturun:
+```dart
+class ApiKeys {
+  static const String googleMapsApiKey = 'YOUR_ACTUAL_API_KEY_HERE';
+}
+```
+
+#### 2. Android
 `android/app/src/main/AndroidManifest.xml` dosyasında:
 ```xml
 <meta-data android:name="com.google.android.geo.API_KEY"
            android:value="YOUR_GOOGLE_MAPS_API_KEY_HERE"/>
 ```
 
-#### iOS
-`ios/Runner/AppDelegate.swift` dosyasına:
+#### 3. iOS
+`ios/Runner/AppDelegate.swift` dosyasında:
 ```swift
-import GoogleMaps
-
-@UIApplicationMain
-@objc class AppDelegate: FlutterAppDelegate {
-  override func application(
-    _ application: UIApplication,
-    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-  ) -> Bool {
-    GMSServices.provideAPIKey("YOUR_GOOGLE_MAPS_API_KEY_HERE")
+GMSServices.provideAPIKey("YOUR_GOOGLE_MAPS_API_KEY_HERE")
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
