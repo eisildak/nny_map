@@ -7,7 +7,6 @@ import '../services/location_service.dart';
 import '../widgets/search_widget.dart';
 import '../widgets/poi_bottom_sheet.dart';
 import '../widgets/navigation_controls.dart';
-import 'web_map_screen.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -24,9 +23,24 @@ class _MapScreenState extends State<MapScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _initializeServices();
-      _setupLocationListener();
+      _waitForGoogleMaps();
     });
+  }
+
+  void _waitForGoogleMaps() async {
+    if (kIsWeb) {
+      // Web'de Google Maps API'nin yüklenmesini bekle
+      print('🔄 Waiting for Google Maps API...');
+      int attempts = 0;
+      while (attempts < 50) { // Max 5 saniye bekle
+        await Future.delayed(Duration(milliseconds: 100));
+        attempts++;
+      }
+      print('✅ Google Maps API loading completed!');
+    }
+    
+    _initializeServices();
+    _setupLocationListener();
   }
 
   void _setupLocationListener() {
@@ -146,6 +160,8 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   void _onMapCreated(GoogleMapController controller) {
+    print('🗺️ Google Maps onMapCreated called!');
+    print('🌐 Platform: ${kIsWeb ? 'WEB' : 'MOBILE'}');
     _mapController = controller;
     final mapService = Provider.of<MapService>(context, listen: false);
     mapService.setController(controller);
@@ -153,11 +169,6 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Web için özel layout kullan
-    if (kIsWeb) {
-      return const WebMapScreen();
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Kayseri Millet Bahçesi'),

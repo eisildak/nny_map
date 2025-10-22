@@ -23,6 +23,21 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
+  <!-- Google Maps API -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWVBfYxASYj1aTqcS8pvHa67IDic4wthk&libraries=geometry,places&callback=initMap"></script>
+  
+  <script>
+    // Global function for Google Maps callback
+    function initMap() {
+      console.log("✅ Google Maps API initialized successfully!");
+      // Flutter web will handle the map creation
+      window.googleMapsReady = true;
+    }
+    
+    // Initialize as false
+    window.googleMapsReady = false;
+  </script>
+  
   <style>
     * {
       margin: 0;
