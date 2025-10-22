@@ -267,6 +267,106 @@
       font-size: 0.95rem;
     }
     
+    /* Download Section */
+    .download-section {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 60px 0;
+      color: white;
+    }
+    
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+      margin-top: 40px;
+    }
+    
+    .download-card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.3s ease;
+    }
+    
+    .download-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.15);
+    }
+    
+    .platform-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+    }
+    
+    .download-card h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+    
+    .download-card p {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+    
+    .qr-placeholder {
+      width: 150px;
+      height: 150px;
+      margin: 0 auto 20px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #7f8c8d;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    
+    .download-btn {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: 2px solid rgba(255,255,255,0.3);
+      padding: 12px 30px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      display: inline-block;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .download-btn:hover {
+      background: rgba(255,255,255,0.3);
+      border-color: rgba(255,255,255,0.5);
+      transform: translateY(-2px);
+    }
+    
+    .download-btn.disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .coming-soon {
+      font-size: 0.85rem;
+      opacity: 0.7;
+      margin-top: 10px;
+      font-style: italic;
+    }
+    
     /* Footer */
     .footer {
       background: #2c3e50;
@@ -307,6 +407,26 @@
       
       .info-cards {
         grid-template-columns: 1fr;
+      }
+      
+      .download-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      
+      .download-card {
+        padding: 30px 20px;
+      }
+      
+      .platform-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+      }
+      
+      .qr-placeholder {
+        width: 120px;
+        height: 120px;
       }
     }
   </style>
@@ -420,6 +540,52 @@
         <div class="info-card">
           <h4>📱 Platform</h4>
           <p>Android, iOS ve Web platformlarında çalışır</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download Section -->
+  <section class="download-section">
+    <div class="container">
+      <h2 class="section-title">Mobil Uygulamayı İndirin</h2>
+      <p class="section-subtitle">
+        Kayseri Millet Bahçesi harita uygulamasını mobil cihazınıza indirin ve her zaman yanınızda taşıyın
+      </p>
+      
+      <div class="download-grid">
+        <!-- Android APK -->
+        <div class="download-card">
+          <div class="platform-icon">🤖</div>
+          <h3>Android APK</h3>
+          <p>Android cihazlar için optimize edilmiş uygulama. Doğrudan APK dosyasını indirerek kurulum yapabilirsiniz.</p>
+          
+          <div class="qr-placeholder" id="androidQR">
+            QR Kod
+            <br><small>Yakında Eklenecek</small>
+          </div>
+          
+          <a href="#" class="download-btn disabled" id="androidDownloadBtn">
+            📥 Android APK İndir
+          </a>
+          <div class="coming-soon">APK linki yakında eklenecek</div>
+        </div>
+        
+        <!-- iOS IPA -->
+        <div class="download-card">
+          <div class="platform-icon">🍎</div>
+          <h3>iOS IPA</h3>
+          <p>iOS cihazlar için optimize edilmiş uygulama. TestFlight veya enterprise dağıtım ile kurulum yapabilirsiniz.</p>
+          
+          <div class="qr-placeholder" id="iosQR">
+            QR Kod
+            <br><small>Yakında Eklenecek</small>
+          </div>
+          
+          <a href="#" class="download-btn disabled" id="iosDownloadBtn">
+            📥 iOS IPA İndir
+          </a>
+          <div class="coming-soon">IPA linki yakında eklenecek</div>
         </div>
       </div>
     </div>
