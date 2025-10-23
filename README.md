@@ -183,6 +183,12 @@ Bu proje MIT lisansı ile lisanslanmıştır. Detaylar için [LICENSE](LICENSE) 
 - 🧭 Yürüyerek navigasyon desteği
 - 📱 Modern UI tasarımı
 
+
+## 📝 TODO
+1- nny logo büyüyecek
+2- hazırlayan ve danışman ismi eklenecek
+3- apple - android logo değişecek
+4- Harita sorunu çözülecek
 ---
 
 ⭐ **Kayseri Millet Bahçesi'nde keyifli geziler dileriz!** 🌳
