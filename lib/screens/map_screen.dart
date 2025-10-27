@@ -7,6 +7,8 @@ import '../services/location_service.dart';
 import '../widgets/search_widget.dart';
 import '../widgets/poi_bottom_sheet.dart';
 import '../widgets/navigation_controls.dart';
+import '../widgets/web_map_widget_stub.dart'
+    if (dart.library.html) '../widgets/web_map_widget.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -192,35 +194,40 @@ class _MapScreenState extends State<MapScreen> {
       ),
       body: Stack(
         children: [
-          // Ana harita
-          Consumer<MapService>(
-            builder: (context, mapService, child) {
-              return GoogleMap(
-                onMapCreated: _onMapCreated,
-                initialCameraPosition: const CameraPosition(
-                  target: MapService.kayseriMilletBahcesi,
-                  zoom: 16.0,
-                ),
-                markers: mapService.markers,
-                polylines: mapService.polylines,
-                myLocationEnabled: true,
-                myLocationButtonEnabled: false,
-                zoomControlsEnabled: false,
-                mapToolbarEnabled: false,
-                buildingsEnabled: true,
-                trafficEnabled: false,
-                mapType: MapType.hybrid, // Satellite + roads view
-                onTap: (LatLng position) {
-                  // Haritaya tıklandığında search'ü kapat
-                  if (_showSearch) {
-                    setState(() {
-                      _showSearch = false;
-                    });
-                  }
-                },
-              );
-            },
-          ),
+          // Ana harita - Web ve mobile için farklı widget
+          if (kIsWeb)
+            // Web için özel harita widget'ı
+            const WebMapWidget()
+          else
+            // Mobile için Flutter GoogleMap widget
+            Consumer<MapService>(
+              builder: (context, mapService, child) {
+                return GoogleMap(
+                  onMapCreated: _onMapCreated,
+                  initialCameraPosition: const CameraPosition(
+                    target: MapService.kayseriMilletBahcesi,
+                    zoom: 16.0,
+                  ),
+                  markers: mapService.markers,
+                  polylines: mapService.polylines,
+                  myLocationEnabled: true,
+                  myLocationButtonEnabled: false,
+                  zoomControlsEnabled: false,
+                  mapToolbarEnabled: false,
+                  buildingsEnabled: true,
+                  trafficEnabled: false,
+                  mapType: MapType.hybrid, // Satellite + roads view
+                  onTap: (LatLng position) {
+                    // Haritaya tıklandığında search'ü kapat
+                    if (_showSearch) {
+                      setState(() {
+                        _showSearch = false;
+                      });
+                    }
+                  },
+                );
+              },
+            ),
 
           // Arama widget'ı
           if (_showSearch)

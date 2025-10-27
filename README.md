@@ -185,10 +185,14 @@ Bu proje MIT lisansı ile lisanslanmıştır. Detaylar için [LICENSE](LICENSE) 
 
 
 ## 📝 TODO
-1- nny logo büyüyecek
-2- hazırlayan ve danışman ismi eklenecek
-3- apple - android logo değişecek
+1- ✅ nny logo büyüyecek (Tamamlandı - 120x120px)
+2- ✅ hazırlayan ve danışman ismi eklenecek (Tamamlandı)
+   - Hazırlayan: Erol IŞILDAK
+   - Danışman: Öğr.Gör. Gülsüm KEMERLİ
+3- ✅ apple - android logo değişecek (Tamamlandı)
 4- Harita sorunu çözülecek
+5- ✅ Android APK için QR kod eklendi
+6- Web hosting'e yüklenecek
 ---
 
 ⭐ **Kayseri Millet Bahçesi'nde keyifli geziler dileriz!** 🌳
