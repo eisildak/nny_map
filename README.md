@@ -1,33 +1,77 @@
-# Kayseri Millet Bahçesi Harita Uygulaması
+# NNY Kampüs Haritası 🎓
 
-Kayseri Millet Bahçesi için interaktif harita ve navigasyon uygulaması. Flutter ile geliştirilmiş, kullanıcı dostu arayüzü ile ziyaretçilere ilgi noktalarını keşfetme ve yol tarifi alma imkanı sunar.
+Nuh Naci Yazgan Üniversitesi öğrencileri ve ziyaretçileri için geliştirilmiş interaktif kampüs haritası ve navigasyon uygulaması. Flutter ile geliştirilmiş, kullanıcı dostu arayüzü ile kampüs içerisinde yön bulmayı kolaylaştırır.
+
+## 📖 Proje Hakkında
+
+Bu uygulama, Nuh Naci Yazgan Üniversitesi öğrencilerinin kampüs içerisinde kolayca yön bulabilmeleri ve kampüsteki önemli noktaları keşfedebilmeleri için tasarlanmıştır. Öğrenciler, fakülteler, kütüphane, yemekhaneler, yurtlar, otoparklar ve diğer önemli kampüs tesislerini harita üzerinde görebilir ve bu noktalara nasıl ulaşacaklarını öğrenebilirler.
 
 ## 🌟 Özellikler
 
-- 🗺️ **Interaktif Harita**: Google Maps entegrasyonu ile detaylı harita görünümü
-- 📍 **İlgi Noktaları**: Bahçe içerisindeki önemli noktaların işaretlenmesi
-- 🔍 **Akıllı Arama**: İlgi noktalarını isim, kategori ve açıklama bazında arama
-- 🧭 **Navigasyon**: Yürüyerek yol tarifi ve adım adım rehberlik
-- 📱 **Kullanıcı Dostu**: Modern ve sezgisel arayüz tasarımı
-- 🌐 **Konum Servisleri**: GPS ile mevcut konum tespiti ve mesafe hesaplama
+- 🗺️ **Interaktif Kampüs Haritası**: Google Maps entegrasyonu ile detaylı kampüs haritası
+- 📍 **23+ İlgi Noktası**: Fakülteler, yurtlar, kafeterya, kütüphane, spor salonu ve daha fazlası
+- 🔍 **Akıllı Arama**: İlgi noktalarını isim ve kategori bazında hızlı arama
+- 🧭 **Navigasyon**: Kampüs içerisinde yürüyerek yol tarifi
+- 📱 **Modern Arayüz**: Kullanıcı dostu ve responsive tasarım
+- 🌐 **GPS Entegrasyonu**: Mevcut konumunuzu gösterme ve mesafe hesaplama
+- 🎨 **Kategori Bazlı Renkli İkonlar**: Her tesis türü için özel icon ve renk
 
-## 📋 İçerik
+## 📱 Platform Desteği
 
-### İlgi Noktaları
-- **NNY Stant-1**: Ana giriş yakınında yer alan bilgi standı
-- **Çocuk Oyun Alanı**: Modern oyun ekipmanları ile donatılmış güvenli alan
-- **Yürüyüş Parkuru**: Sağlık yürüyüşü için hazırlanmış parkur
-- **Bahçe Kafesi**: Doğal manzara eşliğinde dinlenme alanı
-- **Tesis Alanları**: WC, piknik alanları ve diğer kolaylıklar
-- **Süs Havuzu**: Fıskiyeli dekoratif su öğesi
+- ✅ **Web**: Chrome, Firefox, Safari, Edge
+- ✅ **Android**: Android 5.0 ve üzeri
+- ✅ **iOS**: iOS 11.0 ve üzeri
 
-### Kategoriler
-- 🔵 **Bilgi Standı**: Danışma ve bilgilendirme noktaları
-- 🟠 **Eğlence**: Çocuk oyun alanları, piknik alanları
-- 🟢 **Spor**: Yürüyüş parkurları, spor alanları
-- 🟣 **Restoran**: Kafeler ve yeme-içme alanları
-- 🔵 **Tesis**: WC, lavabo ve diğer kolaylıklar
-- 🟡 **Doğa**: Süs havuzları, peyzaj alanları
+## 📋 Kampüs İçerikleri
+
+### İlgi Noktaları ve Tesisler
+
+#### 🏫 **Fakülteler (4)**
+- Sağlık Bilimleri Fakültesi
+- İktisadi ve İdari Bilimler Fakültesi
+- Mühendislik Fakültesi
+- Güzel Sanatlar ve Tasarım Fakültesi
+
+#### 🏢 **Öğrenci Yurtları (2)**
+- Nuh Yapışlar Yımaz Özdemir Erkek Öğrenci Yurdu
+- Sahabiye Erkek Öğrenci Yurdu B Blok
+
+#### 📚 **Önemli Binalar (4)**
+- ⭐ Saatli Kule (Kampüs simgesi)
+- 📖 Ahmet Uzandaç Kütüphanesi
+- 🍽️ Yemek Hizmetleri
+- 🏀 Baldöktü Spor Salonu
+
+#### � **Otoparklar (3)**
+- Otopark 1 (Ana otopark)
+- Otopark 2
+- Misafir Otoparkı
+
+#### � **Ulaşım (2)**
+- Otobüs Durağı 2
+- Otobüs Durağı 3
+
+#### � **Giriş Kapıları (2)**
+- Ana Giriş Kapısı
+- Lojmanlar Giriş
+
+#### 🏪 **Diğer Hizmetler (1)**
+- Ceylan Kırtasiye
+
+### 🎨 Kategori İkonları
+
+| Kategori | İkon | Renk |
+|----------|------|------|
+| Fakülte | 🏫 | Lacivert |
+| Kütüphane | � | Kahverengi |
+| Yemek | 🍽️ | Kırmızı |
+| Spor | 🏀 | Yeşil |
+| Yurt | 🏢 | Mor |
+| Ulaşım | 🚌 | Turuncu |
+| Otopark | 🅿️ | Gri |
+| Hizmet | 🛍️ | Turkuaz |
+| Önemli Nokta | ⭐ | Altın |
+| Giriş Kapısı | 🚪 | Mavi |
 
 ## 🚀 Kurulum
 
@@ -38,17 +82,17 @@ Kayseri Millet Bahçesi için interaktif harita ve navigasyon uygulaması. Flutt
 
 ### Google Cloud Ayarları
 Google Cloud Console'dan aşağıdaki API'ları aktif edin:
-1. **Maps JavaScript API**
-2. **Directions API**
-3. **Places API**
-4. **Geocoding API**
+1. **Maps JavaScript API** (Web için)
+2. **Directions API** (Navigasyon için)
+3. **Maps SDK for Android** (Android için)
+4. **Maps SDK for iOS** (iOS için)
 
 ### Proje Kurulumu
 
 ```bash
 # Projeyi klonlayın
-git clone https://github.com/eisildak/millet_bahcesi_map.git
-cd millet_bahcesi_map
+git clone https://github.com/eisildak/nny_map.git
+cd nny_map
 
 # Bağımlılıkları yükleyin
 flutter pub get
@@ -80,49 +124,68 @@ class ApiKeys {
 `ios/Runner/AppDelegate.swift` dosyasında:
 ```swift
 GMSServices.provideAPIKey("YOUR_GOOGLE_MAPS_API_KEY_HERE")
-    GeneratedPluginRegistrant.register(with: self)
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
-  }
-}
+GeneratedPluginRegistrant.register(with: self)
+return super.application(application, didFinishLaunchingWithOptions: launchOptions)
 ```
 
-#### Kod İçinde
-`lib/services/map_service.dart` dosyasında:
-```dart
-static const String _apiKey = 'YOUR_GOOGLE_MAPS_API_KEY_HERE';
-```
+#### 4. Web
+`web/index.html` dosyasında Google Maps JavaScript API script tag'ini güncelleyin.
 
 ## 🎯 Kullanım
 
+### Web Uygulaması
+```bash
+flutter run -d chrome
+```
+
+### Android Uygulaması
+```bash
+flutter run -d android
+```
+
+### iOS Uygulaması
+```bash
+flutter run -d ios
+```
+
 ### Ana Özellikler
 
-1. **Harita Görünümü**: Uygulama açıldığında Kayseri Millet Bahçesi merkez alınarak harita yüklenir
+1. **Harita Görünümü**: Uygulama açıldığında NNY Kampüsü merkez alınarak harita yüklenir
 2. **Arama**: Üst menüdeki arama ikonu ile ilgi noktalarını arayabilirsiniz
 3. **Navigasyon**: Bir noktaya tıkladığınızda "Yürüyerek Git" butonu ile navigasyon başlatılır
-4. **Konum**: GPS ikonuna basarak mevcut konumunuza odaklanabilirsiniz
-5. **Kategori Filtreleme**: Arama ekranında kategori çipleri ile filtreleme yapabilirsiniz
+4. **Konum Takibi**: GPS ikonuna basarak mevcut konumunuza odaklanabilirsiniz
+5. **Kategori Filtreleme**: Arama ekranında kategori bazlı filtreleme yapabilirsiniz
+6. **Detaylı Bilgi**: Her POI için açıklama, kategori ve konum bilgileri gösterilir
 
 ### Önemli Notlar
 - Navigasyon için konum izni gereklidir
 - İnternet bağlantısı harita yükleme için gereklidir
-- API key sınırlamaları nedeniyle yoğun kullanımda rate limit uyarısı alabilirsiniz
+- Tüm platformlarda (Web, Android, iOS) çalışır
 
 ## 🏗️ Proje Yapısı
 
 ```
 lib/
-├── main.dart                 # Uygulama giriş noktası
-├── models/                   # Veri modelleri
-│   └── point_of_interest.dart
-├── services/                 # İş mantığı servisleri
-│   ├── location_service.dart
-│   └── map_service.dart
-├── screens/                  # Ekran bileşenleri
-│   └── map_screen.dart
-└── widgets/                  # UI bileşenleri
-    ├── search_widget.dart
-    ├── poi_bottom_sheet.dart
-    └── navigation_controls.dart
+├── main.dart                      # Uygulama giriş noktası
+├── config/                        # Yapılandırma dosyaları
+│   └── api_keys.dart             # Google Maps API Key
+├── models/                        # Veri modelleri
+│   ├── point_of_interest.dart    # POI modeli ve kampüs verileri
+│   └── point_of_interest.g.dart  # JSON serializasyon
+├── services/                      # İş mantığı servisleri
+│   ├── location_service.dart     # GPS ve konum servisleri
+│   └── map_service.dart          # Harita ve navigasyon servisleri
+├── screens/                       # Ekran bileşenleri
+│   ├── splash_screen.dart        # Açılış ekranı
+│   ├── map_screen.dart           # Ana harita ekranı
+│   ├── web_map_screen.dart       # Web için özelleştirilmiş ekran
+│   └── simple_map_screen.dart    # Basit harita görünümü
+└── widgets/                       # Yeniden kullanılabilir UI bileşenleri
+    ├── search_widget.dart         # Arama widget'ı
+    ├── poi_bottom_sheet.dart      # POI detay paneli
+    ├── navigation_controls.dart   # Navigasyon kontrolleri
+    ├── web_map_widget.dart        # Web harita widget'ı
+    └── web_info_panel.dart        # Web bilgi paneli
 ```
 
 ## 🔧 Geliştirme
@@ -132,67 +195,70 @@ lib/
 
 ```dart
 const PointOfInterest(
-  id: 'yeni-nokta-id',
-  name: 'Yeni Nokta Adı',
-  description: 'Nokta açıklaması',
-  latitude: 38.7540,
-  longitude: 35.4580,
-  category: 'Kategori',
+  id: 'yeni-bina',
+  name: 'Yeni Bina Adı',
+  description: 'Bina açıklaması',
+  latitude: 38.78700,
+  longitude: 35.40800,
+  category: 'Fakülte', // veya başka bir kategori
 ),
 ```
 
-### Kategori Ekleme
-`SearchWidget` ve `POIBottomSheet` widget'larında yeni kategori için renk ve ikon tanımlamaları yapın.
+### Yeni Kategori Ekleme
+1. `lib/services/map_service.dart` dosyasında `_getMarkerIcon` metoduna yeni kategori ekleyin
+2. Uygun icon ve renk seçin
+3. `SearchWidget` ve `POIBottomSheet` widget'larında kategori filtrelerini güncelleyin
 
-## 📱 Platform Desteği
+### Marker İkonlarını Özelleştirme
+`lib/services/map_service.dart` dosyasında:
+- `_createCustomMarker`: Icon ve renk özelleştirmesi
+- `_getMarkerIcon`: Kategori bazlı icon seçimi
 
-- ✅ Android 5.0+ (API 21+)
-- ✅ iOS 11.0+
-- ❌ Web (Google Maps plugin limitasyonları)
-- ❌ Desktop (Konum servisleri eksikliği)
+## � Kullanılan Teknolojiler
 
-## 🤝 Katkıda Bulunma
+- **Flutter**: Cross-platform UI framework
+- **Google Maps Flutter**: Harita görüntüleme
+- **Provider**: State management
+- **Geolocator**: Konum servisleri
+- **HTTP**: API istekleri
+- **JSON Annotation**: Veri serializasyonu
 
-1. Fork edin
-2. Feature branch oluşturun (`git checkout -b feature/amazing-feature`)
-3. Commit edin (`git commit -m 'Add amazing feature'`)
-4. Branch'e push edin (`git push origin feature/amazing-feature`)
-5. Pull Request açın
+## 🎓 Lisans ve Kullanım
 
-## TODO
-1- NNY logosu düzenlenecek.
-2- web app applyfy'a yğklenecek
-3- mobile appler için QR oluşturulacak. 
+Bu proje Nuh Naci Yazgan Üniversitesi öğrencileri ve ziyaretçileri için geliştirilmiştir.
 
-## 📄 Lisans
+## 👨‍💻 Geliştirici
 
-Bu proje MIT lisansı ile lisanslanmıştır. Detaylar için [LICENSE](LICENSE) dosyasını inceleyiniz.
+**Nuh Naci Yazgan Üniversitesi**  
+Kayseri, Türkiye
 
 ## 📞 İletişim
 
-- **Proje**: [millet_bahcesi_map](https://github.com/eisildak/millet_bahcesi_map)
-- **Geliştirici**: eisildak
+Sorularınız veya önerileriniz için:
+- 🌐 Web: [nny.edu.tr](https://nny.edu.tr)
+- 📧 E-posta: info@nny.edu.tr
 
-## 📝 Changelog
+## 🚀 Gelecek Özellikler
 
-### v1.0.0 (Mevcut)
-- 🎉 İlk sürüm yayınlandı
-- 🗺️ Google Maps entegrasyonu
-- 📍 8 adet ilgi noktası eklendi
-- 🔍 Arama ve filtreleme özelliği
-- 🧭 Yürüyerek navigasyon desteği
-- 📱 Modern UI tasarımı
+- [ ] Etkinlik takvimi entegrasyonu
+- [ ] Kampüs servisi takibi
+- [ ] Offline harita desteği
+- [ ] Çoklu dil desteği (Türkçe/İngilizce)
+- [ ] QR kod ile POI bilgisi
+- [ ] Kampüs içi bildirimler
+- [ ] Öğrenci ders programı entegrasyonu
+- [ ] Sınıf ve derslik bulucu
 
+## 📝 Sürüm Geçmişi
 
-## 📝 TODO
-1- ✅ nny logo büyüyecek (Tamamlandı - 120x120px)
-2- ✅ hazırlayan ve danışman ismi eklenecek (Tamamlandı)
-   - Hazırlayan: Erol IŞILDAK
-   - Danışman: Öğr.Gör. Gülsüm KEMERLİ
-3- ✅ apple - android logo değişecek (Tamamlandı)
-4- Harita sorunu çözülecek
-5- ✅ Android APK için QR kod eklendi
-6- Web hosting'e yüklenecek
+### v1.0.0 (Kasım 2025)
+- ✅ NNY Kampüsü için özelleştirilmiş harita
+- ✅ 23+ ilgi noktası eklendi
+- ✅ Web, Android ve iOS desteği
+- ✅ Kategori bazlı renkli ikonlar
+- ✅ Akıllı arama ve filtreleme
+- ✅ GPS navigasyon desteği
+
 ---
 
-⭐ **Kayseri Millet Bahçesi'nde keyifli geziler dileriz!** 🌳
+**Made with ❤️ for NNY Students**

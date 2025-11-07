@@ -25,16 +25,16 @@ class _SimpleMapScreenState extends State<SimpleMapScreen> {
           print('Google Maps Web başarıyla yüklendi!');
         },
         initialCameraPosition: const CameraPosition(
-          target: LatLng(38.704200, 35.509500), // Kayseri Millet Bahçesi
+          target: LatLng(38.787374, 35.407380), // Nuh Naci Yazgan Üniversitesi
           zoom: 16.0,
         ),
         markers: {
           const Marker(
-            markerId: MarkerId('kayseri_millet_bahcesi'),
-            position: LatLng(38.704200, 35.509500),
+            markerId: MarkerId('nny_kampus'),
+            position: LatLng(38.787374, 35.407380),
             infoWindow: InfoWindow(
-              title: 'Kayseri Millet Bahçesi',
-              snippet: 'Test marker',
+              title: 'NNY Kampüsü',
+              snippet: 'Nuh Naci Yazgan Üniversitesi',
             ),
           ),
         },

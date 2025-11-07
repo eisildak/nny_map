@@ -6,11 +6,11 @@ import 'services/location_service.dart';
 import 'services/map_service.dart';
 
 void main() {
-  runApp(const KayseriMilletBahcesiApp());
+  runApp(const NNYCampusMapApp());
 }
 
-class KayseriMilletBahcesiApp extends StatelessWidget {
-  const KayseriMilletBahcesiApp({super.key});
+class NNYCampusMapApp extends StatelessWidget {
+  const NNYCampusMapApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class KayseriMilletBahcesiApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => MapService()),
       ],
       child: MaterialApp(
-        title: 'Kayseri Millet Bahçesi',
+        title: 'NNY Kampüs Haritası',
         theme: ThemeData(
           primarySwatch: Colors.blue,
           primaryColor: const Color(0xFF3252a8), // Özel mavi renk

@@ -8,16 +8,12 @@ class WebInfoPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final isMobile = screenWidth < 768;
-    
+
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
         boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 8,
-            offset: Offset(2, 0),
-          ),
+          BoxShadow(color: Colors.black12, blurRadius: 8, offset: Offset(2, 0)),
         ],
       ),
       child: SingleChildScrollView(
@@ -32,335 +28,326 @@ class WebInfoPanel extends StatelessWidget {
 
   List<Widget> _buildDesktopContent() {
     return [
-            // NNY Logo
-            Center(
-              child: Image.asset(
-                'assets/icons/nny_logo.png',
-                height: 120,
-                fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) {
-                  return const Icon(Icons.school, size: 120);
-                },
-              ),
-            ),
-            
-            const SizedBox(height: 24),
-            
-            // Üniversite adı
-            const Text(
-              'NUH NACI YAZGAN ÜNİVERSİTESİ',
+      // NNY Logo
+      Center(
+        child: Image.asset(
+          'assets/icons/nny_logo.png',
+          height: 120,
+          fit: BoxFit.contain,
+          errorBuilder: (context, error, stackTrace) {
+            return const Icon(Icons.school, size: 120);
+          },
+        ),
+      ),
+
+      const SizedBox(height: 24),
+
+      // Üniversite adı
+      const Text(
+        'NUH NACI YAZGAN ÜNİVERSİTESİ',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Colors.blue,
+        ),
+        textAlign: TextAlign.center,
+      ),
+
+      const SizedBox(height: 8),
+
+      const Text(
+        'Bilgisayar Programcılığı',
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          color: Colors.grey,
+        ),
+        textAlign: TextAlign.center,
+      ),
+
+      const SizedBox(height: 32),
+
+      // Proje bilgileri
+      const Text(
+        'KAYSERI MİLLET BAHÇESİ\nİNTERAKTİF HARİTA',
+        style: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+          color: Colors.black87,
+        ),
+        textAlign: TextAlign.center,
+      ),
+
+      const SizedBox(height: 24),
+
+      // Geliştirici bilgileri
+      Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.blue.shade50,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.blue.shade200),
+        ),
+        child: const Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Geliştiren',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: Colors.blue,
               ),
-              textAlign: TextAlign.center,
             ),
-            
-            const SizedBox(height: 8),
-            
-            const Text(
-              'Bilgisayar Programcılığı',
+            SizedBox(height: 8),
+            Text(
+              'Erol IŞILDAK',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: Colors.black87,
+              ),
+            ),
+            Text(
+              'Bilgisayar Programcılığı Öğrencisi',
+              style: TextStyle(fontSize: 14, color: Colors.grey),
+            ),
+            SizedBox(height: 12),
+            Text(
+              'Danışman',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
+            ),
+            SizedBox(height: 4),
+            Text(
+              'Öğr.Gör. Gülsüm KEMERLİ',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                color: Colors.grey,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            
-            const SizedBox(height: 32),
-            
-            // Proje bilgileri
-            const Text(
-              'KAYSERI MİLLET BAHÇESİ\nİNTERAKTİF HARİTA',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
                 color: Colors.black87,
               ),
-              textAlign: TextAlign.center,
             ),
-            
-            const SizedBox(height: 24),
-            
-            // Geliştirici bilgileri
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.blue.shade50,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.blue.shade200),
+          ],
+        ),
+      ),
+
+      const SizedBox(height: 24),
+
+      // Teknik bilgiler
+      Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.green.shade50,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.green.shade200),
+        ),
+        child: const Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Teknolojiler',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.green,
               ),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Geliştiren',
+            ),
+            SizedBox(height: 12),
+            _TechItem(icon: Icons.phone_android, text: 'Flutter Framework'),
+            _TechItem(icon: Icons.map, text: 'Google Maps API'),
+            _TechItem(icon: Icons.directions, text: 'Google Directions API'),
+            _TechItem(icon: Icons.location_on, text: 'GPS Navigasyon'),
+            _TechItem(icon: Icons.wb_sunny, text: 'Gerçek Zamanlı Konum'),
+          ],
+        ),
+      ),
+
+      const SizedBox(height: 24),
+
+      // Özellikler
+      Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.orange.shade50,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.orange.shade200),
+        ),
+        child: const Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Özellikler',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.orange,
+              ),
+            ),
+            SizedBox(height: 12),
+            _FeatureItem('19 İlgi Noktası (POI)'),
+            _FeatureItem('Sesli Navigasyon'),
+            _FeatureItem('Gerçek Zamanlı Konum Takibi'),
+            _FeatureItem('WC ve Giriş Kapıları'),
+            _FeatureItem('Üniversite Kampüsü'),
+            _FeatureItem('Yürüyüş Rotaları'),
+          ],
+        ),
+      ),
+
+      const SizedBox(height: 32),
+
+      // Mobil uygulama indirme
+      const Text(
+        'Mobil Uygulamayı İndir',
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: Colors.black87,
+        ),
+        textAlign: TextAlign.center,
+      ),
+
+      const SizedBox(height: 16),
+
+      // Android APK İndirme
+      _DownloadCard(
+        title: 'Android APK',
+        subtitle: 'Direkt APK İndir - Hızlı Kurulum',
+        icon: Icons.android,
+        color: Colors.green,
+        onTap: () => _launchURL(
+          'https://drive.google.com/uc?export=download&id=1DNm9x4rlQHbyD9eilU4fvBGRyRrBiWCS',
+        ),
+      ),
+
+      const SizedBox(height: 12),
+
+      // QR Kod ve açıklama
+      Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.blue.shade50,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.blue.shade200),
+        ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Icon(Icons.qr_code_2, color: Colors.blue.shade700, size: 24),
+                const SizedBox(width: 12),
+                const Expanded(
+                  child: Text(
+                    'QR Kodu Okut veya Tıkla',
                     style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Erol IŞILDAK',
-                    style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: Colors.black87,
                     ),
                   ),
-                  Text(
-                    'Bilgisayar Programcılığı Öğrencisi',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  SizedBox(height: 12),
-                  Text(
-                    'Danışman',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
-                    ),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    'Öğr.Gör. Gülsüm KEMERLİ',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black87,
-                    ),
-                  ),
-                ],
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            GestureDetector(
+              onTap: () => _launchURL(
+                'https://drive.google.com/uc?export=download&id=1DNm9x4rlQHbyD9eilU4fvBGRyRrBiWCS',
+              ),
+              child: Container(
+                width: 120,
+                height: 120,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.grey.shade300),
+                ),
+                child: const Center(
+                  child: Icon(Icons.qr_code_2, size: 80, color: Colors.black54),
+                ),
               ),
             ),
-            
-            const SizedBox(height: 24),
-            
-            // Teknik bilgiler
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.green.shade50,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.green.shade200),
-              ),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Teknolojiler',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                    ),
-                  ),
-                  SizedBox(height: 12),
-                  _TechItem(icon: Icons.phone_android, text: 'Flutter Framework'),
-                  _TechItem(icon: Icons.map, text: 'Google Maps API'),
-                  _TechItem(icon: Icons.directions, text: 'Google Directions API'),
-                  _TechItem(icon: Icons.location_on, text: 'GPS Navigasyon'),
-                  _TechItem(icon: Icons.wb_sunny, text: 'Gerçek Zamanlı Konum'),
-                ],
-              ),
+            const SizedBox(height: 8),
+            Text(
+              'Android APK için QR kodu okut\nveya bu alana tıkla',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 12, color: Colors.blue.shade700),
             ),
-            
-            const SizedBox(height: 24),
-            
-            // Özellikler
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.orange.shade50,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.orange.shade200),
-              ),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Özellikler',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.orange,
-                    ),
-                  ),
-                  SizedBox(height: 12),
-                  _FeatureItem('19 İlgi Noktası (POI)'),
-                  _FeatureItem('Sesli Navigasyon'),
-                  _FeatureItem('Gerçek Zamanlı Konum Takibi'),
-                  _FeatureItem('WC ve Giriş Kapıları'),
-                  _FeatureItem('Üniversite Kampüsü'),
-                  _FeatureItem('Yürüyüş Rotaları'),
-                ],
-              ),
-            ),
-            
-            const SizedBox(height: 32),
-            
-            // Mobil uygulama indirme
+          ],
+        ),
+      ),
+
+      const SizedBox(height: 12),
+
+      // iOS Kurulum Sayfası
+      _DownloadCard(
+        title: 'iOS Kurulum',
+        subtitle: 'iPhone & iPad - Kurulum Rehberi',
+        icon: Icons.apple,
+        color: Colors.grey.shade700,
+        onTap: () => _launchURL(
+          'https://eisildak.github.io/millet_bahcesi_map/ios_install.html',
+        ),
+      ),
+
+      const SizedBox(height: 32),
+
+      // İletişim bilgileri
+      Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade50,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.grey.shade300),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             const Text(
-              'Mobil Uygulamayı İndir',
+              'İletişim',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: Colors.black87,
               ),
-              textAlign: TextAlign.center,
             ),
-            
-            const SizedBox(height: 16),
-            
-            // Android APK İndirme
-            _DownloadCard(
-              title: 'Android APK',
-              subtitle: 'Direkt APK İndir - Hızlı Kurulum',
-              icon: Icons.android,
-              color: Colors.green,
-              onTap: () => _launchURL('https://drive.google.com/uc?export=download&id=1DNm9x4rlQHbyD9eilU4fvBGRyRrBiWCS'),
-            ),
-            
             const SizedBox(height: 12),
-            
-            // QR Kod ve açıklama
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.blue.shade50,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.blue.shade200),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.qr_code_2,
-                        color: Colors.blue.shade700,
-                        size: 24,
-                      ),
-                      const SizedBox(width: 12),
-                      const Expanded(
-                        child: Text(
-                          'QR Kodu Okut veya Tıkla',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black87,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  GestureDetector(
-                    onTap: () => _launchURL('https://drive.google.com/uc?export=download&id=1DNm9x4rlQHbyD9eilU4fvBGRyRrBiWCS'),
-                    child: Container(
-                      width: 120,
-                      height: 120,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: Colors.grey.shade300),
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.qr_code_2,
-                          size: 80,
-                          color: Colors.black54,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Android APK için QR kodu okut\nveya bu alana tıkla',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.blue.shade700,
-                    ),
-                  ),
-                ],
+            _ContactItem(
+              icon: Icons.email,
+              text: 'erol.isildak@hotmail.com',
+              onTap: () => _launchURL('mailto:erol.isildak@hotmail.com'),
+            ),
+            _ContactItem(
+              icon: Icons.phone,
+              text: '+90 553 572 77 76',
+              onTap: () => _launchURL('tel:+905535727776'),
+            ),
+            _ContactItem(
+              icon: Icons.business,
+              text: 'LinkedIn Profili',
+              onTap: () => _launchURL(
+                'https://www.linkedin.com/in/erol-isildak-softwaretester/',
               ),
             ),
-            
-            const SizedBox(height: 12),
-            
-            // iOS Kurulum Sayfası  
-            _DownloadCard(
-              title: 'iOS Kurulum',
-              subtitle: 'iPhone & iPad - Kurulum Rehberi',
-              icon: Icons.apple,
-              color: Colors.grey.shade700,
-              onTap: () => _launchURL('https://eisildak.github.io/millet_bahcesi_map/ios_install.html'),
-            ),
-            
-            const SizedBox(height: 32),
-            
-            // İletişim bilgileri
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade50,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade300),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'İletişim',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  _ContactItem(
-                    icon: Icons.email,
-                    text: 'erol.isildak@hotmail.com',
-                    onTap: () => _launchURL('mailto:erol.isildak@hotmail.com'),
-                  ),
-                  _ContactItem(
-                    icon: Icons.phone,
-                    text: '+90 553 572 77 76',
-                    onTap: () => _launchURL('tel:+905535727776'),
-                  ),
-                  _ContactItem(
-                    icon: Icons.business,
-                    text: 'LinkedIn Profili',
-                    onTap: () => _launchURL('https://www.linkedin.com/in/erol-isildak-softwaretester/'),
-                  ),
-                ],
-              ),
-            ),
-            
-            const SizedBox(height: 24),
-            
-            // Footer
-            const Divider(),
-            const SizedBox(height: 16),
-            
-            const Center(
-              child: Text(
-                '© 2024 Nuh Naci Yazgan Üniversitesi\nBilgisayar Programcılığı',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
+          ],
+        ),
+      ),
+
+      const SizedBox(height: 24),
+
+      // Footer
+      const Divider(),
+      const SizedBox(height: 16),
+
+      const Center(
+        child: Text(
+          '© 2024 Nuh Naci Yazgan Üniversitesi\nBilgisayar Programcılığı',
+          style: TextStyle(fontSize: 12, color: Colors.grey),
+          textAlign: TextAlign.center,
+        ),
+      ),
     ];
   }
 
@@ -377,12 +364,12 @@ class WebInfoPanel extends StatelessWidget {
           },
         ),
       ),
-      
+
       const SizedBox(height: 12),
-      
+
       // Başlık - kompakt
       const Text(
-        'Kayseri Millet Bahçesi',
+        'Nuh Naci Yazgan Üniversitesi',
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
@@ -390,24 +377,23 @@ class WebInfoPanel extends StatelessWidget {
         ),
         textAlign: TextAlign.center,
       ),
-      
+
       const SizedBox(height: 4),
-      
+
       const Text(
         'İnteraktif Harita',
-        style: TextStyle(
-          fontSize: 14,
-          color: Colors.grey,
-        ),
+        style: TextStyle(fontSize: 14, color: Colors.grey),
         textAlign: TextAlign.center,
       ),
-      
+
       const Spacer(),
-      
+
       // Download butonu - orta kısmında
       Center(
         child: GestureDetector(
-          onTap: () => _launchURL('https://drive.google.com/uc?export=download&id=1DNm9x4rlQHbyD9eilU4fvBGRyRrBiWCS'),
+          onTap: () => _launchURL(
+            'https://drive.google.com/uc?export=download&id=1DNm9x4rlQHbyD9eilU4fvBGRyRrBiWCS',
+          ),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             decoration: BoxDecoration(
@@ -439,9 +425,9 @@ class WebInfoPanel extends StatelessWidget {
           ),
         ),
       ),
-      
+
       const Spacer(),
-      
+
       // Özet bilgi - en altta
       Container(
         padding: const EdgeInsets.all(10),
@@ -471,10 +457,7 @@ class _TechItem extends StatelessWidget {
   final IconData icon;
   final String text;
 
-  const _TechItem({
-    required this.icon,
-    required this.text,
-  });
+  const _TechItem({required this.icon, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -484,12 +467,7 @@ class _TechItem extends StatelessWidget {
         children: [
           Icon(icon, size: 16, color: Colors.green),
           const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              text,
-              style: const TextStyle(fontSize: 14),
-            ),
-          ),
+          Expanded(child: Text(text, style: const TextStyle(fontSize: 14))),
         ],
       ),
     );
@@ -509,12 +487,7 @@ class _FeatureItem extends StatelessWidget {
         children: [
           const Icon(Icons.check_circle, size: 16, color: Colors.orange),
           const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              text,
-              style: const TextStyle(fontSize: 14),
-            ),
-          ),
+          Expanded(child: Text(text, style: const TextStyle(fontSize: 14))),
         ],
       ),
     );
@@ -569,10 +542,7 @@ class _DownloadCard extends StatelessWidget {
                     ),
                     Text(
                       subtitle,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[600],
-                      ),
+                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                     ),
                   ],
                 ),

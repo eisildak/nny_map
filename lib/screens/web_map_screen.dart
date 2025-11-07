@@ -30,19 +30,21 @@ class _WebMapScreenState extends State<WebMapScreen> {
   }
 
   void _setupLocationListener() {
-    final locationService = Provider.of<LocationService>(context, listen: false);
+    final locationService = Provider.of<LocationService>(
+      context,
+      listen: false,
+    );
     final mapService = Provider.of<MapService>(context, listen: false);
-    
+
     locationService.addListener(() {
-      if (locationService.isTracking && 
-          locationService.currentPosition != null && 
+      if (locationService.isTracking &&
+          locationService.currentPosition != null &&
           mapService.isNavigating) {
-        
         final newLocation = LatLng(
           locationService.currentPosition!.latitude,
           locationService.currentPosition!.longitude,
         );
-        
+
         mapService.updateUserLocation(newLocation);
       }
     });
@@ -50,14 +52,17 @@ class _WebMapScreenState extends State<WebMapScreen> {
 
   Future<void> _initializeServices() async {
     final mapService = Provider.of<MapService>(context, listen: false);
-    final locationService = Provider.of<LocationService>(context, listen: false);
+    final locationService = Provider.of<LocationService>(
+      context,
+      listen: false,
+    );
 
     try {
       await mapService.initializePOIs();
       await locationService.getCurrentLocation();
     } catch (e) {
       if (!mounted) return;
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Harita yüklenirken bir hata oluştu: $e'),
@@ -71,7 +76,7 @@ class _WebMapScreenState extends State<WebMapScreen> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final isMobile = screenWidth < 768;
-    
+
     return Scaffold(
       body: isMobile ? _buildMobileLayout() : _buildDesktopLayout(),
     );
@@ -81,16 +86,10 @@ class _WebMapScreenState extends State<WebMapScreen> {
     return Row(
       children: [
         // Sol panel - Bilgi kısmı (%30)
-        const Expanded(
-          flex: 30,
-          child: WebInfoPanel(),
-        ),
-        
+        const Expanded(flex: 30, child: WebInfoPanel()),
+
         // Sağ panel - Harita kısmı (%70)
-        Expanded(
-          flex: 70,
-          child: _buildMapSection(),
-        ),
+        Expanded(flex: 70, child: _buildMapSection()),
       ],
     );
   }
@@ -99,16 +98,10 @@ class _WebMapScreenState extends State<WebMapScreen> {
     return Column(
       children: [
         // Üst panel - Yazı kısmı (7/10 = %70)
-        Expanded(
-          flex: 7,
-          child: const WebInfoPanel(),
-        ),
-        
+        Expanded(flex: 7, child: const WebInfoPanel()),
+
         // Alt panel - Harita kısmı (3/10 = %30)
-        Expanded(
-          flex: 3,
-          child: _buildMapSection(),
-        ),
+        Expanded(flex: 3, child: _buildMapSection()),
       ],
     );
   }
@@ -121,7 +114,7 @@ class _WebMapScreenState extends State<WebMapScreen> {
             // Google Maps
             GoogleMap(
               initialCameraPosition: const CameraPosition(
-                target: LatLng(38.704200, 35.509500), // Millet Bahçesi merkezi
+                target: LatLng(38.787374, 35.407380), // NNY Kampüs merkezi
                 zoom: 16.0,
               ),
               markers: mapService.markers,

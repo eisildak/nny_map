@@ -14,7 +14,7 @@ class WebMapWidget extends StatefulWidget {
 
 class _WebMapWidgetState extends State<WebMapWidget> {
   final String _mapViewType = 'web-google-map';
-  
+
   @override
   void initState() {
     super.initState();
@@ -25,27 +25,25 @@ class _WebMapWidgetState extends State<WebMapWidget> {
 
   void _registerWebMapView() {
     // ignore: undefined_prefixed_name
-    ui.platformViewRegistry.registerViewFactory(
-      _mapViewType,
-      (int viewId) {
-        final mapElement = html.DivElement()
-          ..id = 'google-map-$viewId'
-          ..style.width = '100%'
-          ..style.height = '100%'
-          ..style.border = 'none';
-        
-        // Initialize map after a short delay to ensure Google Maps API is loaded
-        Future.delayed(const Duration(milliseconds: 500), () {
-          _initializeGoogleMap('google-map-$viewId');
-        });
-        
-        return mapElement;
-      },
-    );
+    ui.platformViewRegistry.registerViewFactory(_mapViewType, (int viewId) {
+      final mapElement = html.DivElement()
+        ..id = 'google-map-$viewId'
+        ..style.width = '100%'
+        ..style.height = '100%'
+        ..style.border = 'none';
+
+      // Initialize map after a short delay to ensure Google Maps API is loaded
+      Future.delayed(const Duration(milliseconds: 500), () {
+        _initializeGoogleMap('google-map-$viewId');
+      });
+
+      return mapElement;
+    });
   }
 
   void _initializeGoogleMap(String elementId) {
-    final script = '''
+    final script =
+        '''
       function initGoogleMap_${elementId.replaceAll('-', '_')}() {
         const mapElement = document.getElementById('$elementId');
         
@@ -62,7 +60,7 @@ class _WebMapWidgetState extends State<WebMapWidget> {
         
         try {
           const map = new google.maps.Map(mapElement, {
-            center: { lat: 38.7312, lng: 35.4787 }, // Kayseri Millet Bahçesi
+            center: { lat: 38.787374, lng: 35.407380 }, // Nuh Naci Yazgan Üniversitesi
             zoom: 16,
             mapTypeId: 'hybrid',
             streetViewControl: true,
@@ -79,11 +77,11 @@ class _WebMapWidgetState extends State<WebMapWidget> {
             ]
           });
           
-          // Millet Bahçesi merkez marker
+          // NNY Kampüs merkez marker
           const centerMarker = new google.maps.Marker({
-            position: { lat: 38.7312, lng: 35.4787 },
+            position: { lat: 38.787374, lng: 35.407380 },
             map: map,
-            title: 'Kayseri Millet Bahçesi - Merkez',
+            title: 'Nuh Naci Yazgan Üniversitesi - Kampüs Merkezi',
             icon: {
               url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(
                 '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#2196F3" stroke="#1976D2" stroke-width="2"/><circle cx="12" cy="9" r="3" fill="white"/></svg>'
@@ -93,7 +91,7 @@ class _WebMapWidgetState extends State<WebMapWidget> {
           });
           
           const centerInfoWindow = new google.maps.InfoWindow({
-            content: '<div style="text-align: center;"><h3>🌳 Kayseri Millet Bahçesi</h3><p>İnteraktif harita ve navigasyon rehberi</p><p><strong>NNY Üniversitesi</strong> tarafından geliştirilmiştir.</p></div>',
+            content: '<div style="text-align: center;"><h3>� Nuh Naci Yazgan Üniversitesi</h3><p>İnteraktif kampüs haritası ve navigasyon rehberi</p></div>',
             maxWidth: 300
           });
           
@@ -163,7 +161,7 @@ class _WebMapWidgetState extends State<WebMapWidget> {
       // Haritayı başlat
       initGoogleMap_${elementId.replaceAll('-', '_')}();
     ''';
-    
+
     final scriptElement = html.ScriptElement()..text = script;
     html.document.head!.append(scriptElement);
   }
@@ -175,13 +173,11 @@ class _WebMapWidgetState extends State<WebMapWidget> {
         child: Text('Bu widget sadece web platformunda çalışır.'),
       );
     }
-    
+
     return Container(
       width: double.infinity,
       height: double.infinity,
-      child: HtmlElementView(
-        viewType: _mapViewType,
-      ),
+      child: HtmlElementView(viewType: _mapViewType),
     );
   }
 }

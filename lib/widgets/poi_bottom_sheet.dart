@@ -8,10 +8,7 @@ import '../services/location_service.dart';
 class POIBottomSheet extends StatelessWidget {
   final PointOfInterest poi;
 
-  const POIBottomSheet({
-    super.key,
-    required this.poi,
-  });
+  const POIBottomSheet({super.key, required this.poi});
 
   @override
   Widget build(BuildContext context) {
@@ -71,10 +68,7 @@ class POIBottomSheet extends StatelessWidget {
                     ),
                     Text(
                       poi.category,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[600],
-                      ),
+                      style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                     ),
                   ],
                 ),
@@ -82,7 +76,10 @@ class POIBottomSheet extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.close),
                 onPressed: () {
-                  final mapService = Provider.of<MapService>(context, listen: false);
+                  final mapService = Provider.of<MapService>(
+                    context,
+                    listen: false,
+                  );
                   mapService.stopNavigation();
                 },
               ),
@@ -92,10 +89,7 @@ class POIBottomSheet extends StatelessWidget {
           const SizedBox(height: 16),
 
           // POI açıklaması
-          Text(
-            poi.description,
-            style: const TextStyle(fontSize: 16),
-          ),
+          Text(poi.description, style: const TextStyle(fontSize: 16)),
 
           const SizedBox(height: 20),
 
@@ -107,13 +101,21 @@ class POIBottomSheet extends StatelessWidget {
                 child: Consumer2<MapService, LocationService>(
                   builder: (context, mapService, locationService, child) {
                     return ElevatedButton.icon(
-                      onPressed: () => _startNavigation(context, mapService, locationService),
-                      icon: Icon(locationService.currentPosition != null 
-                          ? Icons.directions_walk 
-                          : Icons.location_searching),
-                      label: Text(locationService.currentPosition != null 
-                          ? 'Yürüyerek Git' 
-                          : 'Konum Al & Git'),
+                      onPressed: () => _startNavigation(
+                        context,
+                        mapService,
+                        locationService,
+                      ),
+                      icon: Icon(
+                        locationService.currentPosition != null
+                            ? Icons.directions_walk
+                            : Icons.location_searching,
+                      ),
+                      label: Text(
+                        locationService.currentPosition != null
+                            ? 'Yürüyerek Git'
+                            : 'Konum Al & Git',
+                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Theme.of(context).primaryColor,
                         foregroundColor: Colors.white,
@@ -134,7 +136,10 @@ class POIBottomSheet extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.grey[100],
                   foregroundColor: Colors.grey[700],
-                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 12,
+                    horizontal: 16,
+                  ),
                 ),
               ),
             ],
@@ -162,14 +167,15 @@ class POIBottomSheet extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      Icon(Icons.location_on, color: Colors.blue[700], size: 16),
+                      Icon(
+                        Icons.location_on,
+                        color: Colors.blue[700],
+                        size: 16,
+                      ),
                       const SizedBox(width: 8),
                       Text(
                         'Konumunuzdan ${distance.toInt()} metre uzaklıkta',
-                        style: TextStyle(
-                          color: Colors.blue[700],
-                          fontSize: 14,
-                        ),
+                        style: TextStyle(color: Colors.blue[700], fontSize: 14),
                       ),
                     ],
                   ),
@@ -185,14 +191,15 @@ class POIBottomSheet extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.location_off, color: Colors.orange[700], size: 16),
+                    Icon(
+                      Icons.location_off,
+                      color: Colors.orange[700],
+                      size: 16,
+                    ),
                     const SizedBox(width: 8),
                     Text(
                       'Mesafe bilgisi için konum iznini verin',
-                      style: TextStyle(
-                        color: Colors.orange[700],
-                        fontSize: 14,
-                      ),
+                      style: TextStyle(color: Colors.orange[700], fontSize: 14),
                     ),
                   ],
                 ),
@@ -207,9 +214,13 @@ class POIBottomSheet extends StatelessWidget {
     );
   }
 
-  void _startNavigation(BuildContext context, MapService mapService, LocationService locationService) async {
+  void _startNavigation(
+    BuildContext context,
+    MapService mapService,
+    LocationService locationService,
+  ) async {
     print('Navigasyon başlatma talebi alındı...');
-    
+
     // Eğer konum yoksa önce konum al
     if (locationService.currentPosition == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -218,29 +229,33 @@ class POIBottomSheet extends StatelessWidget {
           duration: Duration(seconds: 2),
         ),
       );
-      
+
       await locationService.getCurrentLocation();
     }
-    
+
     // Konum var mı kontrol et
     if (locationService.currentPosition != null) {
       final userLocation = LatLng(
         locationService.currentPosition!.latitude,
         locationService.currentPosition!.longitude,
       );
-      
-      print('Kullanıcı konumu: ${userLocation.latitude}, ${userLocation.longitude}');
+
+      print(
+        'Kullanıcı konumu: ${userLocation.latitude}, ${userLocation.longitude}',
+      );
       print('Hedef: ${poi.latitude}, ${poi.longitude}');
-      
+
       // Navigasyonu başlat
       await mapService.startNavigation(poi, userLocation);
-      
+
       // Konum takibini başlat
       await locationService.startLocationTracking();
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('${poi.name} noktasına rota çiziliyor - Konum takibi aktif'),
+          content: Text(
+            '${poi.name} noktasına rota çiziliyor - Konum takibi aktif',
+          ),
           backgroundColor: Colors.green,
           duration: const Duration(seconds: 3),
           action: SnackBarAction(
@@ -253,17 +268,24 @@ class POIBottomSheet extends StatelessWidget {
         ),
       );
     } else {
-      // Konum alınamadı, Millet Bahçesi merkezinden başlat
-      const defaultLocation = LatLng(38.704200, 35.509500); // Millet Bahçesi merkezi
-      
-      print('Konum alınamadı, varsayılan konumdan başlatılıyor: ${defaultLocation.latitude}, ${defaultLocation.longitude}');
+      // Konum alınamadı, NNY Kampüs merkezinden başlat
+      const defaultLocation = LatLng(
+        38.787374,
+        35.407380,
+      ); // NNY Kampüs merkezi
+
+      print(
+        'Konum alınamadı, varsayılan konumdan başlatılıyor: ${defaultLocation.latitude}, ${defaultLocation.longitude}',
+      );
       print('Hedef: ${poi.latitude}, ${poi.longitude}');
-      
+
       await mapService.startNavigation(poi, defaultLocation);
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('${poi.name} noktasına rota çiziliyor (Millet Bahçesi merkezinden)'),
+          content: Text(
+            '${poi.name} noktasına rota çiziliyor (NNY Kampüs merkezinden)',
+          ),
           backgroundColor: Colors.orange,
           duration: const Duration(seconds: 3),
           action: SnackBarAction(
@@ -276,15 +298,16 @@ class POIBottomSheet extends StatelessWidget {
   }
 
   void _sharePOI(BuildContext context) {
-    final shareText = '''
-🌳 Kayseri Millet Bahçesi - ${poi.name}
+    final shareText =
+        '''
+� Nuh Naci Yazgan Üniversitesi - ${poi.name}
 
 📍 Kategori: ${poi.category}
 📝 ${poi.description}
 
 🗺️ Konum: ${poi.latitude.toStringAsFixed(6)}, ${poi.longitude.toStringAsFixed(6)}
 
-📱 Kayseri Millet Bahçesi Harita Uygulaması ile paylaşıldı
+📱 NNY Kampüs Haritası ile paylaşıldı
 ''';
 
     // Gerçek uygulamada share_plus paketi kullanılabilir

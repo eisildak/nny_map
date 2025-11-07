@@ -8,7 +8,7 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> 
+class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   late AnimationController _fadeController;
   late AnimationController _scaleController;
@@ -18,36 +18,28 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    
+
     // Fade animasyon controller
     _fadeController = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
-    
-    // Scale animasyon controller  
+
+    // Scale animasyon controller
     _scaleController = AnimationController(
       duration: const Duration(milliseconds: 1200),
       vsync: this,
     );
-    
+
     // Animasyonları tanımla
-    _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _fadeController,
-      curve: Curves.easeInOut,
-    ));
-    
-    _scaleAnimation = Tween<double>(
-      begin: 0.8,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _scaleController,
-      curve: Curves.elasticOut,
-    ));
-    
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _fadeController, curve: Curves.easeInOut),
+    );
+
+    _scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
+      CurvedAnimation(parent: _scaleController, curve: Curves.elasticOut),
+    );
+
     // Animasyonları başlat
     _startAnimations();
   }
@@ -57,10 +49,10 @@ class _SplashScreenState extends State<SplashScreen>
     _scaleController.forward();
     await Future.delayed(const Duration(milliseconds: 200));
     _fadeController.forward();
-    
+
     // 5 saniye bekle ve ana ekrana geç
     await Future.delayed(const Duration(milliseconds: 5000));
-    
+
     if (mounted) {
       Navigator.of(context).pushReplacementNamed('/map');
     }
@@ -133,7 +125,8 @@ class _SplashScreenState extends State<SplashScreen>
                                                 begin: Alignment.topLeft,
                                                 end: Alignment.bottomRight,
                                               ),
-                                              borderRadius: BorderRadius.circular(10),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
                                             ),
                                             child: const Center(
                                               child: Text(
@@ -154,17 +147,19 @@ class _SplashScreenState extends State<SplashScreen>
                               ),
                             ),
                           ),
-                          
+
                           const SizedBox(height: 40),
-                          
+
                           // Alt metin
                           Center(
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 40),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 40,
+                              ),
                               child: Column(
                                 children: [
                                   const Text(
-                                    'Kayseri Millet Bahçesi',
+                                    'Nuh Naci Yazgan Üniversitesi',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 24,
@@ -186,7 +181,10 @@ class _SplashScreenState extends State<SplashScreen>
                                   ),
                                   const SizedBox(height: 20),
                                   Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 12,
+                                    ),
                                     decoration: BoxDecoration(
                                       gradient: const LinearGradient(
                                         colors: [
@@ -199,7 +197,9 @@ class _SplashScreenState extends State<SplashScreen>
                                       borderRadius: BorderRadius.circular(20),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: const Color(0xFF3252a8).withOpacity(0.3),
+                                          color: const Color(
+                                            0xFF3252a8,
+                                          ).withOpacity(0.3),
                                           blurRadius: 8,
                                           offset: const Offset(0, 4),
                                         ),
@@ -235,7 +235,7 @@ class _SplashScreenState extends State<SplashScreen>
                 },
               ),
             ),
-            
+
             // Alt kısım - Copyright
             Expanded(
               flex: 2,
@@ -324,35 +324,40 @@ class CircularTextPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     final radius = size.width / 2 - 20;
-    
+
     // Üst kısım - "NUH NACİ YAZGAN ÜNİVERSİTESİ"
     _drawTextOnCircle(
-      canvas, 
-      'NUH NACİ YAZGAN ÜNİVERSİTESİ', 
-      center, 
-      radius, 
-      -math.pi / 2, 
+      canvas,
+      'NUH NACİ YAZGAN ÜNİVERSİTESİ',
+      center,
+      radius,
+      -math.pi / 2,
       Colors.white70,
       10,
     );
-    
+
     // Alt kısım - "KAYSERİ"
     _drawTextOnCircle(
-      canvas, 
-      'KAYSERİ', 
-      center, 
-      radius, 
-      math.pi / 2, 
+      canvas,
+      'KAYSERİ',
+      center,
+      radius,
+      math.pi / 2,
       Colors.white70,
       12,
     );
   }
 
-  void _drawTextOnCircle(Canvas canvas, String text, Offset center, double radius, 
-      double startAngle, Color color, double fontSize) {
-    final textPainter = TextPainter(
-      textDirection: TextDirection.ltr,
-    );
+  void _drawTextOnCircle(
+    Canvas canvas,
+    String text,
+    Offset center,
+    double radius,
+    double startAngle,
+    Color color,
+    double fontSize,
+  ) {
+    final textPainter = TextPainter(textDirection: TextDirection.ltr);
 
     for (int i = 0; i < text.length; i++) {
       textPainter.text = TextSpan(
