@@ -24,19 +24,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- Google Maps API -->
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=geometry,places&callback=initMap"></script>
-  
-  <script>
-    // Global function for Google Maps callback
-    function initMap() {
-      console.log("✅ Google Maps API initialized successfully!");
-      // Flutter web will handle the map creation
-      window.googleMapsReady = true;
-    }
-    
-    // Initialize as false
-    window.googleMapsReady = false;
-  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWVBfYxASYj1aTqcS8pvHa67IDic4wthk&libraries=geometry,places"></script>
   
   <style>
     * {
@@ -611,7 +599,7 @@
         <div class="feature-card">
           <div class="feature-icon">📍</div>
           <h3>İlgi Noktaları</h3>
-          <p>Bahçe içerisindeki önemli noktaların işaretlenmesi ve detaylı bilgileri</p>
+          <p>Okul içerisindeki önemli noktaların işaretlenmesi ve detaylı bilgileri</p>
         </div>
         
         <div class="feature-card">
@@ -784,6 +772,9 @@
 
     // Flutter App Initialization
     window.addEventListener('load', function(ev) {
+      // Önce haritayı başlat
+      initializeNNYMap();
+      
       _flutter.loader.load({
         serviceWorkerSettings: {
           serviceWorkerVersion: serviceWorkerVersion,
@@ -801,6 +792,84 @@
         }
       });
     });
+    
+    // NNY Harita Başlatma
+    function initializeNNYMap() {
+      const mapDiv = document.getElementById('flutter-map');
+      if (!mapDiv) {
+        console.error('flutter-map div bulunamadı!');
+        return;
+      }
+      
+      if (!window.google || !window.google.maps) {
+        console.log('Google Maps API bekleniyor...');
+        setTimeout(initializeNNYMap, 200);
+        return;
+      }
+      
+      console.log('✅ NNY Haritası başlatılıyor...');
+      
+      const map = new google.maps.Map(mapDiv, {
+        center: { lat: 38.787374, lng: 35.407380 },
+        zoom: 16,
+        mapTypeId: 'hybrid',
+        fullscreenControl: false,
+        streetViewControl: true,
+        mapTypeControl: true,
+        zoomControl: true,
+        gestureHandling: 'greedy'
+      });
+      
+      // NNY Kampüs POI'leri
+      const pois = [
+        { lat: 38.788505, lng: 35.407142, title: '🏛️ Sağlık Bilimleri Fakültesi', info: 'Hemşirelik, Beslenme ve Diyetetik', color: '#1a237e' },
+        { lat: 38.787910, lng: 35.406831, title: '🏛️ İİBF', info: 'İktisadi ve İdari Bilimler Fakültesi', color: '#1a237e' },
+        { lat: 38.787001, lng: 35.407812, title: '🏛️ Mühendislik Fakültesi', info: 'Bilgisayar, Elektrik-Elektronik, Endüstri', color: '#1a237e' },
+        { lat: 38.786412, lng: 35.408523, title: '🏛️ Güzel Sanatlar Fakültesi', info: 'Grafik Tasarım, İç Mimarlık', color: '#1a237e' },
+        { lat: 38.787876, lng: 35.407891, title: '📚 Ahmet Uzandaç Kütüphanesi', info: 'Merkez kütüphane', color: '#6d4c41' },
+        { lat: 38.787512, lng: 35.407234, title: '⏰ Saatli Kule', info: 'Kampüs simgesi', color: '#f57c00' },
+        { lat: 38.786823, lng: 35.407456, title: '🏀 Baldöktü Spor Salonu', info: 'Kapalı spor kompleksi', color: '#2e7d32' },
+        { lat: 38.788134, lng: 35.408912, title: '🏠 Kız Öğrenci Yurdu', info: 'Kampüs içi konaklama', color: '#7b1fa2' },
+        { lat: 38.786234, lng: 35.409123, title: '🏠 Erkek Öğrenci Yurdu', info: 'Kampüs içi konaklama', color: '#7b1fa2' },
+        { lat: 38.787654, lng: 35.406123, title: '🅿️ Ana Otopark', info: 'Kampüs ana park alanı', color: '#616161' },
+        { lat: 38.788901, lng: 35.408234, title: '🚌 Kampüs İçi Durak', info: 'Servis araçları durağı', color: '#ff6f00' },
+        { lat: 38.785678, lng: 35.407890, title: '🏪 Ceylan Kırtasiye', info: 'Kırtasiye ve fotokopi', color: '#00838f' },
+        { lat: 38.787374, lng: 35.407380, title: '🏛️ NNY Kampüs Merkezi', info: 'Nuh Naci Yazgan Üniversitesi', color: '#3252a8' }
+      ];
+      
+      pois.forEach((poi, index) => {
+        const marker = new google.maps.Marker({
+          position: { lat: poi.lat, lng: poi.lng },
+          map: map,
+          title: poi.title,
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 10,
+            fillColor: poi.color,
+            fillOpacity: 0.9,
+            strokeColor: '#ffffff',
+            strokeWeight: 2
+          },
+          animation: google.maps.Animation.DROP
+        });
+        
+        const infoWindow = new google.maps.InfoWindow({
+          content: `<div style="padding:10px;max-width:250px;"><h3 style="margin:0 0 8px 0;color:${poi.color};font-size:16px;">${poi.title}</h3><p style="margin:0;color:#666;font-size:14px;">${poi.info}</p></div>`,
+          maxWidth: 300
+        });
+        
+        marker.addListener('click', () => {
+          infoWindow.open(map, marker);
+        });
+        
+        // Kampüs merkezi otomatik aç
+        if (index === 12) {
+          setTimeout(() => infoWindow.open(map, marker), 500);
+        }
+      });
+      
+      console.log(`✅ ${pois.length} POI eklendi!`);
+    }
     
     // Fullscreen functionality
     document.getElementById('fullscreenBtn').addEventListener('click', function() {

@@ -18,45 +18,61 @@ class _WebMapWidgetState extends State<WebMapWidget> {
   @override
   void initState() {
     super.initState();
+    print('🌐 WebMapWidget initState başladı');
     if (kIsWeb) {
+      print('✅ kIsWeb = true, harita kaydı yapılıyor...');
       _registerWebMapView();
+    } else {
+      print('❌ kIsWeb = false!');
     }
   }
 
   void _registerWebMapView() {
+    print('📝 _registerWebMapView çağrıldı');
     // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(_mapViewType, (int viewId) {
+      print('🏭 ViewFactory çağrıldı, viewId: $viewId');
       final mapElement = html.DivElement()
         ..id = 'google-map-$viewId'
         ..style.width = '100%'
         ..style.height = '100%'
         ..style.border = 'none';
 
+      print('📦 Map element oluşturuldu: google-map-$viewId');
+
       // Initialize map after a short delay to ensure Google Maps API is loaded
       Future.delayed(const Duration(milliseconds: 500), () {
+        print('⏰ 500ms bekleme tamamlandı, harita initialize ediliyor...');
         _initializeGoogleMap('google-map-$viewId');
       });
 
       return mapElement;
     });
+    print('✅ registerViewFactory tamamlandı');
   }
 
   void _initializeGoogleMap(String elementId) {
+    print('🗺️ _initializeGoogleMap çağrıldı: $elementId');
     final script =
         '''
       function initGoogleMap_${elementId.replaceAll('-', '_')}() {
+        console.log('🚀 JavaScript initGoogleMap fonksiyonu çalıştı: $elementId');
         const mapElement = document.getElementById('$elementId');
         
         if (!mapElement) {
-          console.error('Map element not found: $elementId');
+          console.error('❌ Map element bulunamadı: $elementId');
           return;
         }
         
+        console.log('✅ Map element bulundu:', mapElement);
+        
         if (!window.google || !window.google.maps) {
-          console.log('Google Maps API not ready, retrying in 1 second...');
+          console.log('⏳ Google Maps API henüz hazır değil, 1 saniye sonra tekrar denenecek...');
           setTimeout(initGoogleMap_${elementId.replaceAll('-', '_')}, 1000);
           return;
         }
+        
+        console.log('✅ window.google.maps mevcut!');
         
         try {
           const map = new google.maps.Map(mapElement, {
@@ -99,32 +115,67 @@ class _WebMapWidgetState extends State<WebMapWidget> {
             centerInfoWindow.open(map, centerMarker);
           });
           
-          // İlgi noktaları ekle
+          // NNY Kampüs ilgi noktaları
           const pois = [
             {
-              position: { lat: 38.7315, lng: 35.4790 },
-              title: '🍰 Kafeterya',
-              info: 'Sıcak ve soğuk içecekler, atıştırmalıklar'
+              position: { lat: 38.788505, lng: 35.407142 },
+              title: '�️ Sağlık Bilimleri Fakültesi',
+              info: 'Hemşirelik, Beslenme ve Diyetetik bölümleri'
             },
             {
-              position: { lat: 38.7308, lng: 35.4783 },
-              title: '🚻 WC',
-              info: 'Temiz ve modern tuvalet imkanları'
+              position: { lat: 38.787910, lng: 35.406831 },
+              title: '🏛️ İİBF',
+              info: 'İktisadi ve İdari Bilimler Fakültesi'
             },
             {
-              position: { lat: 38.7318, lng: 35.4785 },
-              title: '🎮 Oyun Alanı',
-              info: 'Çocuklar için güvenli oyun alanı'
+              position: { lat: 38.787001, lng: 35.407812 },
+              title: '🏛️ Mühendislik Fakültesi',
+              info: 'Bilgisayar, Elektrik-Elektronik, Endüstri Mühendisliği'
             },
             {
-              position: { lat: 38.7305, lng: 35.4792 },
-              title: '🅿️ Otopark',
-              info: 'Ücretsiz araç park yeri'
+              position: { lat: 38.786412, lng: 35.408523 },
+              title: '🏛️ Güzel Sanatlar Fakültesi',
+              info: 'Grafik Tasarım, İç Mimarlık bölümleri'
             },
             {
-              position: { lat: 38.7320, lng: 35.4780 },
-              title: '🏃‍♂️ Yürüyüş Parkuru',
-              info: 'Sağlık ve spor aktiviteleri için parkur'
+              position: { lat: 38.787876, lng: 35.407891 },
+              title: '� Ahmet Uzandaç Kütüphanesi',
+              info: 'Merkez kütüphane - Geniş çalışma alanları'
+            },
+            {
+              position: { lat: 38.787512, lng: 35.407234 },
+              title: '⏰ Saatli Kule',
+              info: 'Kampüs simge yapısı'
+            },
+            {
+              position: { lat: 38.786823, lng: 35.407456 },
+              title: '� Baldöktü Spor Salonu',
+              info: 'Kapalı spor kompleksi'
+            },
+            {
+              position: { lat: 38.788134, lng: 35.408912 },
+              title: '🏠 Kız Öğrenci Yurdu',
+              info: 'Kampüs içi konaklama'
+            },
+            {
+              position: { lat: 38.786234, lng: 35.409123 },
+              title: '🏠 Erkek Öğrenci Yurdu',
+              info: 'Kampüs içi konaklama'
+            },
+            {
+              position: { lat: 38.787654, lng: 35.406123 },
+              title: '🅿️ Ana Otopark',
+              info: 'Kampüs ana park alanı'
+            },
+            {
+              position: { lat: 38.788901, lng: 35.408234 },
+              title: '🚌 Kampüs İçi Durak',
+              info: 'Servis araçları durağı'
+            },
+            {
+              position: { lat: 38.785678, lng: 35.407890 },
+              title: '🏪 Ceylan Kırtasiye',
+              info: 'Kırtasiye ve fotokopi hizmetleri'
             }
           ];
           
@@ -135,7 +186,7 @@ class _WebMapWidgetState extends State<WebMapWidget> {
               title: poi.title,
               icon: {
                 url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(
-                  '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#FF5722" stroke="#D84315" stroke-width="1"/><circle cx="12" cy="9" r="2.5" fill="white"/></svg>'
+                  '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#3252a8" stroke="#1a2d5e" stroke-width="1"/><circle cx="12" cy="9" r="2.5" fill="white"/></svg>'
                 ),
                 scaledSize: new google.maps.Size(32, 32)
               }

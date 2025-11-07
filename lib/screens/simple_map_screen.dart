@@ -12,7 +12,14 @@ class _SimpleMapScreenState extends State<SimpleMapScreen> {
   late GoogleMapController _mapController;
 
   @override
+  void initState() {
+    super.initState();
+    print('===== SimpleMapScreen initState başladı =====');
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print('===== SimpleMapScreen build çağrıldı =====');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Test Harita'),

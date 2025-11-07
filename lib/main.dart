@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'screens/splash_screen.dart';
 import 'screens/map_screen.dart';
+import 'screens/simple_map_screen.dart';
+import 'screens/iframe_map_screen.dart';
 import 'services/location_service.dart';
 import 'services/map_service.dart';
 
@@ -55,10 +57,12 @@ class NNYCampusMapApp extends StatelessWidget {
             fillColor: Colors.white,
           ),
         ),
-        initialRoute: '/',
+        initialRoute: '/map',
         routes: {
           '/': (context) => const SplashScreen(),
           '/map': (context) => const MapScreen(),
+          '/simple': (context) => const SimpleMapScreen(),
+          '/iframe': (context) => const IframeMapScreen(),
         },
         debugShowCheckedModeBanner: false,
       ),

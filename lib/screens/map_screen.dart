@@ -7,8 +7,8 @@ import '../services/location_service.dart';
 import '../widgets/search_widget.dart';
 import '../widgets/poi_bottom_sheet.dart';
 import '../widgets/navigation_controls.dart';
-import '../widgets/web_map_widget_stub.dart'
-    if (dart.library.html) '../widgets/web_map_widget.dart';
+import '../widgets/simple_web_map_widget_stub.dart'
+    if (dart.library.html) '../widgets/simple_web_map_widget.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -209,7 +209,7 @@ class _MapScreenState extends State<MapScreen> {
           // Ana harita - Web ve mobile için farklı widget
           if (kIsWeb)
             // Web için özel harita widget'ı
-            const WebMapWidget()
+            const SimpleWebMapWidget()
           else
             // Mobile için Flutter GoogleMap widget
             Consumer<MapService>(
