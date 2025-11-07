@@ -1,11 +1,11 @@
 {
-    "name": "Kayseri Millet Bahçesi Harita",
-    "short_name": "Millet Bahçesi",
+    "name": "Nuh Naci Yazgan Üniversitesi Harita",
+    "short_name": "NNY Üniversitesi",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Kayseri Millet Bahçesi interaktif harita uygulaması",
+    "description": "Nuh Naci Yazgan Üniversitesi interaktif harita uygulaması",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

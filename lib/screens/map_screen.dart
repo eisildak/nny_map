@@ -34,32 +34,35 @@ class _MapScreenState extends State<MapScreen> {
       // Web'de Google Maps API'nin yüklenmesini bekle
       print('🔄 Waiting for Google Maps API...');
       int attempts = 0;
-      while (attempts < 50) { // Max 5 saniye bekle
+      while (attempts < 50) {
+        // Max 5 saniye bekle
         await Future.delayed(Duration(milliseconds: 100));
         attempts++;
       }
       print('✅ Google Maps API loading completed!');
     }
-    
+
     _initializeServices();
     _setupLocationListener();
   }
 
   void _setupLocationListener() {
-    final locationService = Provider.of<LocationService>(context, listen: false);
+    final locationService = Provider.of<LocationService>(
+      context,
+      listen: false,
+    );
     final mapService = Provider.of<MapService>(context, listen: false);
-    
+
     // LocationService'i dinle ve konum değişikliklerini MapService'e ilet
     locationService.addListener(() {
-      if (locationService.isTracking && 
-          locationService.currentPosition != null && 
+      if (locationService.isTracking &&
+          locationService.currentPosition != null &&
           mapService.isNavigating) {
-        
         final newLocation = LatLng(
           locationService.currentPosition!.latitude,
           locationService.currentPosition!.longitude,
         );
-        
+
         // MapService'de kullanıcı konumunu güncelle
         mapService.updateUserLocation(newLocation);
       }
@@ -68,19 +71,24 @@ class _MapScreenState extends State<MapScreen> {
 
   Future<void> _initializeServices() async {
     final mapService = Provider.of<MapService>(context, listen: false);
-    final locationService = Provider.of<LocationService>(context, listen: false);
-    
+    final locationService = Provider.of<LocationService>(
+      context,
+      listen: false,
+    );
+
     // POI'ları initialize et
     await mapService.initializePOIs();
-    
+
     // Konum servisini başlat ama bekleme - arkaplanda çalışsın
     _requestLocationWithDialog(locationService);
   }
 
-  Future<void> _requestLocationWithDialog(LocationService locationService) async {
+  Future<void> _requestLocationWithDialog(
+    LocationService locationService,
+  ) async {
     try {
       await locationService.getCurrentLocation();
-      
+
       if (locationService.currentPosition != null) {
         // Konum başarıyla alındı
         print('Konum başarıyla alındı: ${locationService.currentPosition}');
@@ -100,7 +108,7 @@ class _MapScreenState extends State<MapScreen> {
             title: const Text('Konum İzni'),
             content: const Text(
               'Navigasyon ve yakındaki noktaları gösterebilmek için konum izni gerekli.\n\n'
-              'İzin vermek istiyor musunuz?'
+              'İzin vermek istiyor musunuz?',
             ),
             actions: [
               TextButton(
@@ -120,7 +128,7 @@ class _MapScreenState extends State<MapScreen> {
                 onPressed: () async {
                   Navigator.of(context).pop();
                   await locationService.getCurrentLocation();
-                  
+
                   if (locationService.currentPosition != null) {
                     // Konum alındı, haritayı güncelle
                     _mapController.animateCamera(
@@ -138,7 +146,8 @@ class _MapScreenState extends State<MapScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
-                            locationService.error ?? 'Konum alınamadı. Lütfen cihaz ayarlarından konum servisini açın.'
+                            locationService.error ??
+                                'Konum alınamadı. Lütfen cihaz ayarlarından konum servisini açın.',
                           ),
                           duration: const Duration(seconds: 4),
                           action: SnackBarAction(
@@ -173,7 +182,7 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Kayseri Millet Bahçesi'),
+        title: const Text('Nuh Naci Yazgan Üniversitesi'),
         actions: [
           IconButton(
             icon: Icon(_showSearch ? Icons.close : Icons.search),
@@ -186,7 +195,10 @@ class _MapScreenState extends State<MapScreen> {
           IconButton(
             icon: const Icon(Icons.my_location),
             onPressed: () {
-              final locationService = Provider.of<LocationService>(context, listen: false);
+              final locationService = Provider.of<LocationService>(
+                context,
+                listen: false,
+              );
               locationService.getCurrentLocation();
             },
           ),
@@ -260,7 +272,9 @@ class _MapScreenState extends State<MapScreen> {
                   color: Colors.black26,
                   child: const Center(
                     child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF3252a8)),
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Color(0xFF3252a8),
+                      ),
                     ),
                   ),
                 );
@@ -270,7 +284,7 @@ class _MapScreenState extends State<MapScreen> {
           ),
         ],
       ),
-      
+
       // Alt panel POI detayları için
       bottomSheet: Consumer<MapService>(
         builder: (context, mapService, child) {
@@ -288,66 +302,75 @@ class _MapScreenState extends State<MapScreen> {
           FloatingActionButton(
             heroTag: "center_fab",
             onPressed: () {
-              final mapService = Provider.of<MapService>(context, listen: false);
+              final mapService = Provider.of<MapService>(
+                context,
+                listen: false,
+              );
               mapService.centerOnMilletBahcesi();
             },
             backgroundColor: Theme.of(context).primaryColor,
             child: const Icon(Icons.park, color: Colors.white),
           ),
           const SizedBox(height: 16),
-          
+
           // Konum butonu
           Consumer<LocationService>(
             builder: (context, locationService, child) {
               return FloatingActionButton(
                 heroTag: "location_fab",
-                onPressed: locationService.isLoading ? null : () async {
-                  await locationService.getCurrentLocation();
-                  
-                  if (locationService.currentPosition != null) {
-                    print('Konuma gidiliyor: ${locationService.currentPosition!.latitude}, ${locationService.currentPosition!.longitude}');
-                    _mapController.animateCamera(
-                      CameraUpdate.newLatLngZoom(
-                        LatLng(
-                          locationService.currentPosition!.latitude,
-                          locationService.currentPosition!.longitude,
-                        ),
-                        17.0,
-                      ),
-                    );
-                    
-                    // Başarılı mesaj göster
-                    if (mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            locationService.error != null 
-                              ? 'Varsayılan konum gösteriliyor'
-                              : 'Mevcut konumunuz gösteriliyor'
-                          ),
-                          duration: const Duration(seconds: 2),
-                        ),
-                      );
-                    }
-                  } else {
-                    // Hata durumunda Millet Bahçesi'ne git
-                    _mapController.animateCamera(
-                      CameraUpdate.newLatLngZoom(
-                        MapService.kayseriMilletBahcesi,
-                        16.0,
-                      ),
-                    );
-                    
-                    if (mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Konum alınamadı, Millet Bahçesi gösteriliyor'),
-                          duration: Duration(seconds: 2),
-                        ),
-                      );
-                    }
-                  }
-                },
+                onPressed: locationService.isLoading
+                    ? null
+                    : () async {
+                        await locationService.getCurrentLocation();
+
+                        if (locationService.currentPosition != null) {
+                          print(
+                            'Konuma gidiliyor: ${locationService.currentPosition!.latitude}, ${locationService.currentPosition!.longitude}',
+                          );
+                          _mapController.animateCamera(
+                            CameraUpdate.newLatLngZoom(
+                              LatLng(
+                                locationService.currentPosition!.latitude,
+                                locationService.currentPosition!.longitude,
+                              ),
+                              17.0,
+                            ),
+                          );
+
+                          // Başarılı mesaj göster
+                          if (mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  locationService.error != null
+                                      ? 'Varsayılan konum gösteriliyor'
+                                      : 'Mevcut konumunuz gösteriliyor',
+                                ),
+                                duration: const Duration(seconds: 2),
+                              ),
+                            );
+                          }
+                        } else {
+                          // Hata durumunda Millet Bahçesi'ne git
+                          _mapController.animateCamera(
+                            CameraUpdate.newLatLngZoom(
+                              MapService.kayseriMilletBahcesi,
+                              16.0,
+                            ),
+                          );
+
+                          if (mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  'Konum alınamadı, Millet Bahçesi gösteriliyor',
+                                ),
+                                duration: Duration(seconds: 2),
+                              ),
+                            );
+                          }
+                        }
+                      },
                 backgroundColor: locationService.currentPosition != null
                     ? const Color(0xFF3252a8)
                     : Colors.grey[400],
@@ -357,7 +380,9 @@ class _MapScreenState extends State<MapScreen> {
                         height: 20,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.white,
+                          ),
                         ),
                       )
                     : const Icon(Icons.gps_fixed, color: Colors.white),
