@@ -886,9 +886,6 @@
               <div class="nav-info-value" id="navDuration">-</div>
             </div>
           </div>
-          <button class="start-navigation-btn" id="startNavBtn">
-            <span>🧭</span> Yürüyerek Git
-          </button>
         </div>
       </div>
       
@@ -1386,6 +1383,12 @@
     
     // Navigasyon göster
     function showNavigation(destLat, destLng, title) {
+      // Açık olan InfoWindow'u kapat
+      if (currentInfoWindow) {
+        currentInfoWindow.close();
+        currentInfoWindow = null;
+      }
+      
       if (!userLocation) {
         alert('Konum bilgisi alınamadı. Lütfen konum izni verin.');
         return;
@@ -1410,11 +1413,8 @@
           document.getElementById('navDistance').textContent = route.distance.text;
           document.getElementById('navDuration').textContent = route.duration.text;
           
-          // Start navigation button
-          document.getElementById('startNavBtn').onclick = () => {
-            const url = `https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${destLat},${destLng}&travelmode=walking`;
-            window.open(url, '_blank');
-          };
+          // Haritayı rotaya odakla
+          map.fitBounds(result.routes[0].bounds);
         } else {
           console.error('Rota hesaplanamadı:', status);
           alert('Rota hesaplanamadı. Lütfen tekrar deneyin.');
