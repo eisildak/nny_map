@@ -249,6 +249,26 @@ Sorularınız veya önerileriniz için:
 - [ ] Öğrenci ders programı entegrasyonu
 - [ ] Sınıf ve derslik bulucu
 
+## 📋 TODO Listesi
+
+### Aktif Görevler
+- [x] ✅ Web harita ve wayfinding sorunu (TAMAMLANDI)
+  - InfoWindow çakışması çözüldü
+  - Navigation mevcut haritada gösteriliyor
+  - GitHub Pages deployment başarılı
+- [ ] Navigation paneli boyutunu küçült
+  - Wayfinding window şu an çok büyük, CSS ile küçültülecek
+- [ ] POI koordinatlarını düzenle
+  - Mevcut koordinatlar yanlış konumlanmış, gerçek kampüs konumlarına göre güncellenecek
+- [ ] Haritada manuel iyileştirme araştır
+  - Custom overlay, polygon çizimi, kampüs binalarının şekillendirilmesi
+- [ ] NNY kampüsü gölge/renk ekleme araştır
+  - Kampüs alanını harita üzerinde görsel olarak vurgulama
+- [ ] Web sitesi tasarımı - Gülsüm Hoca görüşü
+  - UI/UX iyileştirmeleri, basitleştirme değerlendirmesi
+- [ ] Android/iOS build ve test
+  - Platform-specific hatalar kontrolü ve test
+
 ## 📝 Sürüm Geçmişi
 
 ### v1.0.0 (Kasım 2025)
