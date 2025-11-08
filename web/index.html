@@ -66,8 +66,8 @@
     }
     
     .nny-logo img {
-      width: 120px;
-      height: 120px;
+      width: 130px;
+      height: 130px;
       border-radius: 16px;
       box-shadow: 0 6px 20px rgba(255,255,255,0.25);
       background: white;
@@ -471,6 +471,219 @@
       display: none;
     }
     
+    /* Search Box Styles */
+    .map-search-container {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      width: 90%;
+      max-width: 400px;
+    }
+    
+    .map-search-box {
+      width: 100%;
+      padding: 12px 45px 12px 15px;
+      border: none;
+      border-radius: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      background: white;
+    }
+    
+    .search-icon {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #3252a8;
+      font-size: 18px;
+    }
+    
+    .search-results {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin-top: 10px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      max-height: 300px;
+      overflow-y: auto;
+      display: none;
+    }
+    
+    .search-results.show {
+      display: block;
+    }
+    
+    .search-result-item {
+      padding: 12px 15px;
+      border-bottom: 1px solid #e1e8ed;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .search-result-item:hover {
+      background: #f8fafc;
+    }
+    
+    .search-result-item:last-child {
+      border-bottom: none;
+    }
+    
+    .result-title {
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 4px;
+    }
+    
+    .result-info {
+      font-size: 13px;
+      color: #7f8c8d;
+    }
+    
+    /* Navigation Panel */
+    .navigation-panel {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      z-index: 10;
+      display: none;
+    }
+    
+    .navigation-panel.show {
+      display: block;
+      animation: slideUp 0.3s ease;
+    }
+    
+    @keyframes slideUp {
+      from { transform: translateX(-50%) translateY(100px); opacity: 0; }
+      to { transform: translateX(-50%) translateY(0); opacity: 1; }
+    }
+    
+    .nav-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .nav-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #2c3e50;
+    }
+    
+    .close-nav {
+      background: #e1e8ed;
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    
+    .close-nav:hover {
+      background: #cbd5e0;
+    }
+    
+    .nav-info {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 15px;
+      padding: 12px;
+      background: #f8fafc;
+      border-radius: 8px;
+    }
+    
+    .nav-info-item {
+      flex: 1;
+      text-align: center;
+    }
+    
+    .nav-info-label {
+      font-size: 12px;
+      color: #7f8c8d;
+      margin-bottom: 4px;
+    }
+    
+    .nav-info-value {
+      font-size: 16px;
+      font-weight: 600;
+      color: #3252a8;
+    }
+    
+    .start-navigation-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #3252a8, #2c3e50);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .start-navigation-btn:hover {
+      transform: scale(1.02);
+    }
+    
+    .start-navigation-btn:active {
+      transform: scale(0.98);
+    }
+    
+    /* My Location Button */
+    .my-location-btn {
+      position: absolute;
+      bottom: 120px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background: white;
+      border: none;
+      border-radius: 50%;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      transition: all 0.2s;
+    }
+    
+    .my-location-btn:hover {
+      background: #f8fafc;
+      transform: scale(1.05);
+    }
+    
+    .my-location-btn:active {
+      transform: scale(0.95);
+    }
+    
     /* Responsive Design */
     @media (max-width: 768px) {
       .header-content {
@@ -571,10 +784,10 @@
         </div>
         <div class="header-text">
           <h1>Nuh Naci Yazgan Üniversitesi</h1>
-          <div class="subtitle">İnteraktif Harita ve Navigasyon Rehberi</div>
+          <div class="subtitle"> Navigasyon Rehberi</div>
           <div class="description">
             Nuh Naci Yazgan Üniversitesi tarafından geliştirilen modern Flutter teknolojisi ile 
-            ziyaretçilere ilgi noktalarını keşfetme ve yol tarifi alma imkanı sunar.
+            ziyaretçilere yol tarifi alma imkanı sunar.
           </div>
         </div>
       </div>
@@ -640,12 +853,49 @@
           </button>
         </div>
         <div id="flutter-map" class="map-frame"></div>
+        
+        <!-- Search Box -->
+        <div class="map-search-container">
+          <input type="text" 
+                 id="mapSearchBox" 
+                 class="map-search-box" 
+                 placeholder="🔍 Ara... (Fakülte, Kütüphane, Yurt...)"
+                 autocomplete="off">
+          <span class="search-icon">🔍</span>
+          <div id="searchResults" class="search-results"></div>
+        </div>
+        
+        <!-- My Location Button -->
+        <button class="my-location-btn" id="myLocationBtn" title="Konumumu Göster">
+          📍
+        </button>
+        
+        <!-- Navigation Panel -->
+        <div id="navigationPanel" class="navigation-panel">
+          <div class="nav-header">
+            <div class="nav-title" id="navTitle">Navigasyon</div>
+            <button class="close-nav" id="closeNav">✕</button>
+          </div>
+          <div class="nav-info">
+            <div class="nav-info-item">
+              <div class="nav-info-label">Mesafe</div>
+              <div class="nav-info-value" id="navDistance">-</div>
+            </div>
+            <div class="nav-info-item">
+              <div class="nav-info-label">Süre</div>
+              <div class="nav-info-value" id="navDuration">-</div>
+            </div>
+          </div>
+          <button class="start-navigation-btn" id="startNavBtn">
+            <span>🧭</span> Yürüyerek Git
+          </button>
+        </div>
       </div>
       
       <div class="info-cards">
         <div class="info-card">
           <h4>📍 İlgi Noktaları</h4>
-          <p>NNY Stant, Çocuk Oyun Alanı, Yürüyüş Parkuru, Bahçe Kafesi, Tesis Alanları, Süs Havuzu</p>
+          <p>Fakülteler, Kütüphane, Yurt, Tesis Alanları</p>
         </div>
         
         <div class="info-card">
@@ -794,6 +1044,13 @@
     });
     
     // NNY Harita Başlatma
+    let map, directionsService, directionsRenderer;
+    let userMarker = null;
+    let userLocation = null;
+    let allPois = [];
+    let poiMarkers = [];
+    let currentInfoWindow = null; // Açık olan InfoWindow'u takip et
+    
     function initializeNNYMap() {
       const mapDiv = document.getElementById('flutter-map');
       if (!mapDiv) {
@@ -809,66 +1066,360 @@
       
       console.log('✅ NNY Haritası başlatılıyor...');
       
-      const map = new google.maps.Map(mapDiv, {
-        center: { lat: 38.787374, lng: 35.407380 },
-        zoom: 16,
-        mapTypeId: 'hybrid',
+      // Harita oluştur 
+      map = new google.maps.Map(mapDiv, {
+        center: { lat: 38.786500, lng: 35.407380 }, 
+        zoom: 17,
+        mapTypeId: 'satellite', // Satellite modda heading çalışır
+        heading: 270, // Soldan sağa 90 derece (saat yönünün tersi)
+        tilt: 0,
         fullscreenControl: false,
         streetViewControl: true,
         mapTypeControl: true,
+        mapTypeControlOptions: {
+          mapTypeIds: ['roadmap', 'satellite', 'hybrid'], // Terrain kaldırıldı
+          style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+          position: google.maps.ControlPosition.TOP_RIGHT
+        },
         zoomControl: true,
-        gestureHandling: 'greedy'
+        rotateControl: true, // Döndürme kontrolünü aktif et
+        gestureHandling: 'greedy',
+        // Google'ın kendi POI'lerini gizle
+        styles: [
+          {
+            featureType: 'poi',
+            elementType: 'labels',
+            stylers: [{ visibility: 'off' }]
+          },
+          {
+            featureType: 'poi.business',
+            stylers: [{ visibility: 'off' }]
+          },
+          {
+            featureType: 'transit',
+            elementType: 'labels.icon',
+            stylers: [{ visibility: 'off' }]
+          }
+        ]
       });
       
-      // NNY Kampüs POI'leri
-      const pois = [
-        { lat: 38.788505, lng: 35.407142, title: '🏛️ Sağlık Bilimleri Fakültesi', info: 'Hemşirelik, Beslenme ve Diyetetik', color: '#1a237e' },
-        { lat: 38.787910, lng: 35.406831, title: '🏛️ İİBF', info: 'İktisadi ve İdari Bilimler Fakültesi', color: '#1a237e' },
-        { lat: 38.787001, lng: 35.407812, title: '🏛️ Mühendislik Fakültesi', info: 'Bilgisayar, Elektrik-Elektronik, Endüstri', color: '#1a237e' },
-        { lat: 38.786412, lng: 35.408523, title: '🏛️ Güzel Sanatlar Fakültesi', info: 'Grafik Tasarım, İç Mimarlık', color: '#1a237e' },
-        { lat: 38.787876, lng: 35.407891, title: '📚 Ahmet Uzandaç Kütüphanesi', info: 'Merkez kütüphane', color: '#6d4c41' },
-        { lat: 38.787512, lng: 35.407234, title: '⏰ Saatli Kule', info: 'Kampüs simgesi', color: '#f57c00' },
-        { lat: 38.786823, lng: 35.407456, title: '🏀 Baldöktü Spor Salonu', info: 'Kapalı spor kompleksi', color: '#2e7d32' },
-        { lat: 38.788134, lng: 35.408912, title: '🏠 Kız Öğrenci Yurdu', info: 'Kampüs içi konaklama', color: '#7b1fa2' },
-        { lat: 38.786234, lng: 35.409123, title: '🏠 Erkek Öğrenci Yurdu', info: 'Kampüs içi konaklama', color: '#7b1fa2' },
-        { lat: 38.787654, lng: 35.406123, title: '🅿️ Ana Otopark', info: 'Kampüs ana park alanı', color: '#616161' },
-        { lat: 38.788901, lng: 35.408234, title: '🚌 Kampüs İçi Durak', info: 'Servis araçları durağı', color: '#ff6f00' },
-        { lat: 38.785678, lng: 35.407890, title: '🏪 Ceylan Kırtasiye', info: 'Kırtasiye ve fotokopi', color: '#00838f' },
-        { lat: 38.787374, lng: 35.407380, title: '🏛️ NNY Kampüs Merkezi', info: 'Nuh Naci Yazgan Üniversitesi', color: '#3252a8' }
+      // Haritaya tıklandığında açık InfoWindow'u kapat
+      map.addListener('click', () => {
+        if (currentInfoWindow) {
+          currentInfoWindow.close();
+          currentInfoWindow = null;
+        }
+      });
+      
+      // Directions servisleri
+      directionsService = new google.maps.DirectionsService();
+      directionsRenderer = new google.maps.DirectionsRenderer({
+        map: map,
+        suppressMarkers: false,
+        polylineOptions: {
+          strokeColor: '#3252a8',
+          strokeWeight: 5,
+          strokeOpacity: 0.8
+        }
+      });
+      
+      // NNY Kampüs POI'leri - Her tip için benzersiz ikon
+      allPois = [
+        { lat: 38.788505, lng: 35.407142, title: 'Sağlık Bilimleri Fakültesi', info: 'Hemşirelik, Beslenme ve Diyetetik', type: 'faculty', color: '#1a237e' },
+        { lat: 38.787910, lng: 35.406831, title: 'İİBF', info: 'İktisadi ve İdari Bilimler Fakültesi', type: 'faculty', color: '#1a237e' },
+        { lat: 38.787001, lng: 35.407812, title: 'Mühendislik Fakültesi', info: 'Bilgisayar, Elektrik-Elektronik, Endüstri', type: 'faculty', color: '#1a237e' },
+        { lat: 38.786412, lng: 35.408523, title: 'Güzel Sanatlar Fakültesi', info: 'Grafik Tasarım, İç Mimarlık', type: 'faculty', color: '#1a237e' },
+        { lat: 38.787876, lng: 35.407891, title: 'Ahmet Uzandaç Kütüphanesi', info: 'Merkez kütüphane', type: 'library', color: '#6d4c41' },
+        { lat: 38.787512, lng: 35.407234, title: 'Saatli Kule', info: 'Kampüs simgesi', type: 'landmark', color: '#f57c00' },
+        { lat: 38.786823, lng: 35.407456, title: 'Baldöktü Spor Salonu', info: 'Kapalı spor kompleksi', type: 'sports', color: '#2e7d32' },
+        { lat: 38.786947, lng: 35.409188, title: 'Süleyman Çetinsaya Kültür Merkezi', info: 'Kültür ve sanat etkinlikleri', type: 'culture', color: '#c2185b' },
+        { lat: 38.788134, lng: 35.408912, title: 'Kız Öğrenci Yurdu', info: 'Kampüs içi konaklama', type: 'dormitory', color: '#7b1fa2' },
+        { lat: 38.786234, lng: 35.409123, title: 'Erkek Öğrenci Yurdu', info: 'Kampüs içi konaklama', type: 'dormitory', color: '#7b1fa2' },
+        { lat: 38.787654, lng: 35.406123, title: 'Ana Otopark', info: 'Kampüs ana park alanı', type: 'parking', color: '#616161' },
+        { lat: 38.788901, lng: 35.408234, title: 'Kampüs İçi Durak', info: 'Servis araçları durağı', type: 'bus_stop', color: '#ff6f00' },
+        { lat: 38.785678, lng: 35.407890, title: 'Ceylan Kırtasiye', info: 'Kırtasiye ve fotokopi', type: 'shop', color: '#00838f' },
+        { lat: 38.787374, lng: 35.407380, title: 'NNY Kampüs Merkezi', info: 'Nuh Naci Yazgan Üniversitesi', type: 'entrance', color: '#3252a8' }
       ];
       
-      pois.forEach((poi, index) => {
+      // POI tiplerine göre ikonlar
+      const poiIcons = {
+        'faculty': '🏛️',      // Fakülteler
+        'library': '📚',       // Kütüphane
+        'landmark': '⏰',      // Saatli kule
+        'sports': '🏀',        // Spor salonu
+        'culture': '🎭',       // Kültür merkezi
+        'dormitory': '🏠',     // Yurtlar
+        'parking': '🅿️',      // Otopark
+        'bus_stop': '🚌',      // Otobüs durağı
+        'shop': '🏪',          // Dükkan
+        'entrance': '🎓'       // Ana giriş/kampüs merkezi
+      };
+      
+      // POI marker'larını ekle
+      allPois.forEach((poi, index) => {
+        const iconText = poiIcons[poi.type] || '📍';
+        
         const marker = new google.maps.Marker({
           position: { lat: poi.lat, lng: poi.lng },
           map: map,
           title: poi.title,
+          label: {
+            text: iconText,
+            fontSize: '20px'
+          },
           icon: {
             path: google.maps.SymbolPath.CIRCLE,
-            scale: 10,
+            scale: 15,
             fillColor: poi.color,
-            fillOpacity: 0.9,
+            fillOpacity: 0.85,
             strokeColor: '#ffffff',
-            strokeWeight: 2
+            strokeWeight: 2.5
           },
           animation: google.maps.Animation.DROP
         });
         
+        poiMarkers.push({ marker, poi });
+        
         const infoWindow = new google.maps.InfoWindow({
-          content: `<div style="padding:10px;max-width:250px;"><h3 style="margin:0 0 8px 0;color:${poi.color};font-size:16px;">${poi.title}</h3><p style="margin:0;color:#666;font-size:14px;">${poi.info}</p></div>`,
+          content: `
+            <div style="padding:10px;max-width:250px;">
+              <h3 style="margin:0 0 8px 0;color:${poi.color};font-size:16px;">${iconText} ${poi.title}</h3>
+              <p style="margin:0 0 12px 0;color:#666;font-size:14px;">${poi.info}</p>
+              <button onclick="showNavigation(${poi.lat}, ${poi.lng}, '${poi.title.replace(/'/g, "\\'")}')" 
+                      style="width:100%;padding:10px;background:#3252a8;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;">
+                🧭 Yürüyerek Git
+              </button>
+            </div>
+          `,
           maxWidth: 300
         });
         
         marker.addListener('click', () => {
+          // Önceki açık InfoWindow'u kapat
+          if (currentInfoWindow) {
+            currentInfoWindow.close();
+          }
+          
           infoWindow.open(map, marker);
+          currentInfoWindow = infoWindow; // Yeni açılan'ı kaydet
         });
+      });
+      
+      // Kullanıcı konumunu al
+      getUserLocation();
+      
+      // Event listener'lar
+      setupEventListeners();
+      
+      console.log(`✅ ${allPois.length} POI eklendi!`);
+    }
+    
+    // Kullanıcı konumunu al ve göster
+    function getUserLocation() {
+      if (!navigator.geolocation) {
+        console.error('Tarayıcı konum servislerini desteklemiyor');
+        return;
+      }
+      
+      console.log('🔍 Konum servisi başlatılıyor...');
+      
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          console.log('✅ Konum alındı:', position.coords);
+          
+          userLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          
+          // Mavi nokta marker
+          if (!userMarker) {
+            userMarker = new google.maps.Marker({
+              position: userLocation,
+              map: map,
+              icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 8,
+                fillColor: '#4285F4',
+                fillOpacity: 1,
+                strokeColor: '#ffffff',
+                strokeWeight: 3
+              },
+              zIndex: 1000,
+              title: 'Konumunuz'
+            });
+            
+            // Konumun etrafında açık mavi daire
+            new google.maps.Circle({
+              map: map,
+              center: userLocation,
+              radius: position.coords.accuracy,
+              fillColor: '#4285F4',
+              fillOpacity: 0.2,
+              strokeColor: '#4285F4',
+              strokeOpacity: 0.4,
+              strokeWeight: 1
+            });
+            
+            console.log('📍 Mavi konum marker\'ı eklendi');
+          } else {
+            userMarker.setPosition(userLocation);
+          }
+          
+          // Konum değişikliklerini takip et
+          navigator.geolocation.watchPosition(
+            (pos) => {
+              userLocation = {
+                lat: pos.coords.latitude,
+                lng: pos.coords.longitude
+              };
+              if (userMarker) {
+                userMarker.setPosition(userLocation);
+              }
+            },
+            (error) => {
+              console.warn('Konum güncellenirken hata:', error.message);
+            },
+            {
+              enableHighAccuracy: true,
+              maximumAge: 10000,
+              timeout: 5000
+            }
+          );
+        },
+        (error) => {
+          console.error('❌ Konum hatası:', error);
+          let errorMessage = 'Konum bilgisi alınamadı. ';
+          
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              errorMessage += 'Konum izni reddedildi. Lütfen tarayıcı ayarlarından konum iznini aktifleştirin.';
+              break;
+            case error.POSITION_UNAVAILABLE:
+              errorMessage += 'Konum bilgisi kullanılamıyor. GPS veya internet bağlantınızı kontrol edin.';
+              break;
+            case error.TIMEOUT:
+              errorMessage += 'Konum isteği zaman aşımına uğradı. Tekrar deneyin.';
+              break;
+            default:
+              errorMessage += error.message;
+          }
+          
+          console.warn(errorMessage);
+          // Kullanıcıya gösterme, sadece console'da tut
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
+        }
+      );
+    }
+    
+    // Event Listener'lar
+    function setupEventListeners() {
+      // Search box
+      const searchBox = document.getElementById('mapSearchBox');
+      const searchResults = document.getElementById('searchResults');
+      
+      searchBox.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
         
-        // Kampüs merkezi otomatik aç
-        if (index === 12) {
-          setTimeout(() => infoWindow.open(map, marker), 500);
+        if (query.length === 0) {
+          searchResults.classList.remove('show');
+          return;
+        }
+        
+        const filtered = allPois.filter(poi => 
+          poi.title.toLowerCase().includes(query) || 
+          poi.info.toLowerCase().includes(query)
+        );
+        
+        if (filtered.length > 0) {
+          searchResults.innerHTML = filtered.map(poi => {
+            const iconText = poiIcons[poi.type] || '📍';
+            return `
+              <div class="search-result-item" onclick="selectPOI(${poi.lat}, ${poi.lng}, '${poi.title.replace(/'/g, "\\'")}')">
+                <div class="result-title">${iconText} ${poi.title}</div>
+                <div class="result-info">${poi.info}</div>
+              </div>
+            `;
+          }).join('');
+          searchResults.classList.add('show');
+        } else {
+          searchResults.innerHTML = '<div class="search-result-item"><div class="result-info">Sonuç bulunamadı</div></div>';
+          searchResults.classList.add('show');
         }
       });
       
-      console.log(`✅ ${pois.length} POI eklendi!`);
+      // My Location button
+      document.getElementById('myLocationBtn').addEventListener('click', () => {
+        if (userLocation) {
+          map.setCenter(userLocation);
+          map.setZoom(18);
+        } else {
+          alert('Konum bilgisi alınamadı. Lütfen konum izni verin.');
+        }
+      });
+      
+      // Close navigation panel
+      document.getElementById('closeNav').addEventListener('click', () => {
+        document.getElementById('navigationPanel').classList.remove('show');
+        directionsRenderer.setDirections({ routes: [] });
+      });
+    }
+    
+    // POI seçildiğinde
+    function selectPOI(lat, lng, title) {
+      map.setCenter({ lat, lng });
+      map.setZoom(18);
+      document.getElementById('searchResults').classList.remove('show');
+      document.getElementById('mapSearchBox').value = '';
+      
+      // İlgili marker'ı bul ve tıkla
+      poiMarkers.forEach(({ marker, poi }) => {
+        if (poi.lat === lat && poi.lng === lng) {
+          google.maps.event.trigger(marker, 'click');
+        }
+      });
+    }
+    
+    // Navigasyon göster
+    function showNavigation(destLat, destLng, title) {
+      if (!userLocation) {
+        alert('Konum bilgisi alınamadı. Lütfen konum izni verin.');
+        return;
+      }
+      
+      const panel = document.getElementById('navigationPanel');
+      document.getElementById('navTitle').textContent = title;
+      panel.classList.add('show');
+      
+      // Rota hesapla
+      const request = {
+        origin: userLocation,
+        destination: { lat: destLat, lng: destLng },
+        travelMode: google.maps.TravelMode.WALKING
+      };
+      
+      directionsService.route(request, (result, status) => {
+        if (status === 'OK') {
+          directionsRenderer.setDirections(result);
+          
+          const route = result.routes[0].legs[0];
+          document.getElementById('navDistance').textContent = route.distance.text;
+          document.getElementById('navDuration').textContent = route.duration.text;
+          
+          // Start navigation button
+          document.getElementById('startNavBtn').onclick = () => {
+            const url = `https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${destLat},${destLng}&travelmode=walking`;
+            window.open(url, '_blank');
+          };
+        } else {
+          console.error('Rota hesaplanamadı:', status);
+          alert('Rota hesaplanamadı. Lütfen tekrar deneyin.');
+        }
+      });
     }
     
     // Fullscreen functionality
