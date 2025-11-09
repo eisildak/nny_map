@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <base href="/nny_map/">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Nuh Naci Yazgan Üniversitesi Interaktif Harita - NNY Üniversitesi">
+  <meta name="keywords" content="Nuh Naci Yazgan Üniversitesi, harita, navigasyon, NNY, üniversite">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Nuh Naci Yazgan Üniversitesi Harita">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>Nuh Naci Yazgan Üniversitesi Haritası - NNY Üniversitesi</title>
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Google Maps API -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWVBfYxASYj1aTqcS8pvHa67IDic4wthk&libraries=geometry,places"></script>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      color: #2c3e50;
+      background-color: #f8fafc;
+    }
+    
+    /* Header Section */
+    .header {
+      background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+      color: white;
+      padding: 40px 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .header-content {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+    
+    .nny-logo {
+      flex-shrink: 0;
+    }
+    
+    .nny-logo img {
+      width: 130px;
+      height: 130px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(255,255,255,0.25);
+      background: white;
+      padding: 15px;
+      transition: transform 0.3s ease;
+    }
+    
+    .nny-logo img:hover {
+      transform: scale(1.05);
+    }
+    
+    .header-text {
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    .header-text h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    
+    .header-text .subtitle {
+      font-size: 1.2rem;
+      font-weight: 300;
+      opacity: 0.9;
+      margin-bottom: 20px;
+    }
+    
+    .header-text .description {
+      font-size: 1rem;
+      font-weight: 400;
+      opacity: 0.8;
+      line-height: 1.6;
+    }
+    
+    /* Features Section */
+    .features {
+      background: white;
+      padding: 60px 0;
+    }
+    
+    .section-title {
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+    
+    .section-subtitle {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #7f8c8d;
+      margin-bottom: 50px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-bottom: 50px;
+    }
+    
+    .feature-card {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      border: 1px solid #e1e8ed;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+    
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, #3498db, #2980b9);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+    
+    .feature-card h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #2c3e50;
+    }
+    
+    .feature-card p {
+      color: #7f8c8d;
+      line-height: 1.6;
+    }
+    
+    /* Map Section */
+    .map-section {
+      background: #f8fafc;
+      padding: 40px 0;
+      min-height: 80vh;
+    }
+    
+    .map-container {
+      position: relative;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+      overflow: hidden;
+      height: 70vh;
+      min-height: 500px;
+    }
+    
+    .map-header {
+      background: linear-gradient(135deg, #2c3e50, #34495e);
+      color: white;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .map-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+    
+    .fullscreen-btn {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .fullscreen-btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    
+    .map-frame {
+      width: 100%;
+      height: calc(100% - 70px);
+      border: none;
+      display: block;
+    }
+    
+    /* Fullscreen styles */
+    .map-container.fullscreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1000;
+      border-radius: 0;
+    }
+    
+    .map-container.fullscreen .map-frame {
+      height: calc(100vh - 70px);
+    }
+    
+    /* Info Cards */
+    .info-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    
+    .info-card {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      border-left: 4px solid #3498db;
+    }
+    
+    .info-card h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+    
+    .info-card p {
+      color: #7f8c8d;
+      font-size: 0.95rem;
+    }
+    
+    /* Download Section */
+    .download-section {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 60px 0;
+      color: white;
+    }
+    
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+      margin-top: 40px;
+    }
+    
+    .download-card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.3s ease;
+    }
+    
+    .download-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.15);
+    }
+    
+    .platform-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+    }
+    
+    .download-card h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+    
+    .download-card p {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+    
+    .qr-placeholder {
+      width: 150px;
+      height: 150px;
+      margin: 0 auto 20px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #7f8c8d;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    
+    .download-btn {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: 2px solid rgba(255,255,255,0.3);
+      padding: 12px 30px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      display: inline-block;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      font-family: inherit;
+      outline: none;
+    }
+    
+    .download-btn:focus {
+      outline: 2px solid rgba(255,255,255,0.5);
+      outline-offset: 2px;
+    }
+    
+    .download-btn:hover {
+      background: rgba(255,255,255,0.3);
+      border-color: rgba(255,255,255,0.5);
+      transform: translateY(-2px);
+    }
+    
+    .download-btn.disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .coming-soon {
+      font-size: 0.85rem;
+      opacity: 0.7;
+    }
+    
+    .file-info {
+      margin-top: 10px;
+      opacity: 0.8;
+    }
+    
+    .file-info small {
+      font-size: 0.8rem;
+      margin-top: 10px;
+      font-style: italic;
+    }
+    
+    /* Footer */
+    .footer {
+      background: #2c3e50;
+      color: white;
+      padding: 40px 0;
+    }
+    
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    
+    .footer-info h4 {
+      color: #3498db;
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+    }
+    
+    .team-info {
+      text-align: left;
+    }
+    
+    .team-info p {
+      margin: 8px 0;
+      opacity: 0.9;
+    }
+    
+    .footer-copyright {
+      text-align: right;
+    }
+    
+    .footer-copyright p {
+      margin: 5px 0;
+      opacity: 0.8;
+      font-size: 0.9rem;
+    }
+    
+    /* Loading Screen */
+    .loading-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255,255,255,0.3);
+      border-top: 5px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    .loading-text {
+      color: white;
+      font-size: 1.2rem;
+      margin-top: 20px;
+      text-align: center;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    #flutter-target {
+      display: none;
+    }
+    
+    /* Search Box Styles */
+    .map-search-container {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      width: 90%;
+      max-width: 400px;
+    }
+    
+    .map-search-box {
+      width: 100%;
+      padding: 12px 45px 12px 15px;
+      border: none;
+      border-radius: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      background: white;
+    }
+    
+    .search-icon {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #3252a8;
+      font-size: 18px;
+    }
+    
+    .search-results {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin-top: 10px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      max-height: 300px;
+      overflow-y: auto;
+      display: none;
+    }
+    
+    .search-results.show {
+      display: block;
+    }
+    
+    .search-result-item {
+      padding: 12px 15px;
+      border-bottom: 1px solid #e1e8ed;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .search-result-item:hover {
+      background: #f8fafc;
+    }
+    
+    .search-result-item:last-child {
+      border-bottom: none;
+    }
+    
+    .result-title {
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 4px;
+    }
+    
+    .result-info {
+      font-size: 13px;
+      color: #7f8c8d;
+    }
+    
+    /* Navigation Panel */
+    .navigation-panel {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      transform: none;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+      padding: 20px;
+      width: 90%;
+      max-width: 320px;
+      z-index: 10;
+      display: none;
+    }
+    
+    .navigation-panel.show {
+      display: block;
+      animation: slideInLeft 0.3s ease;
+    }
+    
+    @keyframes slideInLeft {
+      from { transform: translateX(-100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    
+    .nav-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .nav-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #2c3e50;
+    }
+    
+    .close-nav {
+      background: #e1e8ed;
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    
+    .close-nav:hover {
+      background: #cbd5e0;
+    }
+    
+    .nav-info {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 15px;
+      padding: 12px;
+      background: #f8fafc;
+      border-radius: 8px;
+    }
+    
+    .nav-info-item {
+      flex: 1;
+      text-align: center;
+    }
+    
+    .nav-info-label {
+      font-size: 12px;
+      color: #7f8c8d;
+      margin-bottom: 4px;
+    }
+    
+    .nav-info-value {
+      font-size: 16px;
+      font-weight: 600;
+      color: #3252a8;
+    }
+    
+    .start-navigation-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #3252a8, #2c3e50);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .start-navigation-btn:hover {
+      transform: scale(1.02);
+    }
+    
+    .start-navigation-btn:active {
+      transform: scale(0.98);
+    }
+    
+    /* My Location Button - Google style centered */
+    .my-location-btn {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 48px;
+      height: 48px;
+      background: white;
+      border: none;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      padding: 0;
+    }
+    
+    .my-location-btn::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #4285F4;
+      border: 3px solid white;
+      box-shadow: 0 0 0 2px #4285F4;
+    }
+    
+    .my-location-btn:hover {
+      background: #f8fafc;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    }
+    
+    .my-location-btn:active {
+      transform: translateX(-50%) scale(0.95);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .navigation-panel {
+        left: 10px;
+        bottom: 10px;
+        max-width: calc(100% - 20px);
+        padding: 14px;
+      }
+      
+      .nav-title {
+        font-size: 15px;
+      }
+      
+      .nav-info {
+        padding: 8px;
+        gap: 10px;
+      }
+      
+      .nav-info-label {
+        font-size: 11px;
+      }
+      
+      .nav-info-value {
+        font-size: 14px;
+      }
+      
+      .my-location-btn {
+        bottom: 30px;
+        width: 44px;
+        height: 44px;
+      }
+      
+      .my-location-btn::before {
+        width: 18px;
+        height: 18px;
+        border-width: 2px;
+      }
+      
+      .header-content {
+        text-align: center;
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .nny-logo img {
+        width: 100px;
+        height: 100px;
+        padding: 12px;
+      }
+      
+      .header-text h1 {
+        font-size: 2rem;
+      }
+      
+      .header-text .subtitle {
+        font-size: 1.1rem;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .map-container {
+        margin: 0 -20px;
+        border-radius: 0;
+        height: 60vh;
+      }
+      
+      .info-cards {
+        grid-template-columns: 1fr;
+      }
+      
+      .download-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      
+      .download-card {
+        padding: 30px 20px;
+      }
+      
+      .platform-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+      }
+      
+      .qr-placeholder {
+        width: 120px;
+        height: 120px;
+      }
+      
+      .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+      }
+      
+      .team-info {
+        text-align: center;
+      }
+      
+      .footer-copyright {
+        text-align: center;
+      }
+    }
+  </style>
+
+  <script>
+    // The value below is injected by flutter build, do not touch.
+    const serviceWorkerVersion = "1450927833";
+  </script>
+  <!-- This script adds the flutter initialization JS code -->
+  <script src="flutter.js" defer></script>
+</head>
+<body>
+  <!-- Flutter Loading -->
+  <div id="loading" class="loading-container">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Nuh Naci Yazgan Üniversitesi Haritası Yükleniyor...</div>
+  </div>
+  
+  <!-- Flutter App Container -->
+  <div id="flutter-target"></div>
+  
+  <!-- Header Section -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <div class="nny-logo">
+          <img src="https://raw.githubusercontent.com/eisildak/millet_bahcesi_map/main/assets/icons/nny_university_logo.png" 
+               alt="NNY Üniversitesi Logo" 
+               onerror="this.src='https://raw.githubusercontent.com/eisildak/millet_bahcesi_map/main/assets/icons/nny_logo.png'">
+        </div>
+        <div class="header-text">
+          <h1>Nuh Naci Yazgan Üniversitesi</h1>
+          <div class="subtitle"> Navigasyon Rehberi</div>
+          <div class="description">
+            Nuh Naci Yazgan Üniversitesi tarafından geliştirilen modern Flutter teknolojisi ile 
+            ziyaretçilere yol tarifi alma imkanı sunar.
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container">
+      <h2 class="section-title">Uygulama Özellikleri</h2>
+      <p class="section-subtitle">
+        Nuh Naci Yazgan Üniversitesi'nde unutulmaz bir deneyim yaşamanız için geliştirilmiş özellikler
+      </p>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🗺️</div>
+          <h3>İnteraktif Harita</h3>
+          <p>Google Maps entegrasyonu ile detaylı harita görünümü ve gerçek zamanlı konum takibi</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">📍</div>
+          <h3>İlgi Noktaları</h3>
+          <p>Okul içerisindeki önemli noktaların işaretlenmesi ve detaylı bilgileri</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🔍</div>
+          <h3>Akıllı Arama</h3>
+          <p>İlgi noktalarını isim, kategori ve açıklama bazında arama, kategori filtresi</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🧭</div>
+          <h3>Navigasyon</h3>
+          <p>Yürüyerek yol tarifi ve adım adım rehberlik, mesafe hesaplama özellikleri</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3>Kullanıcı Dostu</h3>
+          <p>Modern ve sezgisel arayüz tasarımı, kolay kullanım</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon">🌐</div>
+          <h3>Konum Servisleri</h3>
+          <p>GPS ile mevcut konum tespiti ve mesafe hesaplama</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map Section -->
+  <section class="map-section">
+    <div class="container">
+      <div class="map-container" id="mapContainer">
+        <div class="map-header">
+          <div class="map-title">🗺️ Nuh Naci Yazgan Üniversitesi Haritası</div>
+          <button class="fullscreen-btn" id="fullscreenBtn">
+            <span>⛶</span> Tam Ekran
+          </button>
+        </div>
+        <div id="flutter-map" class="map-frame"></div>
+        
+        <!-- Search Box -->
+        <div class="map-search-container">
+          <input type="text" 
+                 id="mapSearchBox" 
+                 class="map-search-box" 
+                 placeholder="🔍 Ara... (Fakülte, Kütüphane, Yurt...)"
+                 autocomplete="off">
+          <span class="search-icon">🔍</span>
+          <div id="searchResults" class="search-results"></div>
+        </div>
+        
+        <!-- My Location Button -->
+        <button class="my-location-btn" id="myLocationBtn" title="Konumumu Göster"></button>
+        
+        <!-- Navigation Panel -->
+        <div id="navigationPanel" class="navigation-panel">
+          <div class="nav-header">
+            <div class="nav-title" id="navTitle">Navigasyon</div>
+            <button class="close-nav" id="closeNav">✕</button>
+          </div>
+          <div class="nav-info">
+            <div class="nav-info-item">
+              <div class="nav-info-label">Mesafe</div>
+              <div class="nav-info-value" id="navDistance">-</div>
+            </div>
+            <div class="nav-info-item">
+              <div class="nav-info-label">Süre</div>
+              <div class="nav-info-value" id="navDuration">-</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="info-cards">
+        <div class="info-card">
+          <h4>📍 İlgi Noktaları</h4>
+          <p>Fakülteler, Kütüphane, Yurt, Tesis Alanları</p>
+        </div>
+        
+        <div class="info-card">
+          <h4>🎯 Kategoriler</h4>
+          <p>Bilgi Standı, Eğlence, Spor, Restoran, Tesis, Doğa alanları</p>
+        </div>
+        
+        <div class="info-card">
+          <h4>🚀 Teknoloji</h4>
+          <p>Flutter 3.0+, Google Maps API, GPS Konum Servisleri</p>
+        </div>
+        
+        <div class="info-card">
+          <h4>📱 Platform</h4>
+          <p>Android, iOS ve Web platformlarında çalışır</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Download Section -->
+  <section class="download-section">
+    <div class="container">
+      <h2 class="section-title">Mobil Uygulamayı İndirin</h2>
+      <p class="section-subtitle">
+        Nuh Naci Yazgan Üniversitesi harita uygulamasını mobil cihazınıza indirin ve her zaman yanınızda taşıyın
+      </p>
+      
+      <div class="download-grid">
+        <!-- Android APK -->
+        <div class="download-card">
+          <div class="platform-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="#A4C639">
+              <path d="M17.523,15.3414c-0.5665,0-1.0233-0.4568-1.0233-1.0233s0.4568-1.0233,1.0233-1.0233 s1.0233,0.4568,1.0233,1.0233S18.0895,15.3414,17.523,15.3414z M6.477,15.3414c-0.5665,0-1.0233-0.4568-1.0233-1.0233 s0.4568-1.0233,1.0233-1.0233s1.0233,0.4568,1.0233,1.0233S7.0435,15.3414,6.477,15.3414z M12,2.8594 c-0.0896,0-0.1792,0.0224-0.2687,0.0672L6.5313,5.1875c-0.1791,0.0896-0.2687,0.2687-0.2687,0.4478v6.7031 c0,1.7911,1.4588,3.25,3.25,3.25h5.4375c1.7911,0,3.25-1.4589,3.25-3.25V5.6353c0-0.1791-0.0896-0.358-0.2687-0.4478 l-5.2-2.26C12.1792,2.8818,12.0896,2.8594,12,2.8594z"/>
+            </svg>
+          </div>
+          <h3>Android APK</h3>
+          <p>Android cihazlar için optimize edilmiş uygulama. Doğrudan APK dosyasını indirerek kurulum yapabilirsiniz.</p>
+          
+          <div class="qr-placeholder" id="androidQR">
+            <div class="qr-code-container">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://drhamdikemerli.com/app-release.apk" 
+          alt="Android APK QR Kod" style="width: 100%; height: 100%; border-radius: 8px;">
+            </div>
+          </div>
+          
+          <a class="download-btn" 
+             id="androidDownloadBtn"
+             href="https://drhamdikemerli.com/app-release.apk" 
+             target="_blank" rel="noopener">
+            📥 Android APK İndir (v1.0)
+          </a>
+          <div class="file-info">
+            <small>📊 Dosya Boyutu: ~25MB | 📱 Android 6.0+</small>
+          </div>
+        </div>
+        
+        <!-- iOS IPA -->
+        <div class="download-card">
+          <div class="platform-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="#000000">
+              <path d="M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.1,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 12.11,7.75C12.89,7.75 14.37,6.68 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z"/>
+            </svg>
+          </div>
+          <h3>iOS IPA</h3>
+          <p>iOS cihazlar için optimize edilmiş uygulama. TestFlight veya enterprise dağıtım ile kurulum yapabilirsiniz.</p>
+          
+          <div class="qr-placeholder" id="iosQR">
+            QR Kod
+            <br><small>Yakında Eklenecek</small>
+          </div>
+          
+          <a href="#" class="download-btn disabled" id="iosDownloadBtn">
+            📥 iOS IPA İndir
+          </a>
+          <div class="coming-soon">IPA linki yakında eklenecek</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-info">
+          <h4>Proje Ekibi</h4>
+          <div class="team-info">
+            <p><strong>📋 Hazırlayan:</strong> Erol IŞILDAK</p>
+            <p><strong>👨‍🏫 Danışman:</strong> Öğr.Gör. Gülsüm KEMERLİ</p>
+          </div>
+        </div>
+        <div class="footer-copyright">
+          <p>&copy; 2025 Nuh Naci Yazgan Üniversitesi</p>
+          <p>Tüm hakları saklıdır.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // APK Download Function
+    function downloadAPK() {
+      // APK dosyasının doğrudan linkini buraya koyun
+  const apkUrl = 'https://drhamdikemerli.com/app-release.apk'; // Gerçek APK indirme linki
+      
+      // Alternatif olarak external link
+      // const apkUrl = 'https://your-direct-download-link.com/app-release.apk';
+      
+      const a = document.createElement('a');
+      a.href = apkUrl;
+      a.download = 'kayseri-millet-bahcesi.apk';
+      a.target = '_blank';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+    
+    // Hide loading screen after 3 seconds regardless
+    setTimeout(function() {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('flutter-target').style.display = 'block';
+    }, 3000);
+
+    // Flutter App Initialization
+    window.addEventListener('load', function(ev) {
+      // Önce haritayı başlat
+      initializeNNYMap();
+      
+      _flutter.loader.load({
+        serviceWorkerSettings: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: function(engineInitializer) {
+          engineInitializer.initializeEngine({
+            hostElement: document.getElementById('flutter-target')
+          }).then(function(appRunner) {
+            return appRunner.runApp();
+          }).then(function() {
+            // Flutter app yüklendi, loading'i gizle
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('flutter-target').style.display = 'block';
+          });
+        }
+      });
+    });
+    
+    // NNY Harita Başlatma
+    let map, directionsService, directionsRenderer;
+    let userMarker = null;
+    let userLocation = null;
+    let allPois = [];
+    let poiMarkers = [];
+    let currentInfoWindow = null; // Açık olan InfoWindow'u takip et
+    
+    // POI tiplerine göre ikonlar (global scope'ta olmalı) - Google Maps tarzı
+    const poiIcons = {
+      'faculty': '🏛️',      // Fakülteler - University building
+      'health': '🏥',        // Sağlık tesisleri - Hospital
+      'library': '📚',       // Kütüphane - Library
+      'landmark': '🗼',      // Saatli kule, tören alanı - Landmark
+      'sports': '⚽',        // Spor salonu - Sports
+      'culture': '🎭',       // Kültür merkezi - Culture
+      'dormitory': '🏠',     // Yurtlar/Accommodation
+      'bus_stop': '🚌',      // Otobüs durağı
+      'entrance': '🚪',      // Giriş kapıları - Entrance
+      'building': '🏢'       // İsimsiz binalar - Building
+    };
+    
+    function initializeNNYMap() {
+      const mapDiv = document.getElementById('flutter-map');
+      if (!mapDiv) {
+        console.error('flutter-map div bulunamadı!');
+        return;
+      }
+      
+      if (!window.google || !window.google.maps) {
+        console.log('Google Maps API bekleniyor...');
+        setTimeout(initializeNNYMap, 200);
+        return;
+      }
+      
+      console.log('✅ NNY Haritası başlatılıyor...');
+      
+      // Harita oluştur 
+      map = new google.maps.Map(mapDiv, {
+        center: { lat: 38.786500, lng: 35.407380 }, 
+        zoom: 17,
+        mapTypeId: 'satellite', // Satellite modda heading çalışır
+        heading: 270, // Soldan sağa 90 derece (saat yönünün tersi)
+        tilt: 0,
+        fullscreenControl: false,
+        streetViewControl: true,
+        mapTypeControl: true,
+        mapTypeControlOptions: {
+          mapTypeIds: ['roadmap', 'satellite', 'hybrid'], // Terrain kaldırıldı
+          style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+          position: google.maps.ControlPosition.TOP_RIGHT
+        },
+        zoomControl: true,
+        rotateControl: true, // Döndürme kontrolünü aktif et
+        gestureHandling: 'greedy',
+        // Google'ın kendi POI'lerini gizle
+        styles: [
+          {
+            featureType: 'poi',
+            elementType: 'labels',
+            stylers: [{ visibility: 'off' }]
+          },
+          {
+            featureType: 'poi.business',
+            stylers: [{ visibility: 'off' }]
+          },
+          {
+            featureType: 'transit',
+            elementType: 'labels.icon',
+            stylers: [{ visibility: 'off' }]
+          }
+        ]
+      });
+      
+      // Haritaya tıklandığında açık InfoWindow'u kapat
+      map.addListener('click', () => {
+        if (currentInfoWindow) {
+          currentInfoWindow.close();
+          currentInfoWindow = null;
+        }
+      });
+      
+      // Directions servisleri
+      directionsService = new google.maps.DirectionsService();
+      directionsRenderer = new google.maps.DirectionsRenderer({
+        map: map,
+        suppressMarkers: false,
+        polylineOptions: {
+          strokeColor: '#3252a8',
+          strokeWeight: 5,
+          strokeOpacity: 0.8
+        }
+      });
+      
+      // NNY Kampüs POI'leri - Her tip için benzersiz ikon
+      allPois = [
+        // Fakülteler
+        { lat: 38.784986, lng: 35.408400, title: 'Sağlık Bilimleri Fakültesi', info: 'NNY Sağlık Bilimleri Fakültesi', type: 'faculty', color: '#1a237e' },
+        { lat: 38.784841, lng: 35.407210, title: 'İİBF', info: 'İktisadi ve İdari Bilimler Fakültesi', type: 'faculty', color: '#1a237e' },
+        { lat: 38.786820, lng: 35.406947, title: 'Mühendislik Fakültesi', info: 'Bilgisayar, Elektrik-Elektronik, Endüstri', type: 'faculty', color: '#1a237e' },
+        { lat: 38.786857, lng: 35.407829, title: 'Güzel Sanatlar Fakültesi', info: 'Grafik Tasarım, İç Mimarlık', type: 'faculty', color: '#1a237e' },
+        { lat: 38.788004, lng: 35.406966, title: 'Diş Fakültesi', info: 'NNY Diş Hekimliği Fakültesi', type: 'faculty', color: '#1a237e' },
+        
+        // Sağlık Tesisleri
+        { lat: 38.788485, lng: 35.406612, title: 'Diş Hastanesi', info: 'NNY Diş Hastanesi', type: 'health', color: '#d32f2f' },
+        
+        // Önemli Binalar
+        { lat: 38.784961, lng: 35.405728, title: 'Ahmet Uzandaç Kütüphanesi', info: 'Merkez kütüphane', type: 'library', color: '#6d4c41' },
+        { lat: 38.785585, lng: 35.409541, title: 'Saatli Kule', info: 'Kampüs simgesi', type: 'landmark', color: '#f57c00' },
+        { lat: 38.785907, lng: 35.409788, title: 'Tören Alanı', info: 'Kampüs tören ve etkinlik alanı', type: 'landmark', color: '#f57c00' },
+        { lat: 38.783945, lng: 35.403850, title: 'Baldöktü Spor Salonu', info: 'Kapalı spor kompleksi', type: 'sports', color: '#2e7d32' },
+        { lat: 38.787253, lng: 35.409233, title: 'Süleyman Çetinsaya Kültür Merkezi', info: 'Kültür ve sanat etkinlikleri', type: 'culture', color: '#c2185b' },
+        
+        // Yurtlar
+        { lat: 38.785750, lng: 35.404931, title: 'Sahabiye Erkek Öğrenci Yurdu B Blok', info: 'Erkek öğrenci yurdu', type: 'dormitory', color: '#7b1fa2' },
+        { lat: 38.784803, lng: 35.404971, title: 'Nuh Yapışlar Yımaz Özdemir Erkek Öğrenci Yurdu', info: 'Erkek öğrenci yurdu', type: 'dormitory', color: '#7b1fa2' },
+        
+        // Otoparklar
+        { lat: 38.787006774092966, lng: 35.407983689914914, title: 'Güzel Sanatlar Fakültesi Otoparkı', info: 'Güzel Sanatlar Fakültesi otoparkı', type: 'parking', color: '#616161' },
+        { lat: 38.786956, lng: 35.406957, title: 'Mühendislik Fakültesi Otoparkı', info: 'Mühendislik Fakültesi otoparkı', type: 'parking', color: '#616161' },
+        { lat: 38.787089, lng: 35.409707, title: 'Kültür Merkezi Otoparkı', info: 'Süleyman Çetinsaya Kültür Merkezi otoparkı', type: 'parking', color: '#616161' },
+        { lat: 38.785718, lng: 35.405773, title: 'Otopark 3', info: 'Otopark alanı', type: 'parking', color: '#616161' },
+        { lat: 38.784611, lng: 35.405388, title: 'Otopark 4', info: 'Otopark alanı', type: 'parking', color: '#616161' },
+        { lat: 38.784661, lng: 35.407137, title: 'Otopark 5', info: 'Otopark alanı', type: 'parking', color: '#616161' },
+        { lat: 38.786142, lng: 35.411534, title: 'Misafir Otoparkı', info: 'Misafir araçlar için otopark', type: 'parking', color: '#616161' },
+        
+        // Otobüs Durakları
+        { lat: 38.786911, lng: 35.405886, title: 'Otobüs Durağı 1 (Kampüs İçi)', info: 'Kampüs içi otobüs durağı', type: 'bus_stop', color: '#ff6f00' },
+        { lat: 38.784718, lng: 35.406424, title: 'Otobüs Durağı 2 (Kampüs İçi)', info: 'Kampüs içi otobüs durağı', type: 'bus_stop', color: '#ff6f00' },
+        { lat: 38.788722, lng: 35.406562, title: 'Diş Hastanesi Otobüs Durağı', info: 'Diş hastanesi otobüs durağı', type: 'bus_stop', color: '#ff6f00' },
+        { lat: 38.785319, lng: 35.411936, title: 'Kampüs Dışı Otobüs Durağı', info: 'Kampüs dışı otobüs durağı', type: 'bus_stop', color: '#ff6f00' },
+        
+        // Diğer
+        { lat: 38.786172, lng: 35.406315, title: 'Ceylan Kırtasiye', info: 'Kırtasiye ve fotokopi', type: 'shop', color: '#00838f' },
+        { lat: 38.785920, lng: 35.411434, title: 'Ana Giriş Kapısı', info: 'Ana kampüs giriş kapısı', type: 'entrance', color: '#3252a8' },
+        { lat: 38.786920, lng: 35.405372, title: 'Lojmanlar Giriş', info: 'Lojman bölgesi giriş kapısı', type: 'entrance', color: '#3252a8' },
+        
+        // İsimsiz Binalar
+        { lat: 38.786804, lng: 35.405590, title: 'İsimsiz Bina 1', info: 'Kampüs binası', type: 'building', color: '#757575' },
+        { lat: 38.786251, lng: 35.405364, title: 'İsimsiz Bina 2', info: 'Kampüs binası', type: 'building', color: '#757575' },
+        { lat: 38.785857, lng: 35.405671, title: 'İsimsiz Bina 3', info: 'Kampüs binası', type: 'building', color: '#757575' },
+        { lat: 38.785529, lng: 35.405935, title: 'İsimsiz Bina 4', info: 'Kampüs binası', type: 'building', color: '#757575' },
+        { lat: 38.784847, lng: 35.407914, title: 'İsimsiz Bina 5', info: 'Kampüs binası', type: 'building', color: '#757575' },
+        { lat: 38.784551, lng: 35.408165, title: 'İsimsiz Bina 6', info: 'Kampüs binası', type: 'building', color: '#757575' }
+      ];
+      
+      // POI marker'larını ekle
+      allPois.forEach((poi, index) => {
+        const iconText = poiIcons[poi.type] || '📍';
+        
+        const marker = new google.maps.Marker({
+          position: { lat: poi.lat, lng: poi.lng },
+          map: map,
+          title: poi.title,
+          label: {
+            text: iconText,
+            fontSize: '20px'
+          },
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 15,
+            fillColor: poi.color,
+            fillOpacity: 0.85,
+            strokeColor: '#ffffff',
+            strokeWeight: 2.5
+          },
+          animation: google.maps.Animation.DROP
+        });
+        
+        poiMarkers.push({ marker, poi });
+        
+        const infoWindow = new google.maps.InfoWindow({
+          content: `
+            <div style="padding:10px;max-width:250px;">
+              <h3 style="margin:0 0 8px 0;color:${poi.color};font-size:16px;">${iconText} ${poi.title}</h3>
+              <p style="margin:0 0 12px 0;color:#666;font-size:14px;">${poi.info}</p>
+              <button onclick="showNavigation(${poi.lat}, ${poi.lng}, '${poi.title.replace(/'/g, "\\'")}')" 
+                      style="width:100%;padding:10px;background:#3252a8;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;">
+                🧭 Yürüyerek Git
+              </button>
+            </div>
+          `,
+          maxWidth: 300
+        });
+        
+        marker.addListener('click', () => {
+          // Önceki açık InfoWindow'u kapat
+          if (currentInfoWindow) {
+            currentInfoWindow.close();
+          }
+          
+          infoWindow.open(map, marker);
+          currentInfoWindow = infoWindow; // Yeni açılan'ı kaydet
+        });
+      });
+      
+      // Kullanıcı konumunu al
+      getUserLocation();
+      
+      // Event listener'lar
+      setupEventListeners();
+      
+      console.log(`✅ ${allPois.length} POI eklendi!`);
+    }
+    
+    // Kullanıcı konumunu al ve göster
+    function getUserLocation() {
+      if (!navigator.geolocation) {
+        console.error('Tarayıcı konum servislerini desteklemiyor');
+        return;
+      }
+      
+      console.log('🔍 Konum servisi başlatılıyor...');
+      
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          console.log('✅ Konum alındı:', position.coords);
+          
+          userLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          
+          // Mavi nokta marker
+          if (!userMarker) {
+            userMarker = new google.maps.Marker({
+              position: userLocation,
+              map: map,
+              icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: 8,
+                fillColor: '#4285F4',
+                fillOpacity: 1,
+                strokeColor: '#ffffff',
+                strokeWeight: 3
+              },
+              zIndex: 1000,
+              title: 'Konumunuz'
+            });
+            
+            // Konumun etrafında açık mavi daire
+            new google.maps.Circle({
+              map: map,
+              center: userLocation,
+              radius: position.coords.accuracy,
+              fillColor: '#4285F4',
+              fillOpacity: 0.2,
+              strokeColor: '#4285F4',
+              strokeOpacity: 0.4,
+              strokeWeight: 1
+            });
+            
+            console.log('📍 Mavi konum marker\'ı eklendi');
+          } else {
+            userMarker.setPosition(userLocation);
+          }
+          
+          // Konum değişikliklerini takip et
+          navigator.geolocation.watchPosition(
+            (pos) => {
+              userLocation = {
+                lat: pos.coords.latitude,
+                lng: pos.coords.longitude
+              };
+              if (userMarker) {
+                userMarker.setPosition(userLocation);
+              }
+            },
+            (error) => {
+              console.warn('Konum güncellenirken hata:', error.message);
+            },
+            {
+              enableHighAccuracy: true,
+              maximumAge: 10000,
+              timeout: 5000
+            }
+          );
+        },
+        (error) => {
+          console.error('❌ Konum hatası:', error);
+          let errorMessage = 'Konum bilgisi alınamadı. ';
+          
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              errorMessage += 'Konum izni reddedildi. Lütfen tarayıcı ayarlarından konum iznini aktifleştirin.';
+              break;
+            case error.POSITION_UNAVAILABLE:
+              errorMessage += 'Konum bilgisi kullanılamıyor. GPS veya internet bağlantınızı kontrol edin.';
+              break;
+            case error.TIMEOUT:
+              errorMessage += 'Konum isteği zaman aşımına uğradı. Tekrar deneyin.';
+              break;
+            default:
+              errorMessage += error.message;
+          }
+          
+          console.warn(errorMessage);
+          // Kullanıcıya gösterme, sadece console'da tut
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
+        }
+      );
+    }
+    
+    // Event Listener'lar
+    function setupEventListeners() {
+      // Search box
+      const searchBox = document.getElementById('mapSearchBox');
+      const searchResults = document.getElementById('searchResults');
+      
+      if (!searchBox || !searchResults) {
+        console.error('Search elements not found!');
+        return;
+      }
+      
+      searchBox.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        
+        if (query.length === 0) {
+          searchResults.classList.remove('show');
+          return;
+        }
+        
+        // POI ismi, açıklama ve tipe göre filtrele
+        const filtered = allPois.filter(poi => {
+          const titleMatch = poi.title.toLowerCase().includes(query);
+          const infoMatch = poi.info.toLowerCase().includes(query);
+          const typeMatch = poi.type.toLowerCase().includes(query);
+          return titleMatch || infoMatch || typeMatch;
+        });
+        
+        if (filtered.length > 0) {
+          searchResults.innerHTML = filtered.map(poi => {
+            const iconText = poiIcons[poi.type] || '📍';
+            // Güvenli string escape
+            const safeTitle = poi.title.replace(/'/g, "\\'").replace(/"/g, '\\"');
+            return `
+              <div class="search-result-item" onclick="selectPOI(${poi.lat}, ${poi.lng}, '${safeTitle}')">
+                <div class="result-title">${iconText} ${poi.title}</div>
+                <div class="result-info">${poi.info}</div>
+              </div>
+            `;
+          }).join('');
+          searchResults.classList.add('show');
+        } else {
+          searchResults.innerHTML = '<div class="search-result-item"><div class="result-info">Sonuç bulunamadı</div></div>';
+          searchResults.classList.add('show');
+        }
+      });
+      
+      // Haritaya tıklandığında search sonuçlarını kapat
+      if (map) {
+        map.addListener('click', () => {
+          searchResults.classList.remove('show');
+        });
+      }
+      
+      // My Location button
+      document.getElementById('myLocationBtn').addEventListener('click', () => {
+        if (userLocation) {
+          map.setCenter(userLocation);
+          map.setZoom(18);
+        } else {
+          alert('Konum bilgisi alınamadı. Lütfen konum izni verin.');
+        }
+      });
+      
+      // Close navigation panel
+      document.getElementById('closeNav').addEventListener('click', () => {
+        document.getElementById('navigationPanel').classList.remove('show');
+        directionsRenderer.setDirections({ routes: [] });
+      });
+    }
+    
+    // POI seçildiğinde
+    function selectPOI(lat, lng, title) {
+      map.setCenter({ lat, lng });
+      map.setZoom(18);
+      document.getElementById('searchResults').classList.remove('show');
+      document.getElementById('mapSearchBox').value = '';
+      
+      // İlgili marker'ı bul ve tıkla
+      poiMarkers.forEach(({ marker, poi }) => {
+        if (poi.lat === lat && poi.lng === lng) {
+          google.maps.event.trigger(marker, 'click');
+        }
+      });
+    }
+    
+    // Navigasyon göster
+    function showNavigation(destLat, destLng, title) {
+      // Açık olan InfoWindow'u kapat (POI infowindow)
+      if (currentInfoWindow) {
+        currentInfoWindow.close();
+        currentInfoWindow = null;
+      }
+      
+      if (!userLocation) {
+        alert('Konum bilgisi alınamadı. Lütfen konum izni verin.');
+        return;
+      }
+      
+      const panel = document.getElementById('navigationPanel');
+      document.getElementById('navTitle').textContent = title;
+      panel.classList.add('show');
+      
+      // Rota hesapla
+      const request = {
+        origin: userLocation,
+        destination: { lat: destLat, lng: destLng },
+        travelMode: google.maps.TravelMode.WALKING
+      };
+      
+      directionsService.route(request, (result, status) => {
+        if (status === 'OK') {
+          directionsRenderer.setDirections(result);
+          
+          const route = result.routes[0].legs[0];
+          document.getElementById('navDistance').textContent = route.distance.text;
+          document.getElementById('navDuration').textContent = route.duration.text;
+          
+          // Haritayı rotaya odakla
+          map.fitBounds(result.routes[0].bounds);
+        } else {
+          console.error('Rota hesaplanamadı:', status);
+          alert('Rota hesaplanamadı. Lütfen tekrar deneyin.');
+        }
+      });
+    }
+    
+    // Fullscreen functionality
+    document.getElementById('fullscreenBtn').addEventListener('click', function() {
+      const mapContainer = document.getElementById('mapContainer');
+      const btn = this;
+      
+      if (!mapContainer.classList.contains('fullscreen')) {
+        mapContainer.classList.add('fullscreen');
+        btn.innerHTML = '<span>⛶</span> Çık';
+      } else {
+        mapContainer.classList.remove('fullscreen');
+        btn.innerHTML = '<span>⛶</span> Tam Ekran';
+      }
+    });
+    
+    // ESC key to exit fullscreen
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        const mapContainer = document.getElementById('mapContainer');
+        const btn = document.getElementById('fullscreenBtn');
+        if (mapContainer.classList.contains('fullscreen')) {
+          mapContainer.classList.remove('fullscreen');
+          btn.innerHTML = '<span>⛶</span> Tam Ekran';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
