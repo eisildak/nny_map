@@ -1122,36 +1122,70 @@
       
       // NNY Kampüs POI'leri - Her tip için benzersiz ikon
       allPois = [
-        { lat: 38.788505, lng: 35.407142, title: 'Sağlık Bilimleri Fakültesi', info: 'Hemşirelik, Beslenme ve Diyetetik', type: 'faculty', color: '#1a237e' },
-        { lat: 38.787910, lng: 35.406831, title: 'İİBF', info: 'İktisadi ve İdari Bilimler Fakültesi', type: 'faculty', color: '#1a237e' },
-        { lat: 38.787001, lng: 35.407812, title: 'Mühendislik Fakültesi', info: 'Bilgisayar, Elektrik-Elektronik, Endüstri', type: 'faculty', color: '#1a237e' },
-        { lat: 38.786412, lng: 35.408523, title: 'Güzel Sanatlar Fakültesi', info: 'Grafik Tasarım, İç Mimarlık', type: 'faculty', color: '#1a237e' },
-        { lat: 38.787876, lng: 35.407891, title: 'Ahmet Uzandaç Kütüphanesi', info: 'Merkez kütüphane', type: 'library', color: '#6d4c41' },
+        // Fakülteler
+        { lat: 38.784986, lng: 35.408400, title: 'Sağlık Bilimleri Fakültesi', info: 'NNY Sağlık Bilimleri Fakültesi', type: 'faculty', color: '#1a237e' },
+        { lat: 38.784841, lng: 35.407210, title: 'İİBF', info: 'İktisadi ve İdari Bilimler Fakültesi', type: 'faculty', color: '#1a237e' },
+        { lat: 38.786820, lng: 35.406947, title: 'Mühendislik Fakültesi', info: 'Bilgisayar, Elektrik-Elektronik, Endüstri', type: 'faculty', color: '#1a237e' },
+        { lat: 38.786857, lng: 35.407829, title: 'Güzel Sanatlar Fakültesi', info: 'Grafik Tasarım, İç Mimarlık', type: 'faculty', color: '#1a237e' },
+        { lat: 38.788004, lng: 35.406966, title: 'Diş Fakültesi', info: 'NNY Diş Hekimliği Fakültesi', type: 'faculty', color: '#1a237e' },
+        
+        // Sağlık Tesisleri
+        { lat: 38.788485, lng: 35.406612, title: 'Diş Hastanesi', info: 'NNY Diş Hastanesi', type: 'health', color: '#d32f2f' },
+        
+        // Önemli Binalar
+        { lat: 38.784961, lng: 35.405728, title: 'Ahmet Uzandaç Kütüphanesi', info: 'Merkez kütüphane', type: 'library', color: '#6d4c41' },
         { lat: 38.785585, lng: 35.409541, title: 'Saatli Kule', info: 'Kampüs simgesi', type: 'landmark', color: '#f57c00' },
         { lat: 38.785907, lng: 35.409788, title: 'Tören Alanı', info: 'Kampüs tören ve etkinlik alanı', type: 'landmark', color: '#f57c00' },
-        { lat: 38.786823, lng: 35.407456, title: 'Baldöktü Spor Salonu', info: 'Kapalı spor kompleksi', type: 'sports', color: '#2e7d32' },
+        { lat: 38.783945, lng: 35.403850, title: 'Baldöktü Spor Salonu', info: 'Kapalı spor kompleksi', type: 'sports', color: '#2e7d32' },
         { lat: 38.787253, lng: 35.409233, title: 'Süleyman Çetinsaya Kültür Merkezi', info: 'Kültür ve sanat etkinlikleri', type: 'culture', color: '#c2185b' },
-        { lat: 38.788134, lng: 35.408912, title: 'Kız Öğrenci Yurdu', info: 'Kampüs içi konaklama', type: 'dormitory', color: '#7b1fa2' },
-        { lat: 38.786234, lng: 35.409123, title: 'Erkek Öğrenci Yurdu', info: 'Kampüs içi konaklama', type: 'dormitory', color: '#7b1fa2' },
-        { lat: 38.787654, lng: 35.406123, title: 'Ana Otopark', info: 'Kampüs ana park alanı', type: 'parking', color: '#616161' },
+        
+        // Yurtlar
+        { lat: 38.785750, lng: 35.404931, title: 'Sahabiye Erkek Öğrenci Yurdu B Blok', info: 'Erkek öğrenci yurdu', type: 'dormitory', color: '#7b1fa2' },
+        { lat: 38.784803, lng: 35.404971, title: 'Nuh Yapışlar Yımaz Özdemir Erkek Öğrenci Yurdu', info: 'Erkek öğrenci yurdu', type: 'dormitory', color: '#7b1fa2' },
+        
+        // Otoparklar
+        { lat: 38.787006774092966, lng: 35.407983689914914, title: 'Güzel Sanatlar Fakültesi Otoparkı', info: 'Güzel Sanatlar Fakültesi otoparkı', type: 'parking', color: '#616161' },
+        { lat: 38.786956, lng: 35.406957, title: 'Mühendislik Fakültesi Otoparkı', info: 'Mühendislik Fakültesi otoparkı', type: 'parking', color: '#616161' },
         { lat: 38.787089, lng: 35.409707, title: 'Kültür Merkezi Otoparkı', info: 'Süleyman Çetinsaya Kültür Merkezi otoparkı', type: 'parking', color: '#616161' },
-        { lat: 38.788901, lng: 35.408234, title: 'Kampüs İçi Durak', info: 'Servis araçları durağı', type: 'bus_stop', color: '#ff6f00' },
-        { lat: 38.785678, lng: 35.407890, title: 'Ceylan Kırtasiye', info: 'Kırtasiye ve fotokopi', type: 'shop', color: '#00838f' },
-        { lat: 38.785920, lng: 35.411434, title: 'Ana Giriş Kapısı', info: 'Ana kampüs giriş kapısı', type: 'entrance', color: '#3252a8' }
+        { lat: 38.785718, lng: 35.405773, title: 'Otopark 3', info: 'Otopark alanı', type: 'parking', color: '#616161' },
+        { lat: 38.784611, lng: 35.405388, title: 'Otopark 4', info: 'Otopark alanı', type: 'parking', color: '#616161' },
+        { lat: 38.784661, lng: 35.407137, title: 'Otopark 5', info: 'Otopark alanı', type: 'parking', color: '#616161' },
+        { lat: 38.786142, lng: 35.411534, title: 'Misafir Otoparkı', info: 'Misafir araçlar için otopark', type: 'parking', color: '#616161' },
+        
+        // Otobüs Durakları
+        { lat: 38.786911, lng: 35.405886, title: 'Otobüs Durağı 1 (Kampüs İçi)', info: 'Kampüs içi otobüs durağı', type: 'bus_stop', color: '#ff6f00' },
+        { lat: 38.784718, lng: 35.406424, title: 'Otobüs Durağı 2 (Kampüs İçi)', info: 'Kampüs içi otobüs durağı', type: 'bus_stop', color: '#ff6f00' },
+        { lat: 38.788722, lng: 35.406562, title: 'Diş Hastanesi Otobüs Durağı', info: 'Diş hastanesi otobüs durağı', type: 'bus_stop', color: '#ff6f00' },
+        { lat: 38.785319, lng: 35.411936, title: 'Kampüs Dışı Otobüs Durağı', info: 'Kampüs dışı otobüs durağı', type: 'bus_stop', color: '#ff6f00' },
+        
+        // Diğer
+        { lat: 38.786172, lng: 35.406315, title: 'Ceylan Kırtasiye', info: 'Kırtasiye ve fotokopi', type: 'shop', color: '#00838f' },
+        { lat: 38.785920, lng: 35.411434, title: 'Ana Giriş Kapısı', info: 'Ana kampüs giriş kapısı', type: 'entrance', color: '#3252a8' },
+        { lat: 38.786920, lng: 35.405372, title: 'Lojmanlar Giriş', info: 'Lojman bölgesi giriş kapısı', type: 'entrance', color: '#3252a8' },
+        
+        // İsimsiz Binalar
+        { lat: 38.786804, lng: 35.405590, title: 'İsimsiz Bina 1', info: 'Kampüs binası', type: 'building', color: '#757575' },
+        { lat: 38.786251, lng: 35.405364, title: 'İsimsiz Bina 2', info: 'Kampüs binası', type: 'building', color: '#757575' },
+        { lat: 38.785857, lng: 35.405671, title: 'İsimsiz Bina 3', info: 'Kampüs binası', type: 'building', color: '#757575' },
+        { lat: 38.785529, lng: 35.405935, title: 'İsimsiz Bina 4', info: 'Kampüs binası', type: 'building', color: '#757575' },
+        { lat: 38.784847, lng: 35.407914, title: 'İsimsiz Bina 5', info: 'Kampüs binası', type: 'building', color: '#757575' },
+        { lat: 38.784551, lng: 35.408165, title: 'İsimsiz Bina 6', info: 'Kampüs binası', type: 'building', color: '#757575' }
       ];
       
       // POI tiplerine göre ikonlar
       const poiIcons = {
         'faculty': '🏛️',      // Fakülteler
+        'health': '🏥',        // Sağlık tesisleri
         'library': '📚',       // Kütüphane
-        'landmark': '⏰',      // Saatli kule
+        'landmark': '⏰',      // Saatli kule, tören alanı
         'sports': '🏀',        // Spor salonu
         'culture': '🎭',       // Kültür merkezi
         'dormitory': '🏠',     // Yurtlar
         'parking': '🅿️',      // Otopark
         'bus_stop': '🚌',      // Otobüs durağı
         'shop': '🏪',          // Dükkan
-        'entrance': '🎓'       // Ana giriş/kampüs merkezi
+        'entrance': '🚪',      // Giriş kapıları
+        'building': '🏢'       // İsimsiz binalar
       };
       
       // POI marker'larını ekle
@@ -1321,6 +1355,11 @@
       const searchBox = document.getElementById('mapSearchBox');
       const searchResults = document.getElementById('searchResults');
       
+      if (!searchBox || !searchResults) {
+        console.error('Search elements not found!');
+        return;
+      }
+      
       searchBox.addEventListener('input', (e) => {
         const query = e.target.value.toLowerCase().trim();
         
@@ -1329,16 +1368,21 @@
           return;
         }
         
-        const filtered = allPois.filter(poi => 
-          poi.title.toLowerCase().includes(query) || 
-          poi.info.toLowerCase().includes(query)
-        );
+        // POI ismi, açıklama ve tipe göre filtrele
+        const filtered = allPois.filter(poi => {
+          const titleMatch = poi.title.toLowerCase().includes(query);
+          const infoMatch = poi.info.toLowerCase().includes(query);
+          const typeMatch = poi.type.toLowerCase().includes(query);
+          return titleMatch || infoMatch || typeMatch;
+        });
         
         if (filtered.length > 0) {
           searchResults.innerHTML = filtered.map(poi => {
             const iconText = poiIcons[poi.type] || '📍';
+            // Güvenli string escape
+            const safeTitle = poi.title.replace(/'/g, "\\'").replace(/"/g, '\\"');
             return `
-              <div class="search-result-item" onclick="selectPOI(${poi.lat}, ${poi.lng}, '${poi.title.replace(/'/g, "\\'")}')">
+              <div class="search-result-item" onclick="selectPOI(${poi.lat}, ${poi.lng}, '${safeTitle}')">
                 <div class="result-title">${iconText} ${poi.title}</div>
                 <div class="result-info">${poi.info}</div>
               </div>
@@ -1350,6 +1394,13 @@
           searchResults.classList.add('show');
         }
       });
+      
+      // Haritaya tıklandığında search sonuçlarını kapat
+      if (map) {
+        map.addListener('click', () => {
+          searchResults.classList.remove('show');
+        });
+      }
       
       // My Location button
       document.getElementById('myLocationBtn').addEventListener('click', () => {
