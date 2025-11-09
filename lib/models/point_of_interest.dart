@@ -39,10 +39,10 @@ class POIData {
     // Giriş Kapıları
     const PointOfInterest(
       id: 'giris-kapisi-1',
-      name: 'Giriş Kapısı',
+      name: 'Ana-Giriş Kapısı',
       description: 'Ana kampüs giriş kapısı',
-      latitude: 38.78589474434629,
-      longitude: 35.411693980735855,
+      latitude: 38.785920,
+      longitude: 35.411434,
       category: 'Kapı',
     ),
     const PointOfInterest(
