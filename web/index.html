@@ -551,26 +551,26 @@
     .navigation-panel {
       position: absolute;
       bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 20px;
+      transform: none;
       background: white;
       border-radius: 16px;
       box-shadow: 0 8px 30px rgba(0,0,0,0.3);
       padding: 20px;
       width: 90%;
-      max-width: 400px;
+      max-width: 320px;
       z-index: 10;
       display: none;
     }
     
     .navigation-panel.show {
       display: block;
-      animation: slideUp 0.3s ease;
+      animation: slideInLeft 0.3s ease;
     }
     
-    @keyframes slideUp {
-      from { transform: translateX(-50%) translateY(100px); opacity: 0; }
-      to { transform: translateX(-50%) translateY(0); opacity: 1; }
+    @keyframes slideInLeft {
+      from { transform: translateX(-100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
     }
     
     .nav-header {
@@ -655,37 +655,84 @@
       transform: scale(0.98);
     }
     
-    /* My Location Button */
+    /* My Location Button - Google style centered */
     .my-location-btn {
       position: absolute;
-      bottom: 120px;
-      right: 20px;
-      width: 50px;
-      height: 50px;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 48px;
+      height: 48px;
       background: white;
       border: none;
       border-radius: 50%;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
       cursor: pointer;
       z-index: 10;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
       transition: all 0.2s;
+      padding: 0;
+    }
+    
+    .my-location-btn::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #4285F4;
+      border: 3px solid white;
+      box-shadow: 0 0 0 2px #4285F4;
     }
     
     .my-location-btn:hover {
       background: #f8fafc;
-      transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
     }
     
     .my-location-btn:active {
-      transform: scale(0.95);
+      transform: translateX(-50%) scale(0.95);
     }
     
     /* Responsive Design */
     @media (max-width: 768px) {
+      .navigation-panel {
+        left: 10px;
+        bottom: 10px;
+        max-width: calc(100% - 20px);
+        padding: 14px;
+      }
+      
+      .nav-title {
+        font-size: 15px;
+      }
+      
+      .nav-info {
+        padding: 8px;
+        gap: 10px;
+      }
+      
+      .nav-info-label {
+        font-size: 11px;
+      }
+      
+      .nav-info-value {
+        font-size: 14px;
+      }
+      
+      .my-location-btn {
+        bottom: 30px;
+        width: 44px;
+        height: 44px;
+      }
+      
+      .my-location-btn::before {
+        width: 18px;
+        height: 18px;
+        border-width: 2px;
+      }
+      
       .header-content {
         text-align: center;
         flex-direction: column;
@@ -866,9 +913,7 @@
         </div>
         
         <!-- My Location Button -->
-        <button class="my-location-btn" id="myLocationBtn" title="Konumumu Göster">
-          📍
-        </button>
+        <button class="my-location-btn" id="myLocationBtn" title="Konumumu Göster"></button>
         
         <!-- Navigation Panel -->
         <div id="navigationPanel" class="navigation-panel">
@@ -1048,6 +1093,20 @@
     let poiMarkers = [];
     let currentInfoWindow = null; // Açık olan InfoWindow'u takip et
     
+    // POI tiplerine göre ikonlar (global scope'ta olmalı) - Google Maps tarzı
+    const poiIcons = {
+      'faculty': '🏛️',      // Fakülteler - University building
+      'health': '🏥',        // Sağlık tesisleri - Hospital
+      'library': '📚',       // Kütüphane - Library
+      'landmark': '🗼',      // Saatli kule, tören alanı - Landmark
+      'sports': '⚽',        // Spor salonu - Sports
+      'culture': '🎭',       // Kültür merkezi - Culture
+      'dormitory': '🏠',     // Yurtlar/Accommodation
+      'bus_stop': '🚌',      // Otobüs durağı
+      'entrance': '🚪',      // Giriş kapıları - Entrance
+      'building': '🏢'       // İsimsiz binalar - Building
+    };
+    
     function initializeNNYMap() {
       const mapDiv = document.getElementById('flutter-map');
       if (!mapDiv) {
@@ -1171,22 +1230,6 @@
         { lat: 38.784847, lng: 35.407914, title: 'İsimsiz Bina 5', info: 'Kampüs binası', type: 'building', color: '#757575' },
         { lat: 38.784551, lng: 35.408165, title: 'İsimsiz Bina 6', info: 'Kampüs binası', type: 'building', color: '#757575' }
       ];
-      
-      // POI tiplerine göre ikonlar
-      const poiIcons = {
-        'faculty': '🏛️',      // Fakülteler
-        'health': '🏥',        // Sağlık tesisleri
-        'library': '📚',       // Kütüphane
-        'landmark': '⏰',      // Saatli kule, tören alanı
-        'sports': '🏀',        // Spor salonu
-        'culture': '🎭',       // Kültür merkezi
-        'dormitory': '🏠',     // Yurtlar
-        'parking': '🅿️',      // Otopark
-        'bus_stop': '🚌',      // Otobüs durağı
-        'shop': '🏪',          // Dükkan
-        'entrance': '🚪',      // Giriş kapıları
-        'building': '🏢'       // İsimsiz binalar
-      };
       
       // POI marker'larını ekle
       allPois.forEach((poi, index) => {
