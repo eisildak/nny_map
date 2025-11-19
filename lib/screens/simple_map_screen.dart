@@ -22,6 +22,7 @@ class _SimpleMapScreenState extends State<SimpleMapScreen> {
     print('===== SimpleMapScreen build çağrıldı =====');
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Test Harita'),
         backgroundColor: const Color(0xFF3252a8),
         foregroundColor: Colors.white,

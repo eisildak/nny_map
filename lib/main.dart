@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'dart:async';
 import 'screens/splash_screen.dart';
 import 'screens/map_screen.dart';
 import 'screens/simple_map_screen.dart';
@@ -7,8 +9,25 @@ import 'screens/iframe_map_screen.dart';
 import 'services/location_service.dart';
 import 'services/map_service.dart';
 
-void main() {
-  runApp(const NNYCampusMapApp());
+void main() async {
+  // Hata yakalama ekleyelim
+  runZonedGuarded(
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
+
+      // iOS için sadece dikey yönelimi zorla
+      await SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+
+      runApp(const NNYCampusMapApp());
+    },
+    (error, stack) {
+      debugPrint('❌ HATA: $error');
+      debugPrint('📍 STACK: $stack');
+    },
+  );
 }
 
 class NNYCampusMapApp extends StatelessWidget {
