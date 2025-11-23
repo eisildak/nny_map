@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,17 +16,17 @@
             justify-content: center;
             align-items: center;
         }
-        
+
         .container {
             background: white;
             border-radius: 20px;
             padding: 40px;
             max-width: 400px;
             width: 100%;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
-        
+
         .logo {
             width: 100px;
             height: 100px;
@@ -38,20 +39,20 @@
             font-size: 40px;
             color: white;
         }
-        
+
         h1 {
             color: #1d1d1f;
             font-size: 28px;
             margin-bottom: 10px;
             font-weight: 600;
         }
-        
+
         .subtitle {
             color: #86868b;
             font-size: 16px;
             margin-bottom: 30px;
         }
-        
+
         .install-btn {
             background: #007AFF;
             color: white;
@@ -67,12 +68,12 @@
             display: inline-block;
             margin-bottom: 20px;
         }
-        
+
         .install-btn:hover {
             background: #0056b3;
             transform: translateY(-2px);
         }
-        
+
         .info {
             background: #f5f5f7;
             border-radius: 12px;
@@ -80,31 +81,31 @@
             margin-top: 20px;
             text-align: left;
         }
-        
+
         .info h3 {
             color: #1d1d1f;
             font-size: 16px;
             margin: 0 0 10px 0;
         }
-        
+
         .info p {
             color: #86868b;
             font-size: 14px;
             margin: 0;
             line-height: 1.5;
         }
-        
+
         .steps {
             margin-top: 20px;
             text-align: left;
         }
-        
+
         .step {
             display: flex;
             align-items: center;
             margin-bottom: 15px;
         }
-        
+
         .step-number {
             background: #007AFF;
             color: white;
@@ -119,13 +120,13 @@
             margin-right: 12px;
             flex-shrink: 0;
         }
-        
+
         .step-text {
             color: #86868b;
             font-size: 14px;
             line-height: 1.4;
         }
-        
+
         .warning {
             background: #fff3cd;
             border: 1px solid #ffeaa7;
@@ -133,7 +134,7 @@
             padding: 15px;
             margin-top: 20px;
         }
-        
+
         .warning-text {
             color: #856404;
             font-size: 14px;
@@ -141,16 +142,18 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="logo">🗺️</div>
         <h1>Nuh Naci Yazgan Üniversitesi</h1>
         <p class="subtitle">İnteraktif Harita Uygulaması</p>
-        
-        <a href="itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/eisildak/millet_bahcesi_map/main/kayseri-millet-bahcesi-map.plist" class="install-btn" id="installBtn">
+
+        <a href="itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/eisildak/nny_map/main/nny_map.plist"
+            class="install-btn" id="installBtn">
             📱 Uygulamayı Yükle
         </a>
-        
+
         <div class="info">
             <h3>📋 Kurulum Adımları</h3>
             <div class="steps">
@@ -168,51 +171,53 @@
                 </div>
                 <div class="step">
                     <div class="step-number">4</div>
-                    <div class="step-text">Ayarlar → Genel → VPN ve Cihaz Yönetimi'nden geliştiriciyi güvenilir yap</div>
+                    <div class="step-text">Ayarlar → Genel → VPN ve Cihaz Yönetimi'nden geliştiriciyi güvenilir yap
+                    </div>
                 </div>
             </div>
         </div>
-        
+
         <div class="warning">
             <p class="warning-text">
-                <strong>⚠️ Not:</strong> Bu uygulama App Store dışı bir kaynaktan geldiği için iOS güvenlik ayarlarından geliştiriciyi güvenilir yapmanız gerekebilir.
+                <strong>⚠️ Not:</strong> Bu uygulama App Store dışı bir kaynaktan geldiği için iOS güvenlik ayarlarından
+                geliştiriciyi güvenilir yapmanız gerekebilir.
             </p>
         </div>
-        
+
         <div class="info">
             <h3>✨ Uygulama Özellikleri</h3>
             <p>• 19 İlgi Noktası (WC, Kapılar, Üniversite)<br>
-               • GPS Navigasyon ve Sesli Rehberlik<br>
-               • Gerçek Zamanlı Konum Takibi<br>
-               • Google Maps Entegrasyonu<br>
-               • Yürüyüş Rotaları</p>
+                • GPS Navigasyon ve Sesli Rehberlik<br>
+                • Gerçek Zamanlı Konum Takibi<br>
+                • Google Maps Entegrasyonu<br>
+                • Yürüyüş Rotaları</p>
         </div>
-        
+
         <p style="color: #86868b; font-size: 12px; margin-top: 30px;">
             © 2024 Nuh Naci Yazgan Üniversitesi<br>
             Geliştirici: Erol Işıldak
         </p>
     </div>
-    
+
     <script>
         // iOS detection
         function isiOS() {
             return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         }
-        
+
         // Android detection  
         function isAndroid() {
             return /Android/.test(navigator.userAgent);
         }
-        
-        document.addEventListener('DOMContentLoaded', function() {
+
+        document.addEventListener('DOMContentLoaded', function () {
             const installBtn = document.getElementById('installBtn');
-            
+
             if (isAndroid()) {
                 // Android için APK indirme linkini göster
-                installBtn.href = 'https://github.com/eisildak/millet_bahcesi_map/releases/download/v1.0/kayseri-millet-bahcesi-map-v1.0.apk';
+                installBtn.href = 'https://github.com/eisildak/nny_map/releases/download/v1.0/nny_map-v1.0.apk';
                 installBtn.innerHTML = '🤖 Android APK İndir';
-                
+
                 // Adımları Android için güncelle
                 document.querySelector('.steps').innerHTML = `
                     <div class="step">
@@ -232,22 +237,22 @@
                         <div class="step-text">Kurulum tamamlandıktan sonra uygulamayı açabilirsiniz</div>
                     </div>
                 `;
-                
+
                 document.querySelector('.warning-text').innerHTML = `
                     <strong>⚠️ Not:</strong> Android'de bilinmeyen kaynaklardan uygulama yükleme izni vermeniz gerekebilir.
                 `;
             }
-            
+
             // Install button click handler
-            installBtn.addEventListener('click', function(e) {
+            installBtn.addEventListener('click', function (e) {
                 if (isiOS()) {
                     // iOS için enterprise install
-                    setTimeout(function() {
+                    setTimeout(function () {
                         alert('Eğer yükleme başlamazsa, Safari\'yi kapatıp tekrar açın ve linke tekrar dokunun.');
                     }, 2000);
                 } else if (isAndroid()) {
                     // Android için APK download
-                    setTimeout(function() {
+                    setTimeout(function () {
                         alert('APK dosyası indiriliyor. İndirme tamamlandıktan sonra dosyayı açın.');
                     }, 1000);
                 }
@@ -255,4 +260,5 @@
         });
     </script>
 </body>
+
 </html>

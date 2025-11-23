@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
@@ -8,12 +9,22 @@ import 'screens/simple_map_screen.dart';
 import 'screens/iframe_map_screen.dart';
 import 'services/location_service.dart';
 import 'services/map_service.dart';
+import 'services/indoor_navigation_service.dart';
+import 'services/web_integration_service.dart'
+    if (dart.library.html) 'services/web_integration_service_web.dart';
 
 void main() async {
+  print('🚀 Dart main() started!');
   // Hata yakalama ekleyelim
   runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
+
+      // Set up JS Interop early for web
+      if (kIsWeb) {
+        print('🌐 main.dart: Running on web, will setup JS interop after first frame');
+        WebIntegrationService.setup();
+      }
 
       // iOS için sadece dikey yönelimi zorla
       await SystemChrome.setPreferredOrientations([
@@ -30,15 +41,37 @@ void main() async {
   );
 }
 
-class NNYCampusMapApp extends StatelessWidget {
+class NNYCampusMapApp extends StatefulWidget { // Changed to StatefulWidget
   const NNYCampusMapApp({super.key});
 
+  @override
+  State<NNYCampusMapApp> createState() => _NNYCampusMapAppState();
+}
+
+class _NNYCampusMapAppState extends State<NNYCampusMapApp> { // Added State class
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => LocationService()),
         ChangeNotifierProvider(create: (_) => MapService()),
+        ChangeNotifierProxyProvider<MapService, IndoorNavigationService>(
+          create: (context) {
+            final service = IndoorNavigationService(
+              mapService: Provider.of<MapService>(context, listen: false),
+            );
+            
+            // Register for web JS interop
+            if (kIsWeb) {
+              print('🌐 Registering IndoorNavigationService with WebIntegrationService...');
+              WebIntegrationService.registerService(service);
+            }
+            
+            return service;
+          },
+          update: (context, mapService, previous) =>
+              previous ?? IndoorNavigationService(mapService: mapService),
+        ),
       ],
       child: MaterialApp(
         title: 'NNY Kampüs Haritası',
@@ -76,7 +109,7 @@ class NNYCampusMapApp extends StatelessWidget {
             fillColor: Colors.white,
           ),
         ),
-        initialRoute: '/map',
+        initialRoute: '/',
         routes: {
           '/': (context) => const SplashScreen(),
           '/map': (context) => const MapScreen(),

@@ -1,4 +1,4 @@
-name: kayseri_millet_bahcesi_map
+name: nny_map
 description: NNY interaktif harita uygulaması
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev

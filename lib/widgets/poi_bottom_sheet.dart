@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../models/point_of_interest.dart';
+import '../models/building.dart';
 import '../services/map_service.dart';
 import '../services/location_service.dart';
+import '../services/indoor_navigation_service.dart';
 
 class POIBottomSheet extends StatelessWidget {
   final PointOfInterest poi;
@@ -14,10 +17,10 @@ class POIBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-        boxShadow: [
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+        boxShadow: const [
           BoxShadow(
             color: Colors.black26,
             blurRadius: 10,
@@ -25,6 +28,7 @@ class POIBottomSheet extends StatelessWidget {
           ),
         ],
       ),
+      margin: const EdgeInsets.only(bottom: 80), // Lift up to avoid native buttons
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -250,23 +254,6 @@ class POIBottomSheet extends StatelessWidget {
 
       // Konum takibini başlat
       await locationService.startLocationTracking();
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            '${poi.name} noktasına rota çiziliyor - Konum takibi aktif',
-          ),
-          backgroundColor: Colors.green,
-          duration: const Duration(seconds: 3),
-          action: SnackBarAction(
-            label: 'Durdur',
-            onPressed: () {
-              mapService.stopNavigation();
-              locationService.stopLocationTracking();
-            },
-          ),
-        ),
-      );
     } else {
       // Konum alınamadı, NNY Kampüs merkezinden başlat
       const defaultLocation = LatLng(

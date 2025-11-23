@@ -1,0 +1,8 @@
+
+services:
+  nny-map:
+    build: .
+    ports:
+      - "8080:80"
+    container_name: nny-map-container
+    restart: always

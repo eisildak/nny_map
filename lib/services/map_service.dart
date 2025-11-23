@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import '../models/point_of_interest.dart';
+import '../models/building.dart';
 import '../config/api_keys.dart';
 
 class MapService extends ChangeNotifier {
@@ -17,12 +18,13 @@ class MapService extends ChangeNotifier {
   bool _isNavigating = false;
   PointOfInterest? _selectedPoi;
   Marker? _userLocationMarker;
+  List<Map<String, dynamic>>? _currentRouteSteps;
 
   // Google API Key - Directions API için
   static const String _apiKey = ApiKeys.googleMapsApiKey;
 
   // NNY Üniversite Kampüsü merkez koordinatları
-  static const LatLng kayseriMilletBahcesi = LatLng(38.787374, 35.407380);
+  static const LatLng nuhNaciYazganUniversitesi = LatLng(38.787374, 35.407380);
 
   // Getters
   GoogleMapController? get controller => _controller;
@@ -32,6 +34,7 @@ class MapService extends ChangeNotifier {
   List<PointOfInterest> get filteredPois => _filteredPois;
   bool get isNavigating => _isNavigating;
   PointOfInterest? get selectedPoi => _selectedPoi;
+  List<Map<String, dynamic>>? get currentRouteSteps => _currentRouteSteps;
 
   // Tüm marker'ları (POI + kullanıcı konumu) döndür
   Set<Marker> _getAllMarkers() {
@@ -48,7 +51,7 @@ class MapService extends ChangeNotifier {
   }
 
   Future<void> initializePOIs() async {
-    _pois = POIData.kayseriMilletBahcesi;
+    _pois = POIData.nuhNaciYazganUniversitesi;
     _filteredPois = List.from(_pois);
     // Cache'i temizle ki yeni boyuttaki marker'lar oluşturulsun
     _markerCache.clear();
@@ -402,6 +405,13 @@ class MapService extends ChangeNotifier {
 
           _createPolyline(polylinePoints);
 
+          // Store route steps for later display
+          if (route['legs'] != null && route['legs'].isNotEmpty) {
+            _currentRouteSteps = List<Map<String, dynamic>>.from(
+              route['legs'][0]['steps'] ?? [],
+            );
+          }
+
           // Route başarılı olduğunu bildir
           _showRouteSuccess(route);
         } else {
@@ -633,9 +643,9 @@ class MapService extends ChangeNotifier {
     });
   }
 
-  void centerOnMilletBahcesi() {
+  void centerOnNny() {
     _controller?.animateCamera(
-      CameraUpdate.newLatLngZoom(kayseriMilletBahcesi, 16.0),
+      CameraUpdate.newLatLngZoom(nuhNaciYazganUniversitesi, 17.0),
     );
   }
 
@@ -665,5 +675,51 @@ class MapService extends ChangeNotifier {
   // Kullanıcı konumuna odaklanmak için public fonksiyon
   Future<void> focusOnUserLocation(LatLng userLocation) async {
     await _focusOnUserLocation(userLocation);
+  }
+
+  // Check if user is near a building (within 50 meters)
+  Building? getNearbyBuilding(LatLng userLocation) {
+    const double proximityThreshold = 50.0; // meters
+
+    for (var building in BuildingData.getAllBuildings()) {
+      final distance = _calculateDistanceBetween(
+        userLocation.latitude,
+        userLocation.longitude,
+        building.latitude,
+        building.longitude,
+      );
+
+      if (distance <= proximityThreshold && building.hasIndoorMap) {
+        return building;
+      }
+    }
+
+    return null;
+  }
+
+  // Calculate distance between two coordinates in meters (Haversine formula)
+  double _calculateDistanceBetween(
+    double lat1,
+    double lon1,
+    double lat2,
+    double lon2,
+  ) {
+    const double earthRadius = 6371000; // meters
+    final dLat = _degreesToRadians(lat2 - lat1);
+    final dLon = _degreesToRadians(lon2 - lon1);
+
+    final a =
+        math.sin(dLat / 2) * math.sin(dLat / 2) +
+        math.cos(_degreesToRadians(lat1)) *
+            math.cos(_degreesToRadians(lat2)) *
+            math.sin(dLon / 2) *
+            math.sin(dLon / 2);
+
+    final c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a));
+    return earthRadius * c;
+  }
+
+  double _degreesToRadians(double degrees) {
+    return degrees * math.pi / 180;
   }
 }

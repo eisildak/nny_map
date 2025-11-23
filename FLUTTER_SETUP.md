@@ -58,7 +58,7 @@ flutter doctor
 
 ## Proje Çalıştırma
 ```bash
-cd /Users/pointr/Documents/repository/millet_bahcesi_map
+cd /Users/pointr/Documents/repository/nny_map
 
 # Bağımlılıkları yükle
 flutter pub get

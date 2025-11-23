@@ -35,7 +35,7 @@ class PointOfInterest {
 
 // NNY Üniversite Kampüsü POI'ları
 class POIData {
-  static List<PointOfInterest> kayseriMilletBahcesi = [
+  static List<PointOfInterest> nuhNaciYazganUniversitesi = [
     // Giriş Kapıları
     const PointOfInterest(
       id: 'giris-kapisi-1',

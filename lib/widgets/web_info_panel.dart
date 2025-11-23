@@ -288,7 +288,7 @@ class WebInfoPanel extends StatelessWidget {
         icon: Icons.apple,
         color: Colors.grey.shade700,
         onTap: () => _launchURL(
-          'https://eisildak.github.io/millet_bahcesi_map/ios_install.html',
+          'https://eisildak.github.io/nny_map/ios_install.html',
         ),
       ),
 

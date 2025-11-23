@@ -158,7 +158,8 @@ class _WebMapScreenState extends State<WebMapScreen> {
               right: 16,
               child: FloatingActionButton(
                 mini: true,
-                onPressed: () => mapService.centerOnMilletBahcesi(),
+                onPressed: () => mapService.centerOnNny
+                (),
                 backgroundColor: Colors.white,
                 child: const Icon(Icons.my_location),
               ),

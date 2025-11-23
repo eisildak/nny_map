@@ -191,7 +191,7 @@ lib/
 ## 🔧 Geliştirme
 
 ### Yeni İlgi Noktası Ekleme
-`lib/models/point_of_interest.dart` dosyasındaki `POIData.kayseriMilletBahcesi` listesine yeni nokta ekleyin:
+`lib/models/point_of_interest.dart` dosyasındaki `POIData.nuhNaciYazganUniversitesi` listesine yeni nokta ekleyin:
 
 ```dart
 const PointOfInterest(

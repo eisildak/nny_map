@@ -8,12 +8,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:kayseri_millet_bahcesi_map/main.dart';
+import 'package:nny_map/main.dart';
 
 void main() {
   testWidgets('App launches smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const KayseriMilletBahcesiApp());
+    await tester.pumpWidget(const NNYCampusMapApp());
 
     // Verify that splash screen loads
     expect(find.byType(MaterialApp), findsOneWidget);

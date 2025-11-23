@@ -70,45 +70,57 @@ class LocationService extends ChangeNotifier {
   Future<void> _getLocationForWeb() async {
     print('Web platformu için konum alınıyor...');
 
-    // Web'de direkt konum almayı dene, izin sorunu varsa handle et
     try {
-      // Web'de daha basit approach - sadece getCurrentPosition
+      // Önce yüksek hassasiyetle dene
       _currentPosition = await geolocator.Geolocator.getCurrentPosition(
-        desiredAccuracy: geolocator.LocationAccuracy.low,
-        timeLimit: const Duration(seconds: 8),
+        desiredAccuracy: geolocator.LocationAccuracy.high,
+        timeLimit: const Duration(seconds: 5),
       );
       print(
-        'Web konum başarıyla alındı: ${_currentPosition?.latitude}, ${_currentPosition?.longitude}',
+        'Web konum başarıyla alındı (High Accuracy): ${_currentPosition?.latitude}, ${_currentPosition?.longitude}',
       );
-      _error = null; // Başarılı olursa hata temizle
+      _error = null;
     } catch (e) {
-      print('Web konum alma hatası: $e');
+      print('Yüksek hassasiyet başarısız, düşük hassasiyet deneniyor: $e');
+      try {
+        // Başarısız olursa düşük hassasiyetle dene
+        _currentPosition = await geolocator.Geolocator.getCurrentPosition(
+          desiredAccuracy: geolocator.LocationAccuracy.low,
+          timeLimit: const Duration(seconds: 10),
+        );
+        print(
+          'Web konum başarıyla alındı (Low Accuracy): ${_currentPosition?.latitude}, ${_currentPosition?.longitude}',
+        );
+        _error = null;
+      } catch (e2) {
+        // Hata mesajını analiz et
+        final errorStr = e2.toString();
+        
+        // Kullanıcı dostu loglama
+        if (errorStr.contains('denied')) {
+          print('Konum izni reddedildi, varsayılan konum kullanılıyor');
+        } else if (errorStr.contains('unavailable') || errorStr.contains('code: 2')) {
+          print('Konum servisi kullanılamıyor (örn. GPS kapalı veya emülatör), varsayılan konum kullanılıyor');
+        } else {
+          print('Web konum alma hatası: $e2');
+        }
 
-      // Varsayılan konumu kullan ve kullanıcıya bildirme
-      _currentPosition = geolocator.Position(
-        latitude: 38.787374, // Nuh Naci Yazgan Üniversitesi kampüs merkezi
-        longitude: 35.407380,
-        timestamp: DateTime.now(),
-        accuracy: 1000.0, // Düşük accuracy belirt
-        altitude: 0.0,
-        heading: 0.0,
-        speed: 0.0,
-        speedAccuracy: 0.0,
-        altitudeAccuracy: 0.0,
-        headingAccuracy: 0.0,
-      );
-
-      // Hatayı kullanıcı dostu yap
-      if (e.toString().contains('denied')) {
-        _error = null; // Hata gösterme, varsayılan konum kullan
-        print('Konum izni reddedildi, varsayılan konum kullanılıyor');
-      } else if (e.toString().contains('timeout') ||
-          e.toString().contains('TimeoutException')) {
-        _error = null; // Hata gösterme, varsayılan konum kullan
-        print('Konum alma zaman aşımı, varsayılan konum kullanılıyor');
-      } else {
-        _error = null; // Hata gösterme, varsayılan konum kullan
-        print('Web için varsayılan konum kullanıldı: ${e.runtimeType}');
+        // Varsayılan konumu kullan
+        _currentPosition = geolocator.Position(
+          latitude: 38.787374, // Nuh Naci Yazgan Üniversitesi kampüs merkezi
+          longitude: 35.407380,
+          timestamp: DateTime.now(),
+          accuracy: 1000.0,
+          altitude: 0.0,
+          heading: 0.0,
+          speed: 0.0,
+          speedAccuracy: 0.0,
+          altitudeAccuracy: 0.0,
+          headingAccuracy: 0.0,
+        );
+        
+        // Hata mesajını null yap ki UI'da hata göstermesin, varsayılan konumu göstersin
+        _error = null;
       }
     }
   }
@@ -234,16 +246,54 @@ class LocationService extends ChangeNotifier {
   }
 
   Future<void> _startWebLocationTracking() async {
-    // Web'de periyodik konum güncellemesi
     print('Web için konum takibi başlatılıyor...');
 
-    // İlk konum al
-    await getCurrentLocation();
+    // Web için de stream kullan
+    try {
+      // Önce izin kontrolü
+      geolocator.LocationPermission permission = await geolocator.Geolocator.checkPermission();
+      if (permission == geolocator.LocationPermission.denied) {
+        permission = await geolocator.Geolocator.requestPermission();
+        if (permission == geolocator.LocationPermission.denied) {
+          _error = 'Konum izni reddedildi';
+          notifyListeners();
+          return;
+        }
+      }
+      
+      if (permission == geolocator.LocationPermission.deniedForever) {
+        _error = 'Konum izni kalıcı olarak reddedildi';
+        notifyListeners();
+        return;
+      }
 
-    // Her 5 saniyede bir konum güncelle
-    _startPeriodicLocationUpdate();
+      const locationSettings = geolocator.LocationSettings(
+        accuracy: geolocator.LocationAccuracy.high,
+        distanceFilter: 5,
+      );
+
+      _positionStream = geolocator.Geolocator.getPositionStream(
+        locationSettings: locationSettings,
+      ).listen(
+        (geolocator.Position position) {
+          print('Web Stream - Yeni konum: ${position.latitude}, ${position.longitude}');
+          _currentPosition = position;
+          _error = null;
+          notifyListeners();
+        },
+        onError: (error) {
+          print('Web konum takibi hatası: $error');
+          // Web'de bazen timeout olabilir, akışı kesmeyelim
+        },
+      );
+    } catch (e) {
+      print('Web stream başlatma hatası: $e');
+      _error = 'Konum takibi başlatılamadı: $e';
+      notifyListeners();
+    }
   }
 
+  // _startMobileLocationTracking metodu aynen kalacak
   Future<void> _startMobileLocationTracking() async {
     // Mobil'de gerçek zamanlı konum takibi
     print('Mobil için konum takibi başlatılıyor...');
@@ -274,19 +324,9 @@ class LocationService extends ChangeNotifier {
         );
   }
 
+  // _startPeriodicLocationUpdate artık kullanılmıyor, silebiliriz veya boş bırakabiliriz
   void _startPeriodicLocationUpdate() {
-    if (!kIsWeb || !_isTracking) return;
-
-    Future.delayed(const Duration(seconds: 5), () async {
-      if (!_isTracking) return;
-
-      try {
-        await getCurrentLocation();
-        _startPeriodicLocationUpdate(); // Recursive call for continuous tracking
-      } catch (e) {
-        print('Periyodik konum güncelleme hatası: $e');
-      }
-    });
+    // Deprecated: Stream yapısına geçildi
   }
 
   // Test için varsayılan konum set etme
