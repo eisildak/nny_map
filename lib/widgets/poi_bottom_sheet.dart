@@ -4,6 +4,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../models/point_of_interest.dart';
 import '../services/map_service.dart';
 import '../services/location_service.dart';
+import '../services/indoor_navigation_service.dart';
+import '../models/building.dart';
 
 class POIBottomSheet extends StatelessWidget {
   final PointOfInterest poi;
@@ -304,14 +306,49 @@ class POIBottomSheet extends StatelessWidget {
   void _enterBuilding(BuildContext context) {
     print('🏢 Binaya gir butonuna tıklandı!');
     try {
-      // İç mekan navigasyon ekranına git
-      Navigator.of(context).pushNamed('/indoor');
-      print('✅ IndoorNavigationScreen pushNamed ile çağrıldı');
+      // İç mekan navigasyon servisini al ve binayı ayarla
+      final indoorService = Provider.of<IndoorNavigationService>(
+        context,
+        listen: false,
+      );
+
+      // POI'nin ilişkili olduğu binayı bul ve ayarla
+      if (poi.buildingId != null) {
+        final building = _getBuildingById(poi.buildingId!);
+        if (building != null) {
+          print('🏢 Binaya giriliyor: ${building.name}');
+          indoorService.enterBuilding(building);
+
+          // İç mekan navigasyon ekranına git
+          Navigator.of(context).pushNamed('/indoor');
+          print('✅ IndoorNavigationScreen pushNamed ile çağrıldı');
+        } else {
+          print('❌ HATA: Bina bulunamadı (buildingId: ${poi.buildingId})');
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Bina bilgisi bulunamadı')),
+          );
+        }
+      } else {
+        print('❌ HATA: POI için buildingId tanımlanmamış');
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Bina bilgisi eksik')));
+      }
     } catch (e) {
       print('❌ HATA: IndoorNavigationScreen açılamadı: $e');
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text('Hata: $e')));
+    }
+  }
+
+  Building? _getBuildingById(String buildingId) {
+    // building.dart'tan binaları al ve bul
+    final buildings = BuildingData.getAllBuildings();
+    try {
+      return buildings.firstWhere((b) => b.id == buildingId);
+    } catch (e) {
+      return null;
     }
   }
 
