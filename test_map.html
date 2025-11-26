@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NNY Kampüs Haritası - Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #2c3e50 0%, #3252a8 100%);
+            color: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+        
+        .header h1 {
+            font-size: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px 50px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            text-align: center;
+            z-index: 2000;
+        }
+        
+        .loading.hidden {
+            display: none;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3252a8;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🗺️ Nuh Naci Yazgan Üniversitesi Kampüs Haritası</h1>
+    </div>
+    
+    <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Harita yükleniyor...</p>
+    </div>
+    
+    <div id="map"></div>
+
+    <script>
+        // Google Maps API yüklendikten sonra çağrılacak
+        function initMap() {
+            console.log('✅ Google Maps API yüklendi!');
+            
+            // Loading ekranını gizle
+            document.getElementById('loading').classList.add('hidden');
+            
+            // NNY Kampüs merkez koordinatları
+            const nnyCenter = { lat: 38.787374, lng: 35.407380 };
+            
+            // Harita oluştur
+            const map = new google.maps.Map(document.getElementById('map'), {
+                center: nnyCenter,
+                zoom: 16,
+                mapTypeId: 'hybrid',
+                streetViewControl: true,
+                fullscreenControl: true,
+                mapTypeControl: true,
+                zoomControl: true,
+                gestureHandling: 'greedy',
+                styles: [
+                    {
+                        featureType: 'poi',
+                        elementType: 'labels',
+                        stylers: [{ visibility: 'on' }]
+                    }
+                ]
+            });
+            
+            // Kampüs POI'leri
+            const pois = [
+                {
+                    position: { lat: 38.788505, lng: 35.407142 },
+                    title: '🏛️ Sağlık Bilimleri Fakültesi',
+                    info: 'Hemşirelik, Beslenme ve Diyetetik bölümleri',
+                    color: '#1a237e'
+                },
+                {
+                    position: { lat: 38.787910, lng: 35.406831 },
+                    title: '🏛️ İİBF',
+                    info: 'İktisadi ve İdari Bilimler Fakültesi',
+                    color: '#1a237e'
+                },
+                {
+                    position: { lat: 38.787001, lng: 35.407812 },
+                    title: '🏛️ Mühendislik Fakültesi',
+                    info: 'Bilgisayar, Elektrik-Elektronik, Endüstri Mühendisliği',
+                    color: '#1a237e'
+                },
+                {
+                    position: { lat: 38.786412, lng: 35.408523 },
+                    title: '🏛️ Güzel Sanatlar Fakültesi',
+                    info: 'Grafik Tasarım, İç Mimarlık bölümleri',
+                    color: '#1a237e'
+                },
+                {
+                    position: { lat: 38.787876, lng: 35.407891 },
+                    title: '📚 Ahmet Uzandaç Kütüphanesi',
+                    info: 'Merkez kütüphane - Geniş çalışma alanları',
+                    color: '#6d4c41'
+                },
+                {
+                    position: { lat: 38.787512, lng: 35.407234 },
+                    title: '⏰ Saatli Kule',
+                    info: 'Kampüs simge yapısı',
+                    color: '#f57c00'
+                },
+                {
+                    position: { lat: 38.786823, lng: 35.407456 },
+                    title: '🏀 Baldöktü Spor Salonu',
+                    info: 'Kapalı spor kompleksi',
+                    color: '#2e7d32'
+                },
+                {
+                    position: { lat: 38.788134, lng: 35.408912 },
+                    title: '🏠 Kız Öğrenci Yurdu',
+                    info: 'Kampüs içi konaklama',
+                    color: '#7b1fa2'
+                },
+                {
+                    position: { lat: 38.786234, lng: 35.409123 },
+                    title: '🏠 Erkek Öğrenci Yurdu',
+                    info: 'Kampüs içi konaklama',
+                    color: '#7b1fa2'
+                },
+                {
+                    position: { lat: 38.787654, lng: 35.406123 },
+                    title: '🅿️ Ana Otopark',
+                    info: 'Kampüs ana park alanı',
+                    color: '#616161'
+                },
+                {
+                    position: { lat: 38.788901, lng: 35.408234 },
+                    title: '🚌 Kampüs İçi Durak',
+                    info: 'Servis araçları durağı',
+                    color: '#ff6f00'
+                },
+                {
+                    position: { lat: 38.785678, lng: 35.407890 },
+                    title: '🏪 Ceylan Kırtasiye',
+                    info: 'Kırtasiye ve fotokopi hizmetleri',
+                    color: '#00838f'
+                },
+                {
+                    position: { lat: 38.787374, lng: 35.407380 },
+                    title: '🏛️ NNY Kampüs Merkezi',
+                    info: 'Nuh Naci Yazgan Üniversitesi Ana Yerleşke',
+                    color: '#3252a8'
+                }
+            ];
+            
+            // Her POI için marker ekle
+            pois.forEach((poi, index) => {
+                const marker = new google.maps.Marker({
+                    position: poi.position,
+                    map: map,
+                    title: poi.title,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 10,
+                        fillColor: poi.color,
+                        fillOpacity: 0.9,
+                        strokeColor: '#ffffff',
+                        strokeWeight: 2
+                    },
+                    animation: google.maps.Animation.DROP
+                });
+                
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `
+                        <div style="padding: 10px; max-width: 250px;">
+                            <h3 style="margin: 0 0 8px 0; color: ${poi.color}; font-size: 16px;">
+                                ${poi.title}
+                            </h3>
+                            <p style="margin: 0; color: #666; font-size: 14px;">
+                                ${poi.info}
+                            </p>
+                        </div>
+                    `,
+                    maxWidth: 300
+                });
+                
+                marker.addListener('click', () => {
+                    infoWindow.open(map, marker);
+                });
+                
+                // İlk marker'ı otomatik aç
+                if (index === 12) { // Kampüs merkezi
+                    setTimeout(() => {
+                        infoWindow.open(map, marker);
+                    }, 500);
+                }
+            });
+            
+            console.log('✅ Harita başarıyla oluşturuldu!');
+            console.log(`📍 ${pois.length} POI eklendi`);
+        }
+        
+        // Hata durumunu yakala
+        window.gm_authFailure = function() {
+            console.error('❌ Google Maps API Key hatası!');
+            document.getElementById('loading').innerHTML = `
+                <div style="color: red;">
+                    <h3>⚠️ Hata</h3>
+                    <p>Google Maps API anahtarı geçersiz veya hatalı.</p>
+                </div>
+            `;
+        };
+    </script>
+    
+    <!-- Google Maps JavaScript API -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWVBfYxASYj1aTqcS8pvHa67IDic4wthk&libraries=places,geometry&callback=initMap">
+    </script>
+</body>
+</html>
