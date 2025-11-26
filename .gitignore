@@ -69,3 +69,4 @@ GoogleService-Info.plist
 # Firebase configuration
 firebase_options.dart
 build/
+lib/config/api_keys.dart
