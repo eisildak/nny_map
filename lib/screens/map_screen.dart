@@ -10,7 +10,8 @@ import '../widgets/search_widget.dart';
 import '../widgets/poi_bottom_sheet.dart';
 import '../widgets/navigation_controls.dart';
 import '../widgets/indoor_map_widget.dart';
-import '../widgets/simple_web_map_widget_stub.dart';
+import '../widgets/simple_web_map_widget_stub.dart'
+    if (dart.library.html) '../widgets/simple_web_map_widget.dart';
 import '../widgets/compact_navigation_panel.dart';
 import '../services/web_integration_service.dart';
 
@@ -31,7 +32,7 @@ class _MapScreenState extends State<MapScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _waitForGoogleMaps();
-      
+
       // Force IndoorNavigationService creation for web JS interop
       if (kIsWeb) {
         print('📱 MapScreen: Forcing IndoorNavigationService creation...');
@@ -283,7 +284,6 @@ class _MapScreenState extends State<MapScreen> {
                   ),
                 ),
 
-
               // Navigasyon kontrolleri
               const Positioned(
                 bottom: 16,
@@ -310,111 +310,122 @@ class _MapScreenState extends State<MapScreen> {
                   return const SizedBox.shrink();
                 },
               ),
-                  
 
-            // Floating Action Buttons - Position changes based on bottom sheet
-            Positioned(
-              right: 16,
-              bottom: Provider.of<MapService>(context).selectedPoi != null
-                  ? 350.0 // Move up when any bottom sheet is visible
-                  : 16.0, // Normal position otherwise
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // NNY button
-                  FloatingActionButton(
-                    heroTag: "center_fab",
-                    onPressed: () {
-                      final mapService = Provider.of<MapService>(
-                        context,
-                        listen: false,
-                      );
-                      mapService.centerOnNny();
-                    },
-                    backgroundColor: Theme.of(context).primaryColor,
-                    child: const Icon(Icons.park, color: Colors.white),
-                  ),
-                  const SizedBox(height: 16),
+              // Floating Action Buttons - Position changes based on bottom sheet
+              Positioned(
+                right: 16,
+                bottom: Provider.of<MapService>(context).selectedPoi != null
+                    ? 350.0 // Move up when any bottom sheet is visible
+                    : 16.0, // Normal position otherwise
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // NNY button
+                    FloatingActionButton(
+                      heroTag: "center_fab",
+                      onPressed: () {
+                        final mapService = Provider.of<MapService>(
+                          context,
+                          listen: false,
+                        );
+                        mapService.centerOnNny();
+                      },
+                      backgroundColor: Theme.of(context).primaryColor,
+                      child: const Icon(Icons.park, color: Colors.white),
+                    ),
+                    const SizedBox(height: 16),
 
-                  // Location button
-                  Consumer<LocationService>(
-                    builder: (context, locationService, child) {
-                      return FloatingActionButton(
-                        heroTag: "location_fab",
-                        onPressed: locationService.isLoading
-                            ? null
-                            : () async {
-                                await locationService.getCurrentLocation();
+                    // Location button
+                    Consumer<LocationService>(
+                      builder: (context, locationService, child) {
+                        return FloatingActionButton(
+                          heroTag: "location_fab",
+                          onPressed: locationService.isLoading
+                              ? null
+                              : () async {
+                                  await locationService.getCurrentLocation();
 
-                                if (locationService.currentPosition != null) {
-                                  print(
-                                    'Konuma gidiliyor: ${locationService.currentPosition!.latitude}, ${locationService.currentPosition!.longitude}',
-                                  );
-                                  _mapController.animateCamera(
-                                    CameraUpdate.newLatLngZoom(
-                                      LatLng(
-                                        locationService.currentPosition!.latitude,
-                                        locationService.currentPosition!.longitude,
-                                      ),
-                                      17.0,
-                                    ),
-                                  );
-
-                                  if (mounted) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          locationService.error != null
-                                              ? 'Varsayılan konum gösteriliyor'
-                                              : 'Mevcut konumunuz gösteriliyor',
+                                  if (locationService.currentPosition != null) {
+                                    print(
+                                      'Konuma gidiliyor: ${locationService.currentPosition!.latitude}, ${locationService.currentPosition!.longitude}',
+                                    );
+                                    _mapController.animateCamera(
+                                      CameraUpdate.newLatLngZoom(
+                                        LatLng(
+                                          locationService
+                                              .currentPosition!
+                                              .latitude,
+                                          locationService
+                                              .currentPosition!
+                                              .longitude,
                                         ),
-                                        duration: const Duration(seconds: 2),
+                                        17.0,
                                       ),
                                     );
-                                  }
-                                } else {
-                                  _mapController.animateCamera(
-                                    CameraUpdate.newLatLngZoom(
-                                      MapService.nuhNaciYazganUniversitesi,
-                                      16.0,
-                                    ),
-                                  );
 
-                                  if (mounted) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text(
-                                          'Konum alınamadı, NNY gösteriliyor',
+                                    if (mounted) {
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            locationService.error != null
+                                                ? 'Varsayılan konum gösteriliyor'
+                                                : 'Mevcut konumunuz gösteriliyor',
+                                          ),
+                                          duration: const Duration(seconds: 2),
                                         ),
-                                        duration: Duration(seconds: 2),
+                                      );
+                                    }
+                                  } else {
+                                    _mapController.animateCamera(
+                                      CameraUpdate.newLatLngZoom(
+                                        MapService.nuhNaciYazganUniversitesi,
+                                        16.0,
                                       ),
                                     );
+
+                                    if (mounted) {
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                            'Konum alınamadı, NNY gösteriliyor',
+                                          ),
+                                          duration: Duration(seconds: 2),
+                                        ),
+                                      );
+                                    }
                                   }
-                                }
-                              },
-                        backgroundColor: locationService.currentPosition != null
-                            ? const Color(0xFF3252a8)
-                            : Colors.grey[400],
-                        child: locationService.isLoading
-                            ? const SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    Colors.white,
+                                },
+                          backgroundColor:
+                              locationService.currentPosition != null
+                              ? const Color(0xFF3252a8)
+                              : Colors.grey[400],
+                          child: locationService.isLoading
+                              ? const SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white,
+                                    ),
                                   ),
+                                )
+                              : const Icon(
+                                  Icons.gps_fixed,
+                                  color: Colors.white,
                                 ),
-                              )
-                            : const Icon(Icons.gps_fixed, color: Colors.white),
-                      );
-                    },
-                  ),
-                ],
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
 
           // Bottom Sheet: POI Details OR Navigation Panel
           bottomSheet: Consumer<MapService>(
@@ -425,7 +436,7 @@ class _MapScreenState extends State<MapScreen> {
                   context,
                   listen: false,
                 );
-                
+
                 // Calculate values for compact panel
                 final distance = locationService.currentPosition != null
                     ? locationService.calculateDistance(
@@ -435,24 +446,24 @@ class _MapScreenState extends State<MapScreen> {
                         mapService.selectedPoi!.longitude,
                       )
                     : 0.0;
-                
+
                 // Estimate duration: ~80 meters per minute walking speed
                 final durationMinutes = (distance / 80).ceil();
                 final durationText = durationMinutes < 60
                     ? '$durationMinutes dk'
                     : '${(durationMinutes / 60).toStringAsFixed(1)} sa';
-                
+
                 final distanceText = distance >= 1000
                     ? '${(distance / 1000).toStringAsFixed(1)} km'
                     : '${distance.toInt()} m';
-                
+
                 // Calculate arrival time (24-hour format)
                 final now = DateTime.now();
                 final arrivalTime = now.add(Duration(minutes: durationMinutes));
                 final hours = arrivalTime.hour.toString().padLeft(2, '0');
                 final minutes = arrivalTime.minute.toString().padLeft(2, '0');
                 final arrivalText = '$hours:$minutes';
-                
+
                 return CompactNavigationPanel(
                   destination: mapService.selectedPoi!.name,
                   duration: durationText,
@@ -600,11 +611,7 @@ class _MapScreenState extends State<MapScreen> {
 
     _mapController.animateCamera(
       CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: destination,
-          zoom: 18.0,
-          tilt: 0,
-        ),
+        CameraPosition(target: destination, zoom: 18.0, tilt: 0),
       ),
     );
   }

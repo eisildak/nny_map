@@ -10,21 +10,27 @@ import 'screens/iframe_map_screen.dart';
 import 'services/location_service.dart';
 import 'services/map_service.dart';
 import 'services/indoor_navigation_service.dart';
+import 'screens/indoor_navigation_screen.dart';
 import 'services/web_integration_service.dart'
     if (dart.library.html) 'services/web_integration_service_web.dart';
 
 void main() async {
   print('🚀 Dart main() started!');
+
+  // Web için JS Interop'u hemen başlat (runZonedGuarded dışında)
+  if (kIsWeb) {
+    print('🌐 main.dart: Running on web, setting up JS interop immediately');
+    try {
+      WebIntegrationService.setup();
+    } catch (e) {
+      print('❌ Web setup error: $e');
+    }
+  }
+
   // Hata yakalama ekleyelim
   runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
-
-      // Set up JS Interop early for web
-      if (kIsWeb) {
-        print('🌐 main.dart: Running on web, will setup JS interop after first frame');
-        WebIntegrationService.setup();
-      }
 
       // iOS için sadece dikey yönelimi zorla
       await SystemChrome.setPreferredOrientations([
@@ -41,14 +47,16 @@ void main() async {
   );
 }
 
-class NNYCampusMapApp extends StatefulWidget { // Changed to StatefulWidget
+class NNYCampusMapApp extends StatefulWidget {
+  // Changed to StatefulWidget
   const NNYCampusMapApp({super.key});
 
   @override
   State<NNYCampusMapApp> createState() => _NNYCampusMapAppState();
 }
 
-class _NNYCampusMapAppState extends State<NNYCampusMapApp> { // Added State class
+class _NNYCampusMapAppState extends State<NNYCampusMapApp> {
+  // Added State class
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -60,13 +68,15 @@ class _NNYCampusMapAppState extends State<NNYCampusMapApp> { // Added State clas
             final service = IndoorNavigationService(
               mapService: Provider.of<MapService>(context, listen: false),
             );
-            
+
             // Register for web JS interop
             if (kIsWeb) {
-              print('🌐 Registering IndoorNavigationService with WebIntegrationService...');
+              print(
+                '🌐 Registering IndoorNavigationService with WebIntegrationService...',
+              );
               WebIntegrationService.registerService(service);
             }
-            
+
             return service;
           },
           update: (context, mapService, previous) =>
@@ -115,6 +125,7 @@ class _NNYCampusMapAppState extends State<NNYCampusMapApp> { // Added State clas
           '/map': (context) => const MapScreen(),
           '/simple': (context) => const SimpleMapScreen(),
           '/iframe': (context) => const IframeMapScreen(),
+          '/indoor': (context) => const IndoorNavigationScreen(),
         },
         debugShowCheckedModeBanner: false,
       ),
