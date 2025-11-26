@@ -16,6 +16,7 @@ PointOfInterest _$PointOfInterestFromJson(Map<String, dynamic> json) =>
       category: json['category'] as String,
       imageUrl: json['imageUrl'] as String?,
       isActive: json['isActive'] as bool? ?? true,
+      hasIndoorMap: json['hasIndoorMap'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$PointOfInterestToJson(PointOfInterest instance) =>
@@ -28,4 +29,5 @@ Map<String, dynamic> _$PointOfInterestToJson(PointOfInterest instance) =>
       'category': instance.category,
       'imageUrl': instance.imageUrl,
       'isActive': instance.isActive,
+      'hasIndoorMap': instance.hasIndoorMap,
     };

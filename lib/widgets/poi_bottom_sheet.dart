@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../models/point_of_interest.dart';
-import '../models/building.dart';
 import '../services/map_service.dart';
 import '../services/location_service.dart';
-import '../services/indoor_navigation_service.dart';
 
 class POIBottomSheet extends StatelessWidget {
   final PointOfInterest poi;
@@ -28,7 +25,9 @@ class POIBottomSheet extends StatelessWidget {
           ),
         ],
       ),
-      margin: const EdgeInsets.only(bottom: 80), // Lift up to avoid native buttons
+      margin: const EdgeInsets.only(
+        bottom: 80,
+      ), // Lift up to avoid native buttons
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,6 +95,24 @@ class POIBottomSheet extends StatelessWidget {
           Text(poi.description, style: const TextStyle(fontSize: 16)),
 
           const SizedBox(height: 20),
+
+          // Binaya gir butonu (Eğer POI bir bina ise)
+          if (poi.hasIndoorMap)
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.only(bottom: 12),
+              child: ElevatedButton.icon(
+                onPressed: () => _enterBuilding(context),
+                icon: const Icon(Icons.meeting_room),
+                label: const Text('Binaya Gir (İç Mekan Navigasyonu)'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF059669),
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  elevation: 2,
+                ),
+              ),
+            ),
 
           // Aksiyon butonları
           Row(
@@ -284,7 +301,22 @@ class POIBottomSheet extends StatelessWidget {
     }
   }
 
+  void _enterBuilding(BuildContext context) {
+    print('🏢 Binaya gir butonuna tıklandı!');
+    try {
+      // İç mekan navigasyon ekranına git
+      Navigator.of(context).pushNamed('/indoor');
+      print('✅ IndoorNavigationScreen pushNamed ile çağrıldı');
+    } catch (e) {
+      print('❌ HATA: IndoorNavigationScreen açılamadı: $e');
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Hata: $e')));
+    }
+  }
+
   void _sharePOI(BuildContext context) {
+    // ignore: unused_local_variable
     final shareText =
         '''
 � Nuh Naci Yazgan Üniversitesi - ${poi.name}

@@ -12,6 +12,7 @@ class PointOfInterest {
   final String category;
   final String? imageUrl;
   final bool isActive;
+  final bool hasIndoorMap;
 
   const PointOfInterest({
     required this.id,
@@ -22,6 +23,7 @@ class PointOfInterest {
     required this.category,
     this.imageUrl,
     this.isActive = true,
+    this.hasIndoorMap = false,
   });
 
   factory PointOfInterest.fromJson(Map<String, dynamic> json) =>
@@ -78,6 +80,7 @@ class POIData {
       latitude: 38.786820,
       longitude: 35.406947,
       category: 'Fakülte',
+      hasIndoorMap: true, // İç mekan haritası mevcut
     ),
     const PointOfInterest(
       id: 'guzel-sanatlar-fakultesi',

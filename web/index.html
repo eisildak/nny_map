@@ -10,6 +10,7 @@
   <meta name="keywords" content="Nuh Naci Yazgan Üniversitesi, harita, navigasyon, NNY, üniversite">
 
   <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="Nuh Naci Yazgan Üniversitesi Harita">
@@ -27,7 +28,7 @@
 
   <!-- Google Maps API -->
   <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWVBfYxASYj1aTqcS8pvHa67IDic4wthk&libraries=geometry,places"></script>
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWVBfYxASYj1aTqcS8pvHa67IDic4wthk&loading=async&libraries=geometry,places"></script>
 
   <style>
     * {
@@ -862,11 +863,33 @@
         text-align: center;
       }
     }
+
+    /* Indoor Mode Styles */
+    body.indoor-mode {
+      overflow: hidden; /* Prevent scrolling */
+    }
+
+    body.indoor-mode #flutter-target {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      background: white;
+      display: block !important;
+    }
+
+    body.indoor-mode .header,
+    body.indoor-mode .container, /* Hides map and other content */
+    body.indoor-mode .footer {
+      display: none !important;
+    }
   </style>
 
   <script>
     // The value below is injected by flutter build, do not touch.
-    var serviceWorkerVersion = {{ flutter_service_worker_version }};
+    var serviceWorkerVersion = null;
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
@@ -1119,6 +1142,12 @@
   </footer>
 
   <script>
+    // Define serviceWorkerVersion if it doesn't exist to prevent ReferenceErrors
+    if (typeof serviceWorkerVersion === 'undefined') {
+      var serviceWorkerVersion = null;
+    }
+  </script>
+  <script>
     // APK Download Function
     function downloadAPK() {
       // APK dosyasının doğrudan linkini buraya koyun
@@ -1158,6 +1187,18 @@
       if (!window._flutter.buildConfig) {
         window._flutter.buildConfig = {
           entryPointBaseUrl: './',
+          builds: [
+            {
+              compileTarget: 'dart2js',
+              renderer: 'canvaskit',
+              mainJsPath: 'main.dart.js',
+            },
+            {
+              compileTarget: 'dart2js',
+              renderer: 'html',
+              mainJsPath: 'main.dart.js',
+            },
+          ],
         };
       }
 
@@ -1178,7 +1219,7 @@
         }
       };
 
-      // Only add service worker settings if version is defined
+      // Only add service worker settings if version is defined and not null
       if (serviceWorkerVersion) {
         config.serviceWorkerSettings = {
           serviceWorkerVersion: serviceWorkerVersion,
